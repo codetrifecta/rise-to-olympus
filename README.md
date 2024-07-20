@@ -1,14 +1,14 @@
 # Return to Olympus
 
-Roguelike RPG based on Greek Mythology
+Turn-Based Roguelike RPG based on Greek Mythology
 
 ## Setup
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/codetrifecta/rto-combat-simulator
-   cd rto-combat-simulator
+   git clone https://github.com/codetrifecta/return-to-olympus.git
+   cd return-to-olympus
    ```
 
 2. Install dependencies:
