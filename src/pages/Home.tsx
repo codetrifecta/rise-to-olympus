@@ -1,6 +1,21 @@
 import { Link } from 'react-router-dom';
+import { useCampaignStore } from '../store/campaign';
+import { useEffect } from 'react';
+import clsx from 'clsx';
 
 export const Home = () => {
+  const { campaigns, setCampaigns } = useCampaignStore();
+
+  useEffect(() => {
+    // Fetch campaigns from local storage
+    const existingCampaignSerialized = localStorage.getItem('campaigns');
+    if (existingCampaignSerialized) {
+      const campaigns = JSON.parse(existingCampaignSerialized);
+      console.log('campaigns:', campaigns);
+      setCampaigns(campaigns);
+    }
+  }, []);
+
   return (
     <div>
       <header className="mb-16">
@@ -17,9 +32,17 @@ export const Home = () => {
             New Campaign
           </button>
         </Link>
-        <button className="w-[300px] hover:border-yellow-500 mb-5">
-          Load Campaign
-        </button>
+        <Link to={campaigns.length > 0 ? '/load' : '/'}>
+          <button
+            className={clsx('w-[300px] mb-5 text-white', {
+              'hover:border-yellow-500': campaigns.length > 0,
+              'opacity-50 cursor-default': campaigns.length <= 0,
+            })}
+            disabled={campaigns.length <= 0}
+          >
+            Load Campaign
+          </button>
+        </Link>
         {/* <button className="w-[300px] hover:border-white">Settings</button> */}
       </div>
     </div>
