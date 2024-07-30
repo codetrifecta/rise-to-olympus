@@ -16,7 +16,7 @@ export const Home = () => {
         <button className="w-[300px] hover:border-white mb-5">
           Load Campaign
         </button>
-        <button className="w-[300px] hover:border-white">Settings</button>
+        {/* <button className="w-[300px] hover:border-white">Settings</button> */}
       </div>
     </div>
   );
