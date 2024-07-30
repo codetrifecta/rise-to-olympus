@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ICampaign } from '../types';
 import clsx from 'clsx';
+import { useCampaignStore } from '../store/campaign';
 
 export const LoadCampaign = () => {
-  const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
+  const { campaigns, deleteCampaign } = useCampaignStore();
   const [selectedCampaign, setSelectedCampaign] = useState<ICampaign | null>(
     null
   );
@@ -14,32 +15,23 @@ export const LoadCampaign = () => {
   useEffect(() => {
     // Fetch campaigns from local storage
     // If no campaigns, navigate to home page
-    const existingCampaignSerialized = localStorage.getItem('campaigns');
-    if (existingCampaignSerialized) {
-      const campaigns = JSON.parse(existingCampaignSerialized);
-      console.log('campaigns:', campaigns);
-
-      if (campaigns.length === 0) {
-        navigate('/');
-      } else {
-        setCampaigns(campaigns);
-        setSelectedCampaign(campaigns[0]);
-      }
-    } else {
+    if (campaigns.length === 0) {
       navigate('/');
+    } else {
+      setSelectedCampaign(campaigns[0]);
     }
   }, []);
 
+  useEffect(() => {
+    if (campaigns.length === 0) {
+      navigate('/');
+    }
+  }, [campaigns.length]);
+
   const handleDeleteCampaign = (campaign: ICampaign | null) => {
     if (campaign) {
-      const updatedCampaigns = campaigns.filter((c) => c.id !== campaign.id);
-      setCampaigns(updatedCampaigns);
-      setSelectedCampaign(updatedCampaigns[0]);
-      localStorage.setItem('campaigns', JSON.stringify(updatedCampaigns));
-
-      if (updatedCampaigns.length === 0) {
-        navigate('/');
-      }
+      const newCampaigns = deleteCampaign(campaign);
+      setSelectedCampaign(newCampaigns[0]);
     }
   };
 
