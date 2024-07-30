@@ -1,7 +1,7 @@
 export interface ICampaign {
   id: string;
-  name: string;
-  description: string;
+  campaignName: string;
+  playerName: string;
   numberOfDeaths: number;
   createdAt: string;
   updatedAt: string;

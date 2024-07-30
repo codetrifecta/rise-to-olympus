@@ -1,10 +1,14 @@
 import { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { ICampaign } from '../types';
 
 export const NewCampaign = () => {
   const [campaignName, setCampaignName] = useState('New Campaign');
   const [playerName, setPlayerName] = useState('Player 1');
   const [skipTutorial, setSkipTutorial] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -12,6 +16,32 @@ export const NewCampaign = () => {
     console.log('campaignName:', campaignName);
     console.log('playerName:', playerName);
     console.log('skipTutorial:', skipTutorial);
+
+    // Create new campaign object
+    const newCampaign: ICampaign = {
+      id: uuidv4(),
+      campaignName,
+      playerName,
+      numberOfDeaths: 0,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    // Get existing campaigns from local storage
+    const existingCampaigns = localStorage.getItem('campaigns');
+    let campaigns: ICampaign[] = [];
+    if (existingCampaigns) {
+      campaigns = JSON.parse(existingCampaigns);
+    }
+
+    // Add new campaign to existing campaigns
+    campaigns.push(newCampaign);
+
+    // Save campaigns back to local storage
+    localStorage.setItem('campaigns', JSON.stringify(campaigns));
+
+    // Redirect to home page
+    navigate('/');
   };
 
   return (
