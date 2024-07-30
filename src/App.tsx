@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { Home } from './pages/Home';
+import { NewCampaign } from './pages/NewCampaign';
 
 const router = createBrowserRouter([
   {
@@ -9,7 +10,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/new',
-    element: <Home />,
+    element: <NewCampaign />,
   },
   {
     path: '/load',

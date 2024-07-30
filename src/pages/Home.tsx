@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const Home = () => {
   return (
     <div>
@@ -10,10 +12,12 @@ export const Home = () => {
       </header>
 
       <div className="flex flex-col items-center">
-        <button className="w-[300px] hover:border-white mb-5">
-          New Campaign
-        </button>
-        <button className="w-[300px] hover:border-white mb-5">
+        <Link to="/new">
+          <button className="w-[300px] hover:border-yellow-500 mb-5 text-white">
+            New Campaign
+          </button>
+        </Link>
+        <button className="w-[300px] hover:border-yellow-500 mb-5">
           Load Campaign
         </button>
         {/* <button className="w-[300px] hover:border-white">Settings</button> */}
