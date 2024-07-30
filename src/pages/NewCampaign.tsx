@@ -41,7 +41,9 @@ export const NewCampaign = () => {
     localStorage.setItem('campaigns', JSON.stringify(campaigns));
 
     // Redirect to home page
-    navigate('/');
+    navigate(
+      `/game?campaignId=${newCampaign.id}${skipTutorial ? '&skipTutorial=true' : ''}`
+    );
   };
 
   return (

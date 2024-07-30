@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { NewCampaign } from './pages/NewCampaign';
 import { LoadCampaign } from './pages/LoadCampaign';
+import { Game } from './pages/Game';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: '/load',
     element: <LoadCampaign />,
+  },
+  {
+    path: '/game',
+    element: <Game />,
   },
 ]);
 

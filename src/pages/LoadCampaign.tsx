@@ -28,6 +28,12 @@ export const LoadCampaign = () => {
     }
   }, [campaigns.length]);
 
+  const handleLoadCampaign = (campaign: ICampaign | null) => {
+    if (campaign) {
+      navigate(`/game?campaignId=${campaign.id}`);
+    }
+  };
+
   const handleDeleteCampaign = (campaign: ICampaign | null) => {
     if (campaign) {
       const newCampaigns = deleteCampaign(campaign);
@@ -93,6 +99,7 @@ export const LoadCampaign = () => {
         <button
           className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset mr-5"
           disabled={selectedCampaign === null}
+          onClick={() => handleLoadCampaign(selectedCampaign)}
         >
           Load Campaign
         </button>
