@@ -17,9 +17,11 @@ export const Home = () => {
             New Campaign
           </button>
         </Link>
-        <button className="w-[300px] hover:border-yellow-500 mb-5">
-          Load Campaign
-        </button>
+        <Link to="/load">
+          <button className="w-[300px] hover:border-yellow-500 mb-5 text-white">
+            Load Campaign
+          </button>
+        </Link>
         {/* <button className="w-[300px] hover:border-white">Settings</button> */}
       </div>
     </div>
