@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useCampaignStore } from '../store/campaign';
+import { useCampaignStore } from '../stores/campaign';
 import { useEffect } from 'react';
 import clsx from 'clsx';
 

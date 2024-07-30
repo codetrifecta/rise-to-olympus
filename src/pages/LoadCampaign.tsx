@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ICampaign } from '../types';
 import clsx from 'clsx';
-import { useCampaignStore } from '../store/campaign';
+import { useCampaignStore } from '../stores/campaign';
 
 export const LoadCampaign = () => {
   const { campaigns, deleteCampaign } = useCampaignStore();
