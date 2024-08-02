@@ -4,6 +4,7 @@ import { MainMenu } from './pages/MainMenu';
 import { NewCampaign } from './pages/NewCampaign';
 import { LoadCampaign } from './pages/LoadCampaign';
 import { Game } from './pages/Game';
+import { ToMainMenu } from './pages/ToMainMenu';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: '/game',
     element: <Game />,
+  },
+  {
+    path: '*',
+    element: <ToMainMenu />,
   },
 ]);
 
