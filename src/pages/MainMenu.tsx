@@ -3,7 +3,7 @@ import { useCampaignStore } from '../stores/campaign';
 import { useEffect } from 'react';
 import clsx from 'clsx';
 
-export const Home = () => {
+export const MainMenu = () => {
   const { campaigns, setCampaigns } = useCampaignStore();
 
   useEffect(() => {

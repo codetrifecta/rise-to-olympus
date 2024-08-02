@@ -1,3 +1,5 @@
+import { SCRIPT_TYPE } from './constants/scripts';
+
 export interface ICampaign {
   id: string;
   campaignName: string;
@@ -5,4 +7,11 @@ export interface ICampaign {
   numberOfDeaths: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IScript {
+  id: number;
+  type: SCRIPT_TYPE;
+  speakerNames: string[];
+  text: string;
 }
