@@ -1,9 +1,9 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ScriptTextOverlay } from '../overlays/ScriptTextOverlay';
-import { IScriptItem } from '../types';
+import { ScriptTextOverlay } from '../../overlays/ScriptTextOverlay';
+import { IScriptItem } from '../../types';
 import { useEffect, useState } from 'react';
-import { SCRIPT_TUTORIAL } from '../constants/scripts';
-import { useCampaignStore } from '../stores/campaign';
+import { SCRIPT_TUTORIAL } from '../../constants/scripts';
+import { useCampaignStore } from '../../stores/campaign';
 
 export const Game = () => {
   // Get tutorial query parameter
@@ -87,3 +87,5 @@ export const Game = () => {
     </div>
   );
 };
+
+// export default Game;
