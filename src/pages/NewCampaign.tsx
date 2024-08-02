@@ -26,6 +26,9 @@ export const NewCampaign = () => {
       campaignName,
       playerName,
       numberOfDeaths: 0,
+      scriptsCompleted: {
+        tutorial: false,
+      },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

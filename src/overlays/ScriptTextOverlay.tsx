@@ -13,7 +13,7 @@ export const ScriptTextOverlay: FC<{
     scriptItem: IScriptItem;
   } | null>(null);
 
-  const { campaigns, selectedCampaign } = useCampaignStore();
+  const { selectedCampaign } = useCampaignStore();
 
   useEffect(() => {
     if (script.length === 0) return;
@@ -47,13 +47,9 @@ export const ScriptTextOverlay: FC<{
     });
   };
 
-  console.log(selectedCampaign, campaigns);
-
   const renderTextScriptItem = (scriptItem: IScriptItem | null) => {
     if (!scriptItem) return null;
     if (selectedCampaign === null) return null;
-
-    console.log(scriptItem);
 
     // Fill text and speaker name placeholders with appropriate text
     if (scriptItem.text.includes('$PLAYER_NAME')) {
