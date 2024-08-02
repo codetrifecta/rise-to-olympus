@@ -1,19 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useCampaignStore } from '../store/campaign';
+import { useCampaignStore } from '../stores/campaign';
 import { useEffect } from 'react';
 import clsx from 'clsx';
 
-export const Home = () => {
-  const { campaigns, setCampaigns } = useCampaignStore();
+export const MainMenu = () => {
+  const { campaigns } = useCampaignStore();
 
   useEffect(() => {
     // Fetch campaigns from local storage
-    const existingCampaignSerialized = localStorage.getItem('campaigns');
-    if (existingCampaignSerialized) {
-      const campaigns = JSON.parse(existingCampaignSerialized);
-      console.log('campaigns:', campaigns);
-      setCampaigns(campaigns);
-    }
   }, []);
 
   return (

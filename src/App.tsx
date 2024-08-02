@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { Home } from './pages/Home';
+import { MainMenu } from './pages/MainMenu';
 import { NewCampaign } from './pages/NewCampaign';
 import { LoadCampaign } from './pages/LoadCampaign';
+import { Game } from './pages/Game';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <MainMenu />,
   },
   {
     path: '/new',
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: '/load',
     element: <LoadCampaign />,
+  },
+  {
+    path: '/game',
+    element: <Game />,
   },
 ]);
 

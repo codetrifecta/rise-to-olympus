@@ -2,11 +2,14 @@ import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ICampaign } from '../types';
+import { useCampaignStore } from '../stores/campaign';
 
 export const NewCampaign = () => {
   const [campaignName, setCampaignName] = useState('New Campaign');
   const [playerName, setPlayerName] = useState('Player 1');
   const [skipTutorial, setSkipTutorial] = useState(false);
+
+  const { setCampaigns, setSelectedCampaign } = useCampaignStore();
 
   const navigate = useNavigate();
 
@@ -40,8 +43,16 @@ export const NewCampaign = () => {
     // Save campaigns back to local storage
     localStorage.setItem('campaigns', JSON.stringify(campaigns));
 
+    // Save campaigns to store
+    setCampaigns(campaigns);
+
+    // Set selected campaign
+    setSelectedCampaign(newCampaign);
+
     // Redirect to home page
-    navigate('/');
+    navigate(
+      `/game?campaignId=${newCampaign.id}${skipTutorial ? '&skipTutorial=true' : ''}`
+    );
   };
 
   return (

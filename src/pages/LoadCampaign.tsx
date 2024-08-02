@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ICampaign } from '../types';
 import clsx from 'clsx';
-import { useCampaignStore } from '../store/campaign';
+import { useCampaignStore } from '../stores/campaign';
 
 export const LoadCampaign = () => {
-  const { campaigns, deleteCampaign } = useCampaignStore();
-  const [selectedCampaign, setSelectedCampaign] = useState<ICampaign | null>(
-    null
-  );
+  const { campaigns, selectedCampaign, setSelectedCampaign, deleteCampaign } =
+    useCampaignStore();
 
   const navigate = useNavigate();
 
@@ -27,6 +25,12 @@ export const LoadCampaign = () => {
       navigate('/');
     }
   }, [campaigns.length]);
+
+  const handleLoadCampaign = (campaign: ICampaign | null) => {
+    if (campaign) {
+      navigate(`/game?campaignId=${campaign.id}`);
+    }
+  };
 
   const handleDeleteCampaign = (campaign: ICampaign | null) => {
     if (campaign) {
@@ -93,6 +97,7 @@ export const LoadCampaign = () => {
         <button
           className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset mr-5"
           disabled={selectedCampaign === null}
+          onClick={() => handleLoadCampaign(selectedCampaign)}
         >
           Load Campaign
         </button>
