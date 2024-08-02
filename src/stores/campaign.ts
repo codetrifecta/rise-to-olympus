@@ -3,21 +3,30 @@ import { ICampaign } from '../types';
 
 interface ICampaignStore {
   campaigns: ICampaign[];
+  selectedCampaign: ICampaign | null;
 
   setCampaigns: (campaigns: ICampaign[]) => void;
+  setSelectedCampaign: (campaign: ICampaign | null) => void;
 
   addCampaign: (campaign: ICampaign) => ICampaign[];
   deleteCampaign: (campaign: ICampaign) => ICampaign[];
 }
 
 export const useCampaignStore = create<ICampaignStore>((set, get) => ({
-  campaigns: [],
+  campaigns: localStorage.getItem('campaigns')
+    ? JSON.parse(localStorage.getItem('campaigns') || '[]')
+    : [],
+  selectedCampaign: null,
 
   setCampaigns: (campaigns) => {
     set({ campaigns });
 
     // Save campaigns to local storage
     localStorage.setItem('campaigns', JSON.stringify(campaigns));
+  },
+
+  setSelectedCampaign: (campaign) => {
+    set({ selectedCampaign: campaign });
   },
 
   addCampaign: (campaign: ICampaign) => {

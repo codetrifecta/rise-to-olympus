@@ -1,4 +1,4 @@
-import { IScript } from '../types';
+import { IScriptItem } from '../types';
 
 let id = 0;
 
@@ -9,7 +9,7 @@ export enum SCRIPT_TYPE {
   DIALOG = 'DIALOG',
 }
 
-export const SCRIPTS: IScript[] = [
+export const SCRIPT_TUTORIAL: IScriptItem[] = [
   {
     id: id++,
     type: SCRIPT_TYPE.SCENE,
@@ -30,7 +30,7 @@ export const SCRIPTS: IScript[] = [
   },
   {
     id: id++,
-    type: SCRIPT_TYPE.SCENE,
+    type: SCRIPT_TYPE.DIALOG,
     speakerNames: ['$PLAYER_NAME'],
     text: 'I will not be a prisoner any longer. I will find my way out and uncover the truth.',
   },

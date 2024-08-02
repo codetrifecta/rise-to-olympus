@@ -4,16 +4,10 @@ import { useEffect } from 'react';
 import clsx from 'clsx';
 
 export const MainMenu = () => {
-  const { campaigns, setCampaigns } = useCampaignStore();
+  const { campaigns } = useCampaignStore();
 
   useEffect(() => {
     // Fetch campaigns from local storage
-    const existingCampaignSerialized = localStorage.getItem('campaigns');
-    if (existingCampaignSerialized) {
-      const campaigns = JSON.parse(existingCampaignSerialized);
-      console.log('campaigns:', campaigns);
-      setCampaigns(campaigns);
-    }
   }, []);
 
   return (

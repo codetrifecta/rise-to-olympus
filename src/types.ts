@@ -9,7 +9,7 @@ export interface ICampaign {
   updatedAt: string;
 }
 
-export interface IScript {
+export interface IScriptItem {
   id: number;
   type: SCRIPT_TYPE;
   speakerNames: string[];
