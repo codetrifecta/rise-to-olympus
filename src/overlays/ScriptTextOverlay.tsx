@@ -4,9 +4,10 @@ import { SCRIPT_TYPE } from '../constants/scripts';
 import { useCampaignStore } from '../stores/campaign';
 import clsx from 'clsx';
 
-export const ScriptTextOverlay: FC<{ script: IScriptItem[] }> = ({
-  script,
-}) => {
+export const ScriptTextOverlay: FC<{
+  script: IScriptItem[];
+  endScript: () => void;
+}> = ({ script, endScript }) => {
   const [currentScriptItem, setCurrentScriptItem] = useState<{
     id: number;
     scriptItem: IScriptItem;
@@ -104,7 +105,7 @@ export const ScriptTextOverlay: FC<{ script: IScriptItem[] }> = ({
   };
 
   return (
-    <div className="fixed bottom-0 z-50 bottom-0 bg-black w-full min-h-[200px] py-5 px-10 shadow-sm shadow-white">
+    <div className=" bg-black w-screen min-h-[200px] py-5 px-10 shadow-sm shadow-white">
       <div className="container mx-auto px-40">
         {renderTextScriptItem(
           currentScriptItem ? currentScriptItem.scriptItem : null
@@ -126,15 +127,19 @@ export const ScriptTextOverlay: FC<{ script: IScriptItem[] }> = ({
           className={clsx('text-white hover:border-yellow-500')}
           onClick={() => {
             if (currentScriptItem?.id === script.length - 1) {
-              console.log('End of script');
+              endScript();
               return;
             } else {
               handleNextDialog(currentScriptItem);
             }
           }}
-          disabled={currentScriptItem?.id === script.length}
+          disabled={
+            currentScriptItem ? currentScriptItem.id >= script.length : false
+          }
         >
-          {currentScriptItem?.id === script.length - 1 ? '>>' : '>'}
+          {currentScriptItem && currentScriptItem.id >= script.length - 1
+            ? '>>'
+            : '>'}
         </button>
       </div>
     </div>
