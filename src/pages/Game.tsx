@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ScriptTextOverlay } from '../overlays/ScriptTextOverlay';
 import { IScriptItem } from '../types';
 import { useEffect, useState } from 'react';
@@ -9,8 +9,10 @@ export const Game = () => {
   // Get tutorial query parameter
   const [textOverlayScript, setTextOverlayScript] = useState<IScriptItem[]>([]);
 
-  const { campaigns, setSelectedCampaign } = useCampaignStore();
+  const { campaigns, selectedCampaign, setCampaigns, setSelectedCampaign } =
+    useCampaignStore();
 
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -22,22 +24,23 @@ export const Game = () => {
 
     if (!campaignId) {
       console.log('No campaign ID found');
+      navigate('/');
       return;
     }
-
-    console.log(campaigns);
 
     // Find campaign by ID
     const campaign = campaigns.find((c) => c.id === campaignId);
 
     if (!campaign) {
       console.log('No campaign found');
+      navigate('/');
       return;
     } else {
       setSelectedCampaign(campaign);
+      console.log('Selected campaign:', campaign);
     }
 
-    if (skipTutorial === 'false') {
+    if (!skipTutorial && !campaign.scriptsCompleted.tutorial) {
       setTextOverlayScript(SCRIPT_TUTORIAL);
       console.log('Showing tutorial');
     }
@@ -54,7 +57,26 @@ export const Game = () => {
       >
         <ScriptTextOverlay
           script={textOverlayScript}
-          endScript={() => setTextOverlayScript([])}
+          endScript={() => {
+            setTextOverlayScript([]);
+
+            if (!selectedCampaign) return;
+
+            const editedCampaign = {
+              ...selectedCampaign,
+              scriptsCompleted: {
+                ...selectedCampaign.scriptsCompleted,
+                tutorial: true,
+              },
+            };
+
+            const newCampaigns = campaigns.map((c) =>
+              c.id === editedCampaign.id ? editedCampaign : c
+            );
+
+            setSelectedCampaign(editedCampaign);
+            setCampaigns(newCampaigns);
+          }}
         />
       </div>
 
