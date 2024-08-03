@@ -1,16 +1,14 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ScriptTextOverlay } from '../../overlays/ScriptTextOverlay';
-import { IScriptItem } from '../../types';
-import { useEffect, useState } from 'react';
-import { SCRIPT_TUTORIAL } from '../../constants/scripts';
+import { ScriptOverlay } from '../../overlays/ScriptOverlay';
+import { useEffect } from 'react';
+import { SCRIPT_PARENT, SCRIPT_TUTORIAL } from '../../constants/scripts';
 import { useCampaignStore } from '../../stores/campaign';
+import { StartRoom } from './StartRoom';
+import { useScriptStore } from '../../stores/script';
 
 export const Game = () => {
-  // Get tutorial query parameter
-  const [textOverlayScript, setTextOverlayScript] = useState<IScriptItem[]>([]);
-
-  const { campaigns, selectedCampaign, setCampaigns, setSelectedCampaign } =
-    useCampaignStore();
+  const { campaigns, setSelectedCampaign } = useCampaignStore();
+  const { currentScript, setCurrentScript } = useScriptStore();
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -41,10 +39,29 @@ export const Game = () => {
     }
 
     if (!skipTutorial && !campaign.scriptsCompleted.tutorial) {
-      setTextOverlayScript(SCRIPT_TUTORIAL);
+      setCurrentScript(SCRIPT_TUTORIAL);
       console.log('Showing tutorial');
     }
   }, [searchParams, campaigns]);
+
+  const renderGameScreen = () => {
+    if (
+      currentScript !== null &&
+      currentScript.length > 0 &&
+      currentScript[0].parent === SCRIPT_PARENT.TUTORIAL
+    ) {
+      return (
+        <div>
+          <h1 className="text-4xl font-bold mb-5">Game</h1>
+          <p className="mb-5">
+            This is the game page. It is used to display the game.
+          </p>
+        </div>
+      );
+    } else {
+      return <StartRoom />;
+    }
+  };
 
   return (
     <div className="relative flex flex-col items-center justify-center h-screen">
@@ -52,38 +69,15 @@ export const Game = () => {
         className="fixed bottom-0 z-50 bottom-0 transition duration-500 ease-in-out"
         style={{
           transform:
-            textOverlayScript.length > 0 ? 'translateY(0)' : 'translateY(100%)',
+            currentScript && currentScript.length > 0
+              ? 'translateY(0)'
+              : 'translateY(100%)',
         }}
       >
-        <ScriptTextOverlay
-          script={textOverlayScript}
-          endScript={() => {
-            setTextOverlayScript([]);
-
-            if (!selectedCampaign) return;
-
-            const editedCampaign = {
-              ...selectedCampaign,
-              scriptsCompleted: {
-                ...selectedCampaign.scriptsCompleted,
-                tutorial: true,
-              },
-            };
-
-            const newCampaigns = campaigns.map((c) =>
-              c.id === editedCampaign.id ? editedCampaign : c
-            );
-
-            setSelectedCampaign(editedCampaign);
-            setCampaigns(newCampaigns);
-          }}
-        />
+        <ScriptOverlay />
       </div>
 
-      <h1 className="text-4xl font-bold mb-5">Game</h1>
-      <p className="mb-5">
-        This is the game page. It is used to display the game.
-      </p>
+      {renderGameScreen()}
     </div>
   );
 };

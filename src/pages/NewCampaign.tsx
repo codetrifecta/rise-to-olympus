@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ICampaign } from '../types';
 import { useCampaignStore } from '../stores/campaign';
+import { Button } from '../components/Button';
+import { BASE_CAMPAIGN } from '../constants/campaign';
 
 export const NewCampaign = () => {
   const [campaignName, setCampaignName] = useState('New Campaign');
@@ -22,13 +24,10 @@ export const NewCampaign = () => {
 
     // Create new campaign object
     const newCampaign: ICampaign = {
+      ...BASE_CAMPAIGN,
       id: uuidv4(),
       campaignName,
       playerName,
-      numberOfDeaths: 0,
-      scriptsCompleted: {
-        tutorial: false,
-      },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -96,14 +95,14 @@ export const NewCampaign = () => {
           />
           Skip Tutorial
         </label>
-        <button className="w-[300px] hover:border-yellow-500 mb-5">
+        <Button className="w-[300px] hover:border-yellow-500 mb-5">
           Create
-        </button>
+        </Button>
       </form>
       <Link to={'/'} className="">
-        <button className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset">
+        <Button className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset">
           Back
-        </button>
+        </Button>
       </Link>
     </div>
   );
