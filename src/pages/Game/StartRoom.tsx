@@ -1,5 +1,6 @@
 import { Button } from '../../components/Button';
 import { SCRIPT_SHOP, SCRIPT_SHOP_TUTORIAL } from '../../constants/scripts';
+import { StartRoomEscModalOverlay } from '../../overlays/StartRoomEscModalOverlay';
 import { useCampaignStore } from '../../stores/campaign';
 import { useScriptStore } from '../../stores/script';
 
@@ -10,7 +11,8 @@ export const StartRoom = () => {
   if (!selectedCampaign) return null;
 
   return (
-    <div>
+    <>
+      <StartRoomEscModalOverlay />
       <h1>Start Room</h1>
       <p>Will be a small room where player starts a run</p>
       <Button
@@ -24,6 +26,6 @@ export const StartRoom = () => {
       >
         Shopkeeper
       </Button>
-    </div>
+    </>
   );
 };
