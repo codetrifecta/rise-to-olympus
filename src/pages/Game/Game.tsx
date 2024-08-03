@@ -2,8 +2,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ScriptTextOverlay } from '../../overlays/ScriptTextOverlay';
 import { IScriptItem } from '../../types';
 import { useEffect, useState } from 'react';
-import { SCRIPT_TUTORIAL } from '../../constants/scripts';
+import { SCRIPT_PARENT, SCRIPT_TUTORIAL } from '../../constants/scripts';
 import { useCampaignStore } from '../../stores/campaign';
+import { StartRoom } from './StartRoom';
 
 export const Game = () => {
   // Get tutorial query parameter
@@ -46,6 +47,24 @@ export const Game = () => {
     }
   }, [searchParams, campaigns]);
 
+  const renderGameScreen = () => {
+    if (
+      textOverlayScript.length > 0 &&
+      textOverlayScript[0].parent === SCRIPT_PARENT.TUTORIAL
+    ) {
+      return (
+        <div>
+          <h1 className="text-4xl font-bold mb-5">Game</h1>
+          <p className="mb-5">
+            This is the game page. It is used to display the game.
+          </p>
+        </div>
+      );
+    } else {
+      return <StartRoom />;
+    }
+  };
+
   return (
     <div className="relative flex flex-col items-center justify-center h-screen">
       <div
@@ -80,10 +99,7 @@ export const Game = () => {
         />
       </div>
 
-      <h1 className="text-4xl font-bold mb-5">Game</h1>
-      <p className="mb-5">
-        This is the game page. It is used to display the game.
-      </p>
+      {renderGameScreen()}
     </div>
   );
 };
