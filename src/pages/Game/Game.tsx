@@ -1,17 +1,14 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ScriptTextOverlay } from '../../overlays/ScriptTextOverlay';
-import { IScriptItem } from '../../types';
-import { useEffect, useState } from 'react';
+import { ScriptOverlay } from '../../overlays/ScriptOverlay';
+import { useEffect } from 'react';
 import { SCRIPT_PARENT, SCRIPT_TUTORIAL } from '../../constants/scripts';
 import { useCampaignStore } from '../../stores/campaign';
 import { StartRoom } from './StartRoom';
+import { useScriptStore } from '../../stores/script';
 
 export const Game = () => {
-  // Get tutorial query parameter
-  const [textOverlayScript, setTextOverlayScript] = useState<IScriptItem[]>([]);
-
-  const { campaigns, selectedCampaign, setCampaigns, setSelectedCampaign } =
-    useCampaignStore();
+  const { campaigns, setSelectedCampaign } = useCampaignStore();
+  const { currentScript, setCurrentScript } = useScriptStore();
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -42,15 +39,16 @@ export const Game = () => {
     }
 
     if (!skipTutorial && !campaign.scriptsCompleted.tutorial) {
-      setTextOverlayScript(SCRIPT_TUTORIAL);
+      setCurrentScript(SCRIPT_TUTORIAL);
       console.log('Showing tutorial');
     }
   }, [searchParams, campaigns]);
 
   const renderGameScreen = () => {
     if (
-      textOverlayScript.length > 0 &&
-      textOverlayScript[0].parent === SCRIPT_PARENT.TUTORIAL
+      currentScript !== null &&
+      currentScript.length > 0 &&
+      currentScript[0].parent === SCRIPT_PARENT.TUTORIAL
     ) {
       return (
         <div>
@@ -71,32 +69,12 @@ export const Game = () => {
         className="fixed bottom-0 z-50 bottom-0 transition duration-500 ease-in-out"
         style={{
           transform:
-            textOverlayScript.length > 0 ? 'translateY(0)' : 'translateY(100%)',
+            currentScript && currentScript.length > 0
+              ? 'translateY(0)'
+              : 'translateY(100%)',
         }}
       >
-        <ScriptTextOverlay
-          script={textOverlayScript}
-          endScript={() => {
-            setTextOverlayScript([]);
-
-            if (!selectedCampaign) return;
-
-            const editedCampaign = {
-              ...selectedCampaign,
-              scriptsCompleted: {
-                ...selectedCampaign.scriptsCompleted,
-                tutorial: true,
-              },
-            };
-
-            const newCampaigns = campaigns.map((c) =>
-              c.id === editedCampaign.id ? editedCampaign : c
-            );
-
-            setSelectedCampaign(editedCampaign);
-            setCampaigns(newCampaigns);
-          }}
-        />
+        <ScriptOverlay />
       </div>
 
       {renderGameScreen()}

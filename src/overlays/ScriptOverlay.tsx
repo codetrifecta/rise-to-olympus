@@ -1,50 +1,62 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { IScriptItem } from '../types';
-import { SCRIPT_TYPE } from '../constants/scripts';
+import { SCRIPT_PARENT, SCRIPT_TYPE } from '../constants/scripts';
 import { useCampaignStore } from '../stores/campaign';
 import clsx from 'clsx';
+import { useScriptStore } from '../stores/script';
 
-export const ScriptTextOverlay: FC<{
-  script: IScriptItem[];
-  endScript: () => void;
-}> = ({ script, endScript }) => {
-  const [currentScriptItem, setCurrentScriptItem] = useState<{
-    id: number;
-    scriptItem: IScriptItem;
-  } | null>(null);
+export const ScriptOverlay: FC = () => {
+  const {
+    currentScript,
+    currentScriptItemIndex,
+    setCurrentScript,
+    setCurrentScriptItemIndex,
+  } = useScriptStore();
 
-  const { selectedCampaign } = useCampaignStore();
+  const { campaigns, selectedCampaign, setSelectedCampaign, setCampaigns } =
+    useCampaignStore();
 
   useEffect(() => {
-    if (script.length === 0) return;
+    if (currentScript === null || currentScript.length === 0) return;
 
-    setCurrentScriptItem({ id: 0, scriptItem: script[0] });
-  }, [script, selectedCampaign]);
+    setCurrentScriptItemIndex(0);
+  }, [currentScript, selectedCampaign]);
 
-  const handlePreviousDialog = (
-    currentScriptItem: {
-      id: number;
-      scriptItem: IScriptItem;
-    } | null
-  ) => {
-    console.log('Previous dialog');
-    setCurrentScriptItem({
-      id: currentScriptItem ? currentScriptItem.id - 1 : 0,
-      scriptItem: script[currentScriptItem ? currentScriptItem.id - 1 : 0],
-    });
+  const endScript = () => {
+    console.log('End script');
+
+    if (!selectedCampaign || !currentScript) return;
+
+    const editedCampaign = {
+      ...selectedCampaign,
+      scriptsCompleted: {
+        ...selectedCampaign.scriptsCompleted,
+        tutorial: true,
+      },
+    };
+
+    if (currentScript[0].parent === SCRIPT_PARENT.TUTORIAL) {
+      editedCampaign.scriptsCompleted.tutorial = true;
+    }
+
+    const newCampaigns = campaigns.map((c) =>
+      c.id === editedCampaign.id ? editedCampaign : c
+    );
+
+    setCurrentScript(null);
+    setCurrentScriptItemIndex(0);
+    setSelectedCampaign(editedCampaign);
+    setCampaigns(newCampaigns);
   };
 
-  const handleNextDialog = (
-    currentScriptItem: {
-      id: number;
-      scriptItem: IScriptItem;
-    } | null
-  ) => {
-    console.log('Next dialog');
-    setCurrentScriptItem({
-      id: currentScriptItem ? currentScriptItem.id + 1 : 0,
-      scriptItem: script[currentScriptItem ? currentScriptItem.id + 1 : 0],
-    });
+  const handlePreviousScriptItem = (currentScriptItemIndex: number) => {
+    console.log('Previous script item');
+    setCurrentScriptItemIndex(currentScriptItemIndex - 1);
+  };
+
+  const handleNextScriptItem = (currentScriptItemIndex: number) => {
+    console.log('Previous script item');
+    setCurrentScriptItemIndex(currentScriptItemIndex + 1);
   };
 
   const renderTextScriptItem = (scriptItem: IScriptItem | null) => {
@@ -100,40 +112,45 @@ export const ScriptTextOverlay: FC<{
     return <p className="italic">{scriptItem.text}</p>;
   };
 
+  if (!currentScript) return null;
+
   return (
     <div className=" bg-black w-screen min-h-[200px] py-5 px-10 shadow-sm shadow-white">
       <div className="container mx-auto px-40">
-        {renderTextScriptItem(
-          currentScriptItem ? currentScriptItem.scriptItem : null
-        )}
+        {renderTextScriptItem(currentScript[currentScriptItemIndex])}
       </div>
 
       <div className="absolute bottom-5 right-5">
         <button
           className={clsx('text-white', {
-            'hover:border-yellow-500': currentScriptItem?.id !== 0,
-            'opacity-50 cursor-default': currentScriptItem?.id === 0,
+            'hover:border-yellow-500':
+              currentScript[currentScriptItemIndex].id !== 0,
+            'opacity-50 cursor-default':
+              currentScript[currentScriptItemIndex].id === 0,
           })}
-          onClick={() => handlePreviousDialog(currentScriptItem)}
-          disabled={currentScriptItem?.id === 0}
+          onClick={() => handlePreviousScriptItem(currentScriptItemIndex)}
+          disabled={currentScript[currentScriptItemIndex].id === 0}
         >
           {'<'}
         </button>
         <button
           className={clsx('text-white hover:border-yellow-500')}
           onClick={() => {
-            if (currentScriptItem?.id === script.length - 1) {
+            if (
+              currentScript[currentScriptItemIndex].id ===
+              currentScript.length - 1
+            ) {
               endScript();
               return;
             } else {
-              handleNextDialog(currentScriptItem);
+              handleNextScriptItem(currentScriptItemIndex);
             }
           }}
           disabled={
-            currentScriptItem ? currentScriptItem.id >= script.length : false
+            currentScript[currentScriptItemIndex].id >= currentScript.length
           }
         >
-          {currentScriptItem && currentScriptItem.id >= script.length - 1
+          {currentScript[currentScriptItemIndex].id >= currentScript.length - 1
             ? '>>'
             : '>'}
         </button>
