@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ICampaign } from '../types';
 import { useCampaignStore } from '../stores/campaign';
 import { Button } from '../components/Button';
+import { BASE_CAMPAIGN } from '../constants/campaign';
 
 export const NewCampaign = () => {
   const [campaignName, setCampaignName] = useState('New Campaign');
@@ -23,13 +24,10 @@ export const NewCampaign = () => {
 
     // Create new campaign object
     const newCampaign: ICampaign = {
+      ...BASE_CAMPAIGN,
       id: uuidv4(),
       campaignName,
       playerName,
-      numberOfDeaths: 0,
-      scriptsCompleted: {
-        tutorial: false,
-      },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
