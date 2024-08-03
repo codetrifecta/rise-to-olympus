@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ICampaign } from '../types';
 import clsx from 'clsx';
 import { useCampaignStore } from '../stores/campaign';
+import { Button } from '../components/Button';
 
 export const LoadCampaign = () => {
   const { campaigns, selectedCampaign, setSelectedCampaign, deleteCampaign } =
@@ -94,27 +95,27 @@ export const LoadCampaign = () => {
       </div>
 
       <div>
-        <button
+        <Button
           className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset mr-5"
           disabled={selectedCampaign === null}
           onClick={() => handleLoadCampaign(selectedCampaign)}
         >
           Load Campaign
-        </button>
+        </Button>
 
-        <button
+        <Button
           className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset"
           disabled={selectedCampaign === null}
           onClick={() => handleDeleteCampaign(selectedCampaign)}
         >
           Delete Campaign
-        </button>
+        </Button>
       </div>
 
       <Link to={'/'} className="">
-        <button className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset">
+        <Button className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset">
           Back
-        </button>
+        </Button>
       </Link>
     </div>
   );
