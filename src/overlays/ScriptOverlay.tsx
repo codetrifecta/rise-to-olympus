@@ -127,11 +127,12 @@ export const ScriptOverlay: FC = () => {
 
     return (
       <>
-        <p>{scriptItem.text}</p>
+        <p className="mb-3">{scriptItem.text}</p>
         <ul>
           {scriptItem.choices?.map((choice, index) => (
             <li
               key={index}
+              className="cursor-pointer hover:text-yellow-500 hover:underline mb-1"
               onClick={() => {
                 // Handle all script choices here
                 switch (scriptItem.parent) {
