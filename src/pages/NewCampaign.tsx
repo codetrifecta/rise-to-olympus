@@ -58,7 +58,10 @@ export const NewCampaign = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div
+      className="absolute top-[50%] left-[50%] flex flex-col justify-center items-center"
+      style={{ transform: 'translate(-50%, -50%)' }}
+    >
       <header className="mb-16">
         <h1 className="uppercase font-bold">
           N<span className="text-4xl">ew</span> C

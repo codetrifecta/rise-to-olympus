@@ -1,34 +1,63 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { TitleBackgroundOverlay } from './overlays/TitleBackgroundOverlay';
+
 const router = createBrowserRouter([
   {
     path: '/',
-    lazy: async () => {
-      const { MainMenu } = await import('./pages/MainMenu');
-      return { Component: MainMenu };
-    },
+    Component: TitleBackgroundOverlay,
+    children: [
+      {
+        path: '/',
+        lazy: async () => {
+          const { MainMenu } = await import('./pages/MainMenu');
+          return { Component: MainMenu };
+        },
+      },
+      {
+        path: 'new',
+        lazy: async () => {
+          const { NewCampaign } = await import('./pages/NewCampaign');
+          return { Component: NewCampaign };
+        },
+      },
+      {
+        path: 'load',
+        lazy: async () => {
+          const { LoadCampaign } = await import('./pages/LoadCampaign');
+          return { Component: LoadCampaign };
+        },
+      },
+      {
+        path: 'game',
+        lazy: async () => {
+          const { Game } = await import('./pages/Game');
+          return { Component: Game };
+        },
+      },
+    ],
   },
-  {
-    path: '/new',
-    lazy: async () => {
-      const { NewCampaign } = await import('./pages/NewCampaign');
-      return { Component: NewCampaign };
-    },
-  },
-  {
-    path: '/load',
-    lazy: async () => {
-      const { LoadCampaign } = await import('./pages/LoadCampaign');
-      return { Component: LoadCampaign };
-    },
-  },
-  {
-    path: '/game',
-    lazy: async () => {
-      const { Game } = await import('./pages/Game');
-      return { Component: Game };
-    },
-  },
+  // {
+  //   path: '/new',
+  //   lazy: async () => {
+  //     const { NewCampaign } = await import('./pages/NewCampaign');
+  //     return { Component: NewCampaign };
+  //   },
+  // },
+  // {
+  //   path: '/load',
+  //   lazy: async () => {
+  //     const { LoadCampaign } = await import('./pages/LoadCampaign');
+  //     return { Component: LoadCampaign };
+  //   },
+  // },
+  // {
+  //   path: '/game',
+  //   lazy: async () => {
+  //     const { Game } = await import('./pages/Game');
+  //     return { Component: Game };
+  //   },
+  // },
   {
     path: '*',
     lazy: async () => {
