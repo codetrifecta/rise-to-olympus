@@ -46,9 +46,9 @@ export const LoadCampaign = () => {
       style={{ transform: 'translate(-50%, -50%)' }}
     >
       <header className="mb-16">
-        <h1 className="uppercase font-bold">
-          L<span className="text-4xl">oad</span> C
-          <span className="text-4xl">ampaign</span>
+        <h1 className="uppercase font-bold text-7xl">
+          L<span className="text-5xl">oad</span> C
+          <span className="text-5xl">ampaign</span>
         </h1>
       </header>
       <div className="flex max-h-[50vh] mb-5">
@@ -97,9 +97,9 @@ export const LoadCampaign = () => {
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col justify-center items-center">
         <Button
-          className="w-full hover:border-yellow-500 mb-5 text-white bg-unset mr-5"
+          className="w-[350px] hover:border-yellow-500 mb-5 text-white bg-unset text-2xl"
           disabled={selectedCampaign === null}
           onClick={() => handleLoadCampaign(selectedCampaign)}
         >
@@ -107,14 +107,14 @@ export const LoadCampaign = () => {
         </Button>
 
         <Button
-          className="w-full hover:border-yellow-500 mb-5 text-white bg-unset"
+          className="w-[350px] hover:border-yellow-500 mb-5 text-white bg-unset text-2xl"
           disabled={selectedCampaign === null}
           onClick={() => handleDeleteCampaign(selectedCampaign)}
         >
           Delete Campaign
         </Button>
-        <Link to={'/'} className="w-full">
-          <Button className="w-full hover:border-yellow-500 mb-5 text-white bg-unset">
+        <Link to={'/'} className="w-[350px]">
+          <Button className="w-full hover:border-yellow-500 mb-5 text-white bg-unset text-2xl">
             Back
           </Button>
         </Link>
