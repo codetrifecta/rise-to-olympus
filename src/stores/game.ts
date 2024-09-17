@@ -24,7 +24,8 @@ interface IGameStateStore {
   file: string;
   floorArtFile: string;
   wallArtFile: string;
-  isTileHoverable: boolean;
+  isCameraMoving: boolean;
+  isEntityMoving: boolean;
   setDoorPositions: (doorPositions: [number, number][]) => void;
   setHoveredTile: (hoveredTile: [number, number] | null) => void;
   setRoomLength: (roomLength: number) => void;
@@ -48,7 +49,8 @@ interface IGameStateStore {
   setFile: (file: string) => void;
   setFloorArtFile: (floorArtFile: string) => void;
   setWallArtFile: (wallArtFile: string) => void;
-  setIsTileHoverable: (isTileHoverable: boolean) => void;
+  setIsCameraMoving: (isCameraMoving: boolean) => void;
+  setIsEntityMoving: (isEntityMoving: boolean) => void;
 }
 
 export const useGameStateStore = create<IGameStateStore>((set, get) => ({
@@ -73,7 +75,8 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   file: '',
   floorArtFile: '',
   wallArtFile: '',
-  isTileHoverable: true,
+  isCameraMoving: false,
+  isEntityMoving: false,
 
   setDoorPositions: (doorPositions: [number, number][]) =>
     set({ doorPositions }),
@@ -148,5 +151,7 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
 
   setWallArtFile: (wallArtFile: string) => set({ wallArtFile }),
 
-  setIsTileHoverable: (isTileHoverable: boolean) => set({ isTileHoverable }),
+  setIsCameraMoving: (isCameraMoving: boolean) => set({ isCameraMoving }),
+
+  setIsEntityMoving: (isEntityMoving: boolean) => set({ isEntityMoving }),
 }));

@@ -87,11 +87,13 @@ export const RoomLogic: FC<{
     endTurn,
     isRoomOver,
     isGameOver,
-    isTileHoverable,
+    isCameraMoving,
+    isEntityMoving,
     setIsChestOpen,
     setIsGameOver,
     setIsRoomOver,
     setHoveredTile,
+    setIsEntityMoving,
   } = useGameStateStore();
   const { setCurrentSkillAnimation } = useSkillAnimationStore();
   const {
@@ -1166,6 +1168,8 @@ export const RoomLogic: FC<{
       return;
     }
 
+    setIsEntityMoving(true);
+
     while (path.length > 0) {
       const [row, col] = path[0];
 
@@ -1204,6 +1208,8 @@ export const RoomLogic: FC<{
       await sleep(isRoomOver ? 400 : 500);
 
       if (path.length === 0) {
+        setIsEntityMoving(false);
+
         // Remove walking animation and set player back to idle depending on direction (left or right)
         const entitySpriteDirection = getEntitySpriteDirection(player);
         if (entitySpriteDirection === ENTITY_SPRITE_DIRECTION.LEFT) {
@@ -1219,13 +1225,6 @@ export const RoomLogic: FC<{
           );
           return;
         }
-
-        // console.log(
-        //   'playerRow',
-        //   newPlayerPosition[0],
-        //   'playerCol',
-        //   newPlayerPosition[1]
-        // );
 
         if (
           roomTileMatrix[newPlayerPosition[0]][newPlayerPosition[1]] ===
@@ -1493,6 +1492,8 @@ export const RoomLogic: FC<{
     // Get the tile the enemy will move to
     console.log('shortestPath of enemy', enemy.id, shortestPath);
 
+    setIsEntityMoving(true);
+
     while (shortestPath.length > 0) {
       const [row, col] = shortestPath[0];
 
@@ -1531,6 +1532,8 @@ export const RoomLogic: FC<{
       shortestPath = shortestPath.slice(1);
 
       if (shortestPath.length === 0) {
+        setIsEntityMoving(false);
+
         // Remove walking animation and set enemy back to idle depending on direction (left or right)
         const entitySpriteDirection = getEntitySpriteDirection(enemy);
         if (entitySpriteDirection === ENTITY_SPRITE_DIRECTION.LEFT) {
@@ -2604,7 +2607,7 @@ export const RoomLogic: FC<{
               }}
               onMouseEnter={() => {
                 // Only allow setting hovered tile if no entity is moving nor camera is moving
-                if (isTileHoverable === false) return;
+                if (isCameraMoving || isEntityMoving) return;
 
                 debouncedSetHoveredTile([rowIndex, columnIndex]);
                 if (
