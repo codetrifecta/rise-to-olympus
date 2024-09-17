@@ -68,6 +68,7 @@ export const GameRoom: FC = () => {
     isGenerateRoomOpen,
     isCompendiumOpen,
     isMinimapOpen,
+    isTileHoverable,
     setIsRoomOver,
     setIsInventoryOpen,
     setIsGameLogOpen,
@@ -79,6 +80,7 @@ export const GameRoom: FC = () => {
     setRoomEntityPositions,
     setRoomLength,
     setRoomTileMatrix,
+    setIsTileHoverable,
   } = useGameStateStore();
 
   const { floor, currentRoom, setCurrentRoom } = useFloorStore();
@@ -371,6 +373,31 @@ export const GameRoom: FC = () => {
       clearInterval(cameraKeyInputCheckInterval);
     };
   }, [isGenerateRoomOpen]);
+
+  useEffect(() => {
+    // Check if camera is moving, then set isTileHoverable to false
+    // We are setting isTileHoverable to false when camera is moving to prevent hover events from firing
+    const setTileHoverableIfCameraMoving = setInterval(() => {
+      if (
+        Math.round(deltaX) !== 0 ||
+        (Math.round(deltaY) !== 0 && isTileHoverable)
+      ) {
+        setIsTileHoverable(false);
+        // console.log('Camera moving');
+      } else if (
+        Math.round(deltaX) === 0 &&
+        Math.round(deltaY) === 0 &&
+        !isTileHoverable
+      ) {
+        setIsTileHoverable(true);
+        // console.log('Camera not moving');
+      }
+    }, 100);
+
+    return () => {
+      clearInterval(setTileHoverableIfCameraMoving);
+    };
+  }, [isTileHoverable]);
 
   // Add event listeres for other shortcuts
   useEffect(() => {

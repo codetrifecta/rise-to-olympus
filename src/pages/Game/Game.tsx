@@ -66,28 +66,8 @@ export const Game = () => {
 
   if (!selectedCampaign) return null;
 
-  const renderGameRoom = () => {
-    // if (
-    //   currentScript !== null &&
-    //   currentScript.length > 0 &&
-    //   currentScript[0].parent === SCRIPT_PARENT.TUTORIAL
-    // ) {
-    //   return (
-    //     <div>
-    //       <h1 className="text-4xl font-bold mb-5">Game</h1>
-    //       <p className="mb-5">
-    //         This is the game page. It is used to display the game.
-    //       </p>
-    //     </div>
-    //   );
-    // } else {
-    //   return <StartRoom />;
-    // }
-    return <GameRoom />;
-  };
-
   return (
-    <div className="relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden">
+    <>
       <div
         className="fixed bottom-0 z-50 bottom-0 transition duration-500 ease-in-out"
         style={{
@@ -104,9 +84,7 @@ export const Game = () => {
         <StartRoomEscModalOverlay onClose={() => setEscModalOpen(false)} />
       )}
 
-      {renderGameRoom()}
-    </div>
+      <GameRoom />
+    </>
   );
 };
-
-// export default Game;

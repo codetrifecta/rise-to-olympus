@@ -87,6 +87,7 @@ export const RoomLogic: FC<{
     endTurn,
     isRoomOver,
     isGameOver,
+    isTileHoverable,
     setIsChestOpen,
     setIsGameOver,
     setIsRoomOver,
@@ -2602,7 +2603,9 @@ export const RoomLogic: FC<{
                 }
               }}
               onMouseEnter={() => {
-                // TODO: Only allow setting hovered tile if no entity is moving nor camera is moving
+                // Only allow setting hovered tile if no entity is moving nor camera is moving
+                if (isTileHoverable === false) return;
+
                 debouncedSetHoveredTile([rowIndex, columnIndex]);
                 if (
                   isEffectZone &&

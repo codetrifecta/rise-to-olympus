@@ -24,6 +24,7 @@ interface IGameStateStore {
   file: string;
   floorArtFile: string;
   wallArtFile: string;
+  isTileHoverable: boolean;
   setDoorPositions: (doorPositions: [number, number][]) => void;
   setHoveredTile: (hoveredTile: [number, number] | null) => void;
   setRoomLength: (roomLength: number) => void;
@@ -47,6 +48,7 @@ interface IGameStateStore {
   setFile: (file: string) => void;
   setFloorArtFile: (floorArtFile: string) => void;
   setWallArtFile: (wallArtFile: string) => void;
+  setIsTileHoverable: (isTileHoverable: boolean) => void;
 }
 
 export const useGameStateStore = create<IGameStateStore>((set, get) => ({
@@ -71,6 +73,7 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   file: '',
   floorArtFile: '',
   wallArtFile: '',
+  isTileHoverable: true,
 
   setDoorPositions: (doorPositions: [number, number][]) =>
     set({ doorPositions }),
@@ -144,4 +147,6 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   setFloorArtFile: (floorArtFile: string) => set({ floorArtFile }),
 
   setWallArtFile: (wallArtFile: string) => set({ wallArtFile }),
+
+  setIsTileHoverable: (isTileHoverable: boolean) => set({ isTileHoverable }),
 }));
