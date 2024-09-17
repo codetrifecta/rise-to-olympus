@@ -45,8 +45,8 @@ export const LoadCampaign = () => {
       className="absolute top-[50%] left-[50%] flex flex-col justify-center items-center py-16"
       style={{ transform: 'translate(-50%, -50%)' }}
     >
-      <header className="mb-16">
-        <h1 className="uppercase font-bold text-7xl">
+      <header className="mb-20 pointer-events-none">
+        <h1 className="uppercase font-bold text-7xl text-shadow">
           L<span className="text-5xl">oad</span> C
           <span className="text-5xl">ampaign</span>
         </h1>

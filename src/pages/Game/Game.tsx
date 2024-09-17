@@ -87,7 +87,7 @@ export const Game = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center w-screen h-screen">
+    <div className="relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden">
       <div
         className="fixed bottom-0 z-50 bottom-0 transition duration-500 ease-in-out"
         style={{

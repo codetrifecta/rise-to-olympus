@@ -15,8 +15,8 @@ export const MainMenu = () => {
       className="absolute top-[50%] left-[50%]"
       style={{ transform: 'translate(-50%, -50%)' }}
     >
-      <header className="mb-20">
-        <h1 className="uppercase font-bold text-7xl">
+      <header className="mb-20 pointer-events-none">
+        <h1 className="uppercase font-bold text-7xl text-shadow">
           R<span className="text-5xl">ise</span>{' '}
           <span className="text-5xl">to</span> O
           <span className="text-5xl">lympus</span>

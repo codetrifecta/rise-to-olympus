@@ -62,15 +62,15 @@ export const NewCampaign = () => {
       className="absolute top-[50%] left-[50%] flex flex-col justify-center items-center"
       style={{ transform: 'translate(-50%, -50%)' }}
     >
-      <header className="mb-20">
-        <h1 className="uppercase font-bold text-7xl">
+      <header className="mb-20 pointer-events-none">
+        <h1 className="uppercase font-bold text-7xl text-shadow">
           N<span className="text-5xl">ew</span> C
           <span className="text-5xl">ampaign</span>
         </h1>
       </header>
 
       <form
-        className="flex flex-col items-center w-[350px]"
+        className="flex flex-col items-center w-[350px] text-shadow"
         onSubmit={(e) => handleOnSubmit(e)}
       >
         <label className="mb-5 w-[350px] grid grid-rows-1 grid-cols-5 items-center text-xl">
