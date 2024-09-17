@@ -212,6 +212,11 @@ export function findPathsFromCurrentLocation(
 
     // Until we reach back to the player location, keep adding to pathway
     while (current[0] !== playerLoc[0] || current[1] !== playerLoc[1]) {
+      // Check if the current location is an explored location
+      if (explored.get(`${current[0]},${current[1]}`) === undefined) {
+        break;
+      }
+
       pathway.push(current); // Push current coordinate to pathway list
       const prevPathLocation = explored.get(`${current[0]},${current[1]}`);
       if (prevPathLocation !== undefined) {
