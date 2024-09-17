@@ -16,17 +16,17 @@ export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
       <div className="z-10 bg-neutral-900 p-10 flex flex-col">
         <Button
           onClick={() => {
-            navigate('/');
-          }}
-        >
-          Back to Main Menu
-        </Button>
-        <Button
-          onClick={() => {
             onClose();
           }}
         >
           Back to Game
+        </Button>
+        <Button
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          Back to Main Menu
         </Button>
       </div>
     </div>

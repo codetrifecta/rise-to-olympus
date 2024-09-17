@@ -58,35 +58,38 @@ export const NewCampaign = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <header className="mb-16">
-        <h1 className="uppercase font-bold">
-          N<span className="text-4xl">ew</span> C
-          <span className="text-4xl">ampaign</span>
+    <div
+      className="absolute top-[50%] left-[50%] flex flex-col justify-center items-center"
+      style={{ transform: 'translate(-50%, -50%)' }}
+    >
+      <header className="mb-20 pointer-events-none">
+        <h1 className="uppercase font-bold text-7xl text-shadow">
+          N<span className="text-5xl">ew</span> C
+          <span className="text-5xl">ampaign</span>
         </h1>
       </header>
 
       <form
-        className="flex flex-col items-center"
+        className="flex flex-col items-center w-[350px] text-shadow"
         onSubmit={(e) => handleOnSubmit(e)}
       >
-        <label className="mb-5 w-[350px] grid grid-rows-1 grid-cols-3 items-center">
-          <span className="text-right mr-3">Campaign Name</span>
+        <label className="mb-5 w-[350px] grid grid-rows-1 grid-cols-5 items-center text-xl">
+          <span className="text-right mr-3 col-span-2">Campaign Name</span>
           <input
-            className="border-2 border-black px-3 py-1 col-span-2"
+            className="border-2 border-black px-3 py-1 col-span-3"
             value={campaignName}
             onChange={(e) => setCampaignName(e.target.value)}
           />
         </label>
-        <label className="mb-5 w-[350px] grid grid-rows-1 grid-cols-3 items-center">
-          <span className="text-right mr-3">Player Name</span>
+        <label className="mb-5 w-[350px] grid grid-rows-1 grid-cols-5 items-center text-xl">
+          <span className="text-right mr-3 col-span-2">Player Name</span>
           <input
-            className="border-2 border-black px-3 py-1 col-span-2"
+            className="border-2 border-black px-3 py-1 col-span-3"
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
           />
         </label>
-        <label className="mb-5">
+        <label className="mb-5 text-xl">
           <input
             type="checkbox"
             checked={skipTutorial}
@@ -95,12 +98,16 @@ export const NewCampaign = () => {
           />
           Skip Tutorial
         </label>
-        <Button className="w-[300px] hover:border-yellow-500 mb-5">
-          Create
-        </Button>
       </form>
-      <Link to={'/'} className="">
-        <Button className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset">
+
+      <Button
+        className="w-full hover:border-yellow-500 mb-5 text-2xl"
+        onClick={handleOnSubmit}
+      >
+        Create
+      </Button>
+      <Link to={'/'} className="w-full">
+        <Button className="w-full hover:border-yellow-500 mb-5 text-white bg-unset text-2xl">
           Back
         </Button>
       </Link>

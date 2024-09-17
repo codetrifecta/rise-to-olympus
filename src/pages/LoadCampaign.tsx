@@ -41,11 +41,14 @@ export const LoadCampaign = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center py-16">
-      <header className="mb-16">
-        <h1 className="uppercase font-bold">
-          L<span className="text-4xl">oad</span> C
-          <span className="text-4xl">ampaign</span>
+    <div
+      className="absolute top-[50%] left-[50%] flex flex-col justify-center items-center py-16"
+      style={{ transform: 'translate(-50%, -50%)' }}
+    >
+      <header className="mb-20 pointer-events-none">
+        <h1 className="uppercase font-bold text-7xl text-shadow">
+          L<span className="text-5xl">oad</span> C
+          <span className="text-5xl">ampaign</span>
         </h1>
       </header>
       <div className="flex max-h-[50vh] mb-5">
@@ -80,7 +83,7 @@ export const LoadCampaign = () => {
           </h2>
           <p className="text-white">
             {selectedCampaign
-              ? 'Player Name ' + selectedCampaign.playerName
+              ? 'Player Name: ' + selectedCampaign.playerName
               : 'No player'}
           </p>
           <p className="text-white">
@@ -94,9 +97,9 @@ export const LoadCampaign = () => {
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col justify-center items-center">
         <Button
-          className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset mr-5"
+          className="w-[350px] hover:border-yellow-500 mb-5 text-white bg-unset text-2xl"
           disabled={selectedCampaign === null}
           onClick={() => handleLoadCampaign(selectedCampaign)}
         >
@@ -104,19 +107,18 @@ export const LoadCampaign = () => {
         </Button>
 
         <Button
-          className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset"
+          className="w-[350px] hover:border-yellow-500 mb-5 text-white bg-unset text-2xl"
           disabled={selectedCampaign === null}
           onClick={() => handleDeleteCampaign(selectedCampaign)}
         >
           Delete Campaign
         </Button>
+        <Link to={'/'} className="w-[350px]">
+          <Button className="w-full hover:border-yellow-500 mb-5 text-white bg-unset text-2xl">
+            Back
+          </Button>
+        </Link>
       </div>
-
-      <Link to={'/'} className="">
-        <Button className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset">
-          Back
-        </Button>
-      </Link>
     </div>
   );
 };
