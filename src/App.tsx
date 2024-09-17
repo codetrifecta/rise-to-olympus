@@ -28,36 +28,15 @@ const router = createBrowserRouter([
           return { Component: LoadCampaign };
         },
       },
-      {
-        path: 'game',
-        lazy: async () => {
-          const { Game } = await import('./pages/Game');
-          return { Component: Game };
-        },
-      },
     ],
   },
-  // {
-  //   path: '/new',
-  //   lazy: async () => {
-  //     const { NewCampaign } = await import('./pages/NewCampaign');
-  //     return { Component: NewCampaign };
-  //   },
-  // },
-  // {
-  //   path: '/load',
-  //   lazy: async () => {
-  //     const { LoadCampaign } = await import('./pages/LoadCampaign');
-  //     return { Component: LoadCampaign };
-  //   },
-  // },
-  // {
-  //   path: '/game',
-  //   lazy: async () => {
-  //     const { Game } = await import('./pages/Game');
-  //     return { Component: Game };
-  //   },
-  // },
+  {
+    path: '/game',
+    lazy: async () => {
+      const { Game } = await import('./pages/Game');
+      return { Component: Game };
+    },
+  },
   {
     path: '*',
     lazy: async () => {

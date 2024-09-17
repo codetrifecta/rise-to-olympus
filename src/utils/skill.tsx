@@ -11,7 +11,7 @@ import {
   weaponBasedSkillIDs,
 } from '../constants/skill';
 import { BASE_STATUS_EFFECTS, STATUS_ID, STATUSES } from '../constants/status';
-import { useSummonStore } from '../store/summon';
+import { useSummonStore } from '../stores/summon';
 import {
   IEnemy,
   ILog,
