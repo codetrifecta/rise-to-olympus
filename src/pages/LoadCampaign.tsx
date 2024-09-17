@@ -83,7 +83,7 @@ export const LoadCampaign = () => {
           </h2>
           <p className="text-white">
             {selectedCampaign
-              ? 'Player Name ' + selectedCampaign.playerName
+              ? 'Player Name: ' + selectedCampaign.playerName
               : 'No player'}
           </p>
           <p className="text-white">
@@ -99,7 +99,7 @@ export const LoadCampaign = () => {
 
       <div>
         <Button
-          className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset mr-5"
+          className="w-full hover:border-yellow-500 mb-5 text-white bg-unset mr-5"
           disabled={selectedCampaign === null}
           onClick={() => handleLoadCampaign(selectedCampaign)}
         >
@@ -107,19 +107,18 @@ export const LoadCampaign = () => {
         </Button>
 
         <Button
-          className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset"
+          className="w-full hover:border-yellow-500 mb-5 text-white bg-unset"
           disabled={selectedCampaign === null}
           onClick={() => handleDeleteCampaign(selectedCampaign)}
         >
           Delete Campaign
         </Button>
+        <Link to={'/'} className="w-full">
+          <Button className="w-full hover:border-yellow-500 mb-5 text-white bg-unset">
+            Back
+          </Button>
+        </Link>
       </div>
-
-      <Link to={'/'} className="">
-        <Button className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset">
-          Back
-        </Button>
-      </Link>
     </div>
   );
 };

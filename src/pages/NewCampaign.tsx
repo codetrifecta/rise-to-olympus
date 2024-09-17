@@ -98,12 +98,10 @@ export const NewCampaign = () => {
           />
           Skip Tutorial
         </label>
-        <Button className="w-[300px] hover:border-yellow-500 mb-5">
-          Create
-        </Button>
+        <Button className="w-full hover:border-yellow-500 mb-5">Create</Button>
       </form>
-      <Link to={'/'} className="">
-        <Button className="w-[300px] hover:border-yellow-500 mb-5 text-white bg-unset">
+      <Link to={'/'} className="w-full">
+        <Button className="w-full hover:border-yellow-500 mb-5 text-white bg-unset">
           Back
         </Button>
       </Link>
