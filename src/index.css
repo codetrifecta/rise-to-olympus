@@ -82,7 +82,9 @@ p {
 h1,
 h2,
 h3,
-p {
+p,
+span,
+label {
   margin: 0;
   text-shadow:
     1px 0 0 #000,
