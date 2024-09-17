@@ -4,6 +4,7 @@ import {
   DEFAULT_MOVEMENT_RANGE,
   ENTITY_SPRITE_DIRECTION,
   ENTITY_TYPE,
+  MAX_ACTION_POINTS,
   STARTING_ACTION_POINTS,
 } from '../../constants/entity';
 import { TILE_SIZE, TILE_TYPE } from '../../constants/tile';
@@ -413,6 +414,9 @@ export const RoomLogic: FC<{
           ...affectedEnemy,
         };
 
+        // Wait for a short time before enemy can move or attack
+        await sleep(1000);
+
         // Check if enemy can move or attack
         if (cannotMove && cannotAttack) {
           addLog({
@@ -425,9 +429,6 @@ export const RoomLogic: FC<{
             type: 'info',
           });
         } else {
-          // Wait for a short time before enemy can move or attack
-          await sleep(1000);
-
           if (!cannotMove) {
             // Move enemy to a random adjacent tile
             const [enemyAfterMove, enemyPosition] =
@@ -440,7 +441,8 @@ export const RoomLogic: FC<{
             setEnemy(newEnemy);
 
             if (!cannotAttack) {
-              if (newEnemy.actionPoints >= 2) {
+              let enemyAP = newEnemy.actionPoints;
+              while (enemyAP >= 2) {
                 // Make enemy attack player if they can attack
                 const enemyAfterAttack = await handleEnemyAttack(
                   newEnemy,
@@ -452,7 +454,10 @@ export const RoomLogic: FC<{
                   ...newEnemy,
                   ...enemyAfterAttack,
                 };
+
+                enemyAP -= 2;
                 setEnemy(newEnemy);
+                await sleep(1500);
               }
             } else {
               addLog({
@@ -478,8 +483,9 @@ export const RoomLogic: FC<{
             });
 
             // Make enemy attack player if they can attack
-            if (enemy.actionPoints >= 2) {
-              if (!cannotAttack) {
+            if (!cannotAttack) {
+              let enemyAP = newEnemy.actionPoints;
+              while (enemyAP >= 2) {
                 if (!enemyPosition) {
                   console.error('Enemy position not found!');
                   return;
@@ -494,7 +500,10 @@ export const RoomLogic: FC<{
                   ...newEnemy,
                   ...enemyAfterAttack,
                 };
+
+                enemyAP -= 2;
                 setEnemy(newEnemy);
+                await sleep(1500);
               }
             } else {
               addLog({
@@ -546,7 +555,10 @@ export const RoomLogic: FC<{
         // Update enemy with new action points
         newEnemy = {
           ...newEnemy,
-          actionPoints: newEnemy.actionPoints + STARTING_ACTION_POINTS,
+          actionPoints:
+            newEnemy.actionPoints <= 2
+              ? newEnemy.actionPoints + STARTING_ACTION_POINTS
+              : MAX_ACTION_POINTS,
         };
 
         // Check for enemy defeat and log message
@@ -1153,8 +1165,10 @@ export const RoomLogic: FC<{
       return;
     }
 
-    // Set player sprite to walk
-    if (path.length > 0) {
+    while (path.length > 0) {
+      const [row, col] = path[0];
+
+      // Update player walking animation direction based on movement path if player is not already facing that direction
       const spriteDirection = getEntitySpriteDirection(player);
       if (col < newPlayerPosition[1]) {
         setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.LEFT);
@@ -1162,24 +1176,6 @@ export const RoomLogic: FC<{
         setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.RIGHT);
       } else {
         setEntityAnimationWalk(player, spriteDirection);
-      }
-    }
-
-    while (path.length > 0) {
-      const [row, col] = path[0];
-
-      // Update player walking animation direction based on movement path if player is not already facing that direction
-      const spriteDirection = getEntitySpriteDirection(player);
-      if (
-        col < newPlayerPosition[1] &&
-        spriteDirection !== ENTITY_SPRITE_DIRECTION.LEFT
-      ) {
-        setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.LEFT);
-      } else if (
-        col > newPlayerPosition[1] &&
-        spriteDirection !== ENTITY_SPRITE_DIRECTION.RIGHT
-      ) {
-        setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.RIGHT);
       }
 
       // Update player's position in the entity positions map
@@ -1204,7 +1200,7 @@ export const RoomLogic: FC<{
 
       // Delete the first element in the path array
       path = path.slice(1);
-      await sleep(isRoomOver ? 300 : 500);
+      await sleep(isRoomOver ? 400 : 500);
 
       if (path.length === 0) {
         // Remove walking animation and set player back to idle depending on direction (left or right)
@@ -1428,7 +1424,14 @@ export const RoomLogic: FC<{
           Math.max(Math.abs(row - playerRow), Math.abs(col - playerCol)) ===
             range
         ) {
-          possibleTilesInRange.push([row, col]);
+          // Keep only the tiles that are:
+          // - within the player's vision range
+          // - floor tiles
+          // - not occupied by another entity
+          // - within the range of the enemy
+          {
+            possibleTilesInRange.push([row, col]);
+          }
         }
       }
     }
@@ -1442,8 +1445,6 @@ export const RoomLogic: FC<{
     );
 
     let shortestPath: [number, number][] = [];
-
-    console.log('possibleTilesInRange', possibleTilesInRange);
 
     // Find the shortest path to the possible tiles
     for (const possibleTile of possibleTilesInRange) {
@@ -1491,32 +1492,17 @@ export const RoomLogic: FC<{
     // Get the tile the enemy will move to
     console.log('shortestPath of enemy', enemy.id, shortestPath);
 
-    if (shortestPath.length > 0) {
-      const spriteDirection = getEntitySpriteDirection(enemy);
-      if (shortestPath[0][1] < newEnemyPosition[1]) {
-        setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.LEFT);
-      } else if (shortestPath[0][1] > newEnemyPosition[1]) {
-        setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.RIGHT);
-      } else {
-        setEntityAnimationWalk(enemy, spriteDirection);
-      }
-    }
-
     while (shortestPath.length > 0) {
       const [row, col] = shortestPath[0];
 
       // Update enemy walking animation direction based on movement path
       const spriteDirection = getEntitySpriteDirection(enemy);
-      if (
-        col < newEnemyPosition[1] &&
-        spriteDirection !== ENTITY_SPRITE_DIRECTION.LEFT
-      ) {
+      if (col < newEnemyPosition[1]) {
         setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.LEFT);
-      } else if (
-        col > newEnemyPosition[1] &&
-        spriteDirection !== ENTITY_SPRITE_DIRECTION.RIGHT
-      ) {
+      } else if (col > newEnemyPosition[1]) {
         setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.RIGHT);
+      } else {
+        setEntityAnimationWalk(enemy, spriteDirection);
       }
 
       // Update enemy's position in the entity positions map
@@ -1540,7 +1526,7 @@ export const RoomLogic: FC<{
       newEnemyPosition = [row, col];
 
       // Delete the first element in the path array
-      await sleep(700);
+      await sleep(500);
       shortestPath = shortestPath.slice(1);
 
       if (shortestPath.length === 0) {
@@ -1563,20 +1549,21 @@ export const RoomLogic: FC<{
     enemy: IEnemy,
     enemyPosition: [number, number],
     playerPosition: [number, number]
-  ) => {
+  ): Promise<IEnemy> => {
     console.log('handleEnemyAttack');
 
+    let newEnemy: IEnemy = { ...enemy };
     const [enemyRow, enemyCol] = enemyPosition;
     const [playerRow, playerCol] = playerPosition;
 
     if (!enemyRow || !enemyCol || !playerRow || !playerCol) {
       addLog({ message: 'Enemy or player position not found!', type: 'error' });
-      return enemy;
+      return newEnemy;
     }
 
     const canAttackPlayer =
-      Math.abs(playerRow - enemyRow) <= enemy.range &&
-      Math.abs(playerCol - enemyCol) <= enemy.range;
+      Math.abs(playerRow - enemyRow) <= newEnemy.range &&
+      Math.abs(playerCol - enemyCol) <= newEnemy.range;
 
     const isPlayerHidden = player.statuses.some(
       (status) => status.id === STATUS_ID.HIDDEN
@@ -1584,24 +1571,24 @@ export const RoomLogic: FC<{
 
     if (canAttackPlayer && !isPlayerHidden) {
       // Change sprite animation from idle to attack
-      const spriteDirection = getEntitySpriteDirection(enemy);
+      const spriteDirection = getEntitySpriteDirection(newEnemy);
       if (playerCol < enemyCol) {
-        setEntityAnimationAttack(enemy, ENTITY_SPRITE_DIRECTION.LEFT);
+        setEntityAnimationAttack(newEnemy, ENTITY_SPRITE_DIRECTION.LEFT);
       } else if (playerCol > enemyCol) {
-        setEntityAnimationAttack(enemy, ENTITY_SPRITE_DIRECTION.RIGHT);
+        setEntityAnimationAttack(newEnemy, ENTITY_SPRITE_DIRECTION.RIGHT);
       } else {
-        setEntityAnimationAttack(enemy, spriteDirection);
+        setEntityAnimationAttack(newEnemy, spriteDirection);
       }
 
       // After attack animation ends, change back to idle animation
       setTimeout(() => {
         console.log('is this happening? 2');
         if (playerCol < enemyCol) {
-          setEntityAnimationIdle(enemy, ENTITY_SPRITE_DIRECTION.LEFT);
+          setEntityAnimationIdle(newEnemy, ENTITY_SPRITE_DIRECTION.LEFT);
         } else if (playerCol > enemyCol) {
-          setEntityAnimationIdle(enemy, ENTITY_SPRITE_DIRECTION.RIGHT);
+          setEntityAnimationIdle(newEnemy, ENTITY_SPRITE_DIRECTION.RIGHT);
         } else {
-          setEntityAnimationIdle(enemy, spriteDirection);
+          setEntityAnimationIdle(newEnemy, spriteDirection);
         }
       }, 500);
 
@@ -1620,22 +1607,26 @@ export const RoomLogic: FC<{
           message: (
             <>
               <span className="text-green-500">{player.name}</span> dodged{' '}
-              <span className="text-red-500">{enemy.name}&apos;s attack!</span>
+              <span className="text-red-500">
+                {newEnemy.name}&apos;s attack!
+              </span>
             </>
           ),
           type: 'info',
         });
+
+        return newEnemy;
       } else {
         // Calculate damage
-        const baseDamage = enemy.damage;
+        const baseDamage = newEnemy.damage;
 
         // Check for statuses that affect damage
-        const statusDamageBonus = enemy.statuses.reduce((acc, status) => {
+        const statusDamageBonus = newEnemy.statuses.reduce((acc, status) => {
           return acc + status.effect.damageBonus;
         }, 0);
 
         // Check for statuses that increases or decrease damage
-        const damageMultiplier = enemy.statuses.reduce((acc, status) => {
+        const damageMultiplier = newEnemy.statuses.reduce((acc, status) => {
           if (status.effect.damageMultiplier === 1) return acc;
 
           if (status.effect.damageMultiplier > 1) {
@@ -1679,11 +1670,16 @@ export const RoomLogic: FC<{
           `tile_${player.entityType}_${player.id}`
         );
 
+        newEnemy = {
+          ...newEnemy,
+          actionPoints: newEnemy.actionPoints - 2,
+        };
+
         if (playerHealth <= 0) {
           addLog({
             message: (
               <>
-                <span className="text-red-500">{enemy.name}</span> attacked{' '}
+                <span className="text-red-500">{newEnemy.name}</span> attacked{' '}
                 <span className="text-green-500">{player.name}</span> for{' '}
                 {totalDamage} damage and defeated them!
               </>
@@ -1704,7 +1700,7 @@ export const RoomLogic: FC<{
           addLog({
             message: (
               <>
-                <span className="text-red-500">{enemy.name}</span> attacked{' '}
+                <span className="text-red-500">{newEnemy.name}</span> attacked{' '}
                 <span className="text-green-500">{player.name}</span> for{' '}
                 {totalDamage} damage.
               </>
@@ -1713,7 +1709,7 @@ export const RoomLogic: FC<{
           });
         }
 
-        // Check for statuses that deal damage to enemy when they attack
+        // Check for statuses that deal damage to newEnemy when they attack
         // Check if player has a deflecting status effect
         const deflectingStatus = player.statuses.find(
           (status) => status.id === STATUS_ID.DEFLECTING
@@ -1733,28 +1729,27 @@ export const RoomLogic: FC<{
             incomingDamageMultiplierFromDeflecting
           );
 
-          const newEnemy = { ...enemy };
           newEnemy.health = damageEntity(
             newEnemy,
             damageToEnemy,
-            `tile_${enemy.entityType}_${enemy.id}`
+            `tile_${newEnemy.entityType}_${newEnemy.id}`
           );
 
           if (newEnemy.health <= 0) {
-            // Wait for defeat animation to end before removing enemy from room
-            // Also set enemy health to their new health (<= 0) if defeated
+            // Wait for defeat animation to end before removing newEnemy from room
+            // Also set newEnemy health to their new health (<= 0) if defeated
 
             // setEnemy(newEnemy);
 
             await sleep(500);
-            setEnemies(enemies.filter((e) => e.id !== enemy.id));
+            setEnemies(enemies.filter((e) => e.id !== newEnemy.id));
           }
 
           addLog({
             message: (
               <>
                 <span className="text-green-500">{player.name}</span> deflected{' '}
-                <span className="text-red-500">{enemy.name}</span>
+                <span className="text-red-500">{newEnemy.name}</span>
                 &apos;s attack and dealt {damageToEnemy} damage.
               </>
             ),
@@ -1763,8 +1758,12 @@ export const RoomLogic: FC<{
 
           return newEnemy;
         }
+
+        return newEnemy;
       }
     }
+
+    return newEnemy;
   };
 
   // console.log('targetZones', targetZones.current);
