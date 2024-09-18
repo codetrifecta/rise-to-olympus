@@ -206,7 +206,7 @@ const createTutorialFloor = () => {
       ['12,9', [ENTITY_TYPE.ENEMY, 1]],
       ['5,14', [ENTITY_TYPE.ENEMY, 2]],
       ['16,16', [ENTITY_TYPE.ENEMY, 3]],
-      ['10,10', [ENTITY_TYPE.ENEMY, 4]],
+      ['14,10', [ENTITY_TYPE.ENEMY, 4]],
       ['6,16', [ENTITY_TYPE.ENEMY, 5]],
     ]),
     roomTileMatrix: [
