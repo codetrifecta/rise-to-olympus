@@ -1174,17 +1174,30 @@ export const RoomLogic: FC<{
 
     setIsEntityMoving(true);
 
+    const spriteDirection = getEntitySpriteDirection(player);
+    if (col < newPlayerPosition[1]) {
+      setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.LEFT);
+    } else if (col > newPlayerPosition[1]) {
+      setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.RIGHT);
+    } else {
+      setEntityAnimationWalk(player, spriteDirection);
+    }
+
     while (path.length > 0) {
       const [row, col] = path[0];
 
       // Update player walking animation direction based on movement path if player is not already facing that direction
       const spriteDirection = getEntitySpriteDirection(player);
-      if (col < newPlayerPosition[1]) {
+      if (
+        col < newPlayerPosition[1] &&
+        spriteDirection !== ENTITY_SPRITE_DIRECTION.LEFT
+      ) {
         setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.LEFT);
-      } else if (col > newPlayerPosition[1]) {
+      } else if (
+        col > newPlayerPosition[1] &&
+        spriteDirection !== ENTITY_SPRITE_DIRECTION.RIGHT
+      ) {
         setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.RIGHT);
-      } else {
-        setEntityAnimationWalk(player, spriteDirection);
       }
 
       // Update player's position in the entity positions map
@@ -1498,17 +1511,32 @@ export const RoomLogic: FC<{
 
     setIsEntityMoving(true);
 
+    // Update enemy walking animation direction based on movement path
+    const [, col] = shortestPath[0];
+    const spriteDirection = getEntitySpriteDirection(enemy);
+    if (col < newEnemyPosition[1]) {
+      setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.LEFT);
+    } else if (col > newEnemyPosition[1]) {
+      setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.RIGHT);
+    } else {
+      setEntityAnimationWalk(enemy, spriteDirection);
+    }
+
     while (shortestPath.length > 0) {
       const [row, col] = shortestPath[0];
 
       // Update enemy walking animation direction based on movement path
       const spriteDirection = getEntitySpriteDirection(enemy);
-      if (col < newEnemyPosition[1]) {
+      if (
+        col < newEnemyPosition[1] &&
+        spriteDirection !== ENTITY_SPRITE_DIRECTION.LEFT
+      ) {
         setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.LEFT);
-      } else if (col > newEnemyPosition[1]) {
+      } else if (
+        col > newEnemyPosition[1] &&
+        spriteDirection !== ENTITY_SPRITE_DIRECTION.RIGHT
+      ) {
         setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.RIGHT);
-      } else {
-        setEntityAnimationWalk(enemy, spriteDirection);
       }
 
       // Update enemy's position in the entity positions map

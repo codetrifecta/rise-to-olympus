@@ -236,7 +236,7 @@ export const EntitySpritePositions: FC<{
           >
             <div
               id={`spritesheet_container_${enemy.entityType}_${enemy.id}`}
-              className="animate-entityAnimate08"
+              className="animate-entityAnimate10"
               style={{
                 position: 'absolute',
                 width: spriteSheetWidth,
