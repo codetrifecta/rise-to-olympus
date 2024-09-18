@@ -195,6 +195,7 @@ export interface IRoom {
   roomTileMatrix: TILE_TYPE[][];
   artFloor: string;
   artObstacle: string;
+  artWall: string;
 }
 
 export type IFloor = IRoom[][];

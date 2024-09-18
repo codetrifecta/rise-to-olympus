@@ -14,6 +14,9 @@ import art_room_tutorial_obstacle_3 from '../assets/sprites/tiles/tutorial/room_
 import art_room_tutorial_floor_4 from '../assets/sprites/tiles/tutorial/room_tutorial_floor_4.png';
 import art_room_tutorial_obstacle_4 from '../assets/sprites/tiles/tutorial/room_tutorial_obstacle_4.png';
 
+import art_room_tartarus_camp_floor from '../assets/sprites/tiles/tartarus/room_tartarus_camp_floor.png';
+import art_room_tartarus_camp_wall from '../assets/sprites/tiles/tartarus/room_tartarus_camp_wall.png';
+
 const createTutorialFloor = () => {
   let id = 0;
   const tutorialFloor: IFloor = [];
@@ -231,3 +234,29 @@ const createTutorialFloor = () => {
 };
 
 export const TUTORIAL_FLOOR: IFloor = createTutorialFloor();
+
+export const TARTARUS_CAMP_FLOOR: IFloor = [
+  [
+    {
+      ...BASE_ROOM,
+      id: 1,
+      type: ROOM_TYPE.START,
+      roomLength: 9,
+      position: [0, 0],
+      roomTileMatrix: [
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        [3, 3, 3, 4, 4, 4, 3, 3, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+      ],
+      artFloor: art_room_tartarus_camp_floor,
+      artObstacle: '',
+      artWall: art_room_tartarus_camp_wall,
+    },
+  ],
+];

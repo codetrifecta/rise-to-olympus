@@ -1,6 +1,7 @@
 import { IRoom } from '../types';
 import art_room_tutorial_floor from '../assets/sprites/tiles/tutorial/room_tutorial_floor.png';
 import art_room_tutorial_obstacle from '../assets/sprites/tiles/tutorial/room_tutorial_obstacle.png';
+import art_room_tutorial_wall from '../assets/sprites/tiles/tutorial/room_tutorial_wall.png';
 
 export enum ROOM_TYPE {
   NULL = 0,
@@ -49,4 +50,5 @@ export const BASE_ROOM: IRoom = {
   ],
   artFloor: art_room_tutorial_floor,
   artObstacle: art_room_tutorial_obstacle,
+  artWall: art_room_tutorial_wall,
 };
