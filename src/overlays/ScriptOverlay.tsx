@@ -193,10 +193,11 @@ export const ScriptOverlay: FC = () => {
 
   return (
     <div className=" bg-black w-screen min-h-[200px] py-5 px-10 shadow-sm shadow-white">
-      <div className="container mx-auto px-40">
+      <div className="container mx-auto px-40 text-xl">
         {renderTextScriptItem(currentScript[currentScriptItemIndex])}
       </div>
 
+      {/* Buttons */}
       <div className="absolute bottom-5 right-5">
         <button
           className={clsx('text-white', {

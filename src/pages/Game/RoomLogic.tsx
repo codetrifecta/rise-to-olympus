@@ -1139,6 +1139,10 @@ export const RoomLogic: FC<{
   const handlePlayerMove = async (row: number, col: number) => {
     console.log('handlePlayerMove');
 
+    if (isEntityMoving) {
+      return;
+    }
+
     // Set player's state to not moving to turn off effect tiles
     setPlayerState({
       ...player.state,

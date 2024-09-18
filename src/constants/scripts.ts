@@ -19,24 +19,24 @@ export enum SCRIPT_TYPE {
 
 let id = 0;
 export const SCRIPT_TUTORIAL: IScriptItem[] = [
-  {
-    id: id++,
-    parent: SCRIPT_PARENT.TUTORIAL,
-    type: SCRIPT_TYPE.SCENE,
-    text: 'The screen fades from black, revealing a dark, cavernous landscape. Shadows flicker against the walls, and eerie sounds echo through the air. The camera slowly pans down to show $PLAYER_NAME, chained and lying on the cold ground. His eyes open, filled with determination.',
-  },
+  // {
+  //   id: id++,
+  //   parent: SCRIPT_PARENT.TUTORIAL,
+  //   type: SCRIPT_TYPE.SCENE,
+  //   text: 'The screen fades from black, revealing a dark, cavernous landscape. Shadows flicker against the walls, and eerie sounds echo through the air. The camera slowly pans down to show $PLAYER_NAME, chained and lying on the cold ground. His eyes open, filled with determination.',
+  // },
   {
     id: id++,
     parent: SCRIPT_PARENT.TUTORIAL,
     type: SCRIPT_TYPE.NARRATOR,
     text: "In the depths of Tartarus, where the ancient evils dwell, a young demigod awakens. Imprisoned by Zeus for his growing power, $PLAYER_NAME's journey begins here, in darkness and despair.",
   },
-  {
-    id: id++,
-    parent: SCRIPT_PARENT.TUTORIAL,
-    type: SCRIPT_TYPE.SCENE,
-    text: 'The camera zooms in on $PLAYER_NAME as he struggles to his feet, breaking the chains that bind him.',
-  },
+  // {
+  //   id: id++,
+  //   parent: SCRIPT_PARENT.TUTORIAL,
+  //   type: SCRIPT_TYPE.SCENE,
+  //   text: 'The camera zooms in on $PLAYER_NAME as he struggles to his feet, breaking the chains that bind him.',
+  // },
   {
     id: id++,
     parent: SCRIPT_PARENT.TUTORIAL,

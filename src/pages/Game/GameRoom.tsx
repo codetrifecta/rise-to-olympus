@@ -21,12 +21,7 @@ import { Minimap } from './Minimap';
 import { useFloorStore } from '../../stores/floor';
 import { ROOM_TYPE } from '../../constants/room';
 import { ENTITY_TYPE } from '../../constants/entity';
-
-// Flag for first room render
-
-// Camera movement speed
-// const cameraStraightMoveSpeed = 7;
-// const cameraDiagonalMoveSpeed = Math.sqrt(cameraStraightMoveSpeed ** 2 / 2);
+import { useCampaignStore } from '../../stores/campaign';
 
 const MAX_CAMERA_STRIGHT_MOVE_SPEED = 8;
 const MAX_CAMERA_DIAGONAL_MOVE_SPEED = Math.sqrt(
@@ -89,6 +84,8 @@ export const GameRoom: FC = () => {
   const player = getPlayer();
 
   const { setEnemies } = useEnemyStore();
+
+  const { selectedCampaign } = useCampaignStore();
 
   // Initialize key press handlers
   useEffect(() => {
@@ -155,6 +152,14 @@ export const GameRoom: FC = () => {
       setCurrentRoom(newStartRoom);
     }
   }, [floor.length]);
+
+  useEffect(() => {
+    // Check if the starter script is over
+    if (selectedCampaign?.scriptsCompleted.tutorial) {
+      setIsGameLogOpen(true);
+      setIsMinimapOpen(true);
+    }
+  }, [selectedCampaign]);
 
   // When room changes, initialize game state according to the room
   useEffect(() => {
