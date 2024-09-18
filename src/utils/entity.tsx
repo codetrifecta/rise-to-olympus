@@ -643,16 +643,19 @@ export const setEntityAnimationIdle = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else if (spriteDirection === ENTITY_SPRITE_DIRECTION.LEFT) {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
+        entitySpriteSheetContainer.classList.remove(
+          'animate-entityAnimateLeft10'
+        );
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -661,16 +664,16 @@ export const setEntityAnimationIdle = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -697,16 +700,16 @@ export const setEntityAnimationWalk = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -715,16 +718,16 @@ export const setEntityAnimationWalk = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -751,30 +754,20 @@ export const setEntityAnimationAttack = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateOnce05');
       }, 1);
-
-      setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
-        entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
-      }, 500);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add(
           'animate-entityAnimateLeftOnce05'
         );
       }, 1);
-
-      setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
-        entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
-      }, 500);
     }
   }
 };
@@ -799,16 +792,16 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       });
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       });
     }
@@ -817,16 +810,16 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -853,16 +846,16 @@ export const setEntityAnimationDefeat = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -871,16 +864,16 @@ export const setEntityAnimationDefeat = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateOnce08');
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add(
           'animate-entityAnimateLeftOnce08'
         );
