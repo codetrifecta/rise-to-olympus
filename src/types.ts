@@ -196,6 +196,7 @@ export interface IRoom {
   artFloor: string;
   artObstacle: string;
   artWall: string;
+  nextFloor: IFloor; // All rooms in floor will have the same nextFloor
 }
 
 export type IFloor = IRoom[][];

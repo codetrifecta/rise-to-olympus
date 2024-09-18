@@ -22,6 +22,7 @@ import { useFloorStore } from '../../stores/floor';
 import { ROOM_TYPE } from '../../constants/room';
 import { ENTITY_TYPE } from '../../constants/entity';
 import { useCampaignStore } from '../../stores/campaign';
+import { ProceedToNextFloor } from './ProceedToNextFloor';
 
 const MAX_CAMERA_STRIGHT_MOVE_SPEED = 8;
 const MAX_CAMERA_DIAGONAL_MOVE_SPEED = Math.sqrt(
@@ -55,6 +56,7 @@ export const GameRoom: FC = () => {
 
   const {
     isRoomOver,
+    isFloorCleared,
     isChestOpen,
     turnCycle,
     isInventoryOpen,
@@ -529,6 +531,7 @@ export const GameRoom: FC = () => {
           </section>
         ) : null}
 
+        {/* Game Log */}
         <div
           className={clsx('fixed left-10 xl:w-[20%] w-[23%] max-h-[200px]', {
             'z-[50]': isGameLogOpen,
@@ -539,6 +542,7 @@ export const GameRoom: FC = () => {
           <Logger />
         </div>
 
+        {/* Character Sheet */}
         <div
           className={clsx(
             'fixed left-0 w-[400px] shadow-lg transition-all ease duration-300 delay-0 z-[51]'
@@ -653,6 +657,18 @@ export const GameRoom: FC = () => {
         >
           <PlayerControlPanel />
         </section>
+
+        {/* Proceed to Next Floor Button */}
+        {isFloorCleared && isRoomOver && (
+          <section
+            className="z-50 fixed right-10"
+            style={{
+              bottom: `calc(${PLAYER_CONTROL_PANEL_HEIGHT}px + 2rem)`,
+            }}
+          >
+            <ProceedToNextFloor />
+          </section>
+        )}
         {/* </div> */}
       </div>
     </>

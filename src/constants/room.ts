@@ -51,4 +51,5 @@ export const BASE_ROOM: IRoom = {
   artFloor: art_room_tutorial_floor,
   artObstacle: art_room_tutorial_obstacle,
   artWall: art_room_tutorial_wall,
+  nextFloor: [],
 };

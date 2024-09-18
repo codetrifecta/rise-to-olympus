@@ -64,6 +64,7 @@ import {
 } from '../../constants/skillAnimation';
 import { useFloorStore } from '../../stores/floor';
 import { sleep } from '../../utils/general';
+import { ROOM_TYPE } from '../../constants/room';
 
 export const RoomLogic: FC<{
   currentHoveredEntity: IEntity | null;
@@ -92,6 +93,7 @@ export const RoomLogic: FC<{
     setIsChestOpen,
     setIsGameOver,
     setIsRoomOver,
+    setIsFloorCleared,
     setHoveredTile,
     setIsEntityMoving,
   } = useGameStateStore();
@@ -122,6 +124,10 @@ export const RoomLogic: FC<{
     const handleRoomChange = () => {
       if (currentRoom?.enemies.length === 0 || currentRoom?.isCleared) {
         setIsRoomOver(true);
+
+        if (currentRoom.type === ROOM_TYPE.BOSS) {
+          setIsFloorCleared(true);
+        }
       }
     };
 
