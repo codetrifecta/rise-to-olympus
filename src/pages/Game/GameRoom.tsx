@@ -20,9 +20,10 @@ import { ChestItemsDisplay } from './ChestItemsDisplay';
 import { Minimap } from './Minimap';
 import { useFloorStore } from '../../stores/floor';
 import { ROOM_TYPE } from '../../constants/room';
-import { ENTITY_TYPE } from '../../constants/entity';
+import { ENTITY_SPRITE_DIRECTION, ENTITY_TYPE } from '../../constants/entity';
 import { useCampaignStore } from '../../stores/campaign';
 import { ProceedToNextFloor } from './ProceedToNextFloor';
+import { setEntityAnimationIdle } from '../../utils/entity';
 
 const MAX_CAMERA_STRIGHT_MOVE_SPEED = 8;
 const MAX_CAMERA_DIAGONAL_MOVE_SPEED = Math.sqrt(
@@ -213,6 +214,18 @@ export const GameRoom: FC = () => {
           // Setup entities
           setEnemies(roomEnemies);
           setRoomEntityPositions(roomEntityPositions);
+
+          // Setup animations for enemies
+          setTimeout(() => {
+            roomEnemies.forEach((enemy) => {
+              setEntityAnimationIdle(
+                enemy,
+                Math.random() > 0.5
+                  ? ENTITY_SPRITE_DIRECTION.RIGHT
+                  : ENTITY_SPRITE_DIRECTION.LEFT
+              );
+            });
+          }, 100);
 
           // Set turn cycle
           setTurnCycle([player, ...roomEnemies]);
