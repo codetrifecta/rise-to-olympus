@@ -117,6 +117,8 @@ export const RoomLogic: FC<{
 
   const { addLog } = useLogStore();
 
+  const prevTurnCycle = useRef<IEntity[]>(turnCycle);
+
   // When player changes room, check if the room is over and set it to true if it is
   useEffect(() => {
     console.log('handleRoomChange');
@@ -173,6 +175,7 @@ export const RoomLogic: FC<{
           return true;
         });
 
+        prevTurnCycle.current = [...turnCycle];
         // Update game store turn cycle
         setTurnCycle(newTurnCycle);
       }
@@ -243,6 +246,7 @@ export const RoomLogic: FC<{
     const automaticallyEndPlayerTurn = () => {
       if (player.actionPoints === 0 && !isRoomOver && enemies.length > 0) {
         console.log('automaticallyEndPlayerTurn');
+        prevTurnCycle.current = [...turnCycle];
         handlePlayerEndTurn(turnCycle, getPlayer, setPlayer, endTurn);
         addLog({
           message: (
@@ -260,7 +264,7 @@ export const RoomLogic: FC<{
 
   // When turn cycle changes,
   // Handle DoT effects,
-  // Handle enemy turn (Move closest to player and attack if within range)
+  // Handle enemy turn (Move closer to player and attack if within range)
   useEffect(() => {
     console.log('handleDoT');
 
@@ -451,17 +455,25 @@ export const RoomLogic: FC<{
 
             if (!cannotAttack) {
               let enemyAP = newEnemy.actionPoints;
+              let newPlayer = player;
               while (enemyAP >= 2) {
                 // Make enemy attack player if they can attack
-                const enemyAfterAttack = await handleEnemyAttack(
-                  newEnemy,
-                  enemyPosition,
-                  playerPosition
-                );
+                const [enemyAfterAttack, playerAfterAttack] =
+                  await handleEnemyAttack(
+                    newEnemy,
+                    enemyPosition,
+                    newPlayer,
+                    playerPosition
+                  );
 
                 newEnemy = {
                   ...newEnemy,
                   ...enemyAfterAttack,
+                };
+
+                newPlayer = {
+                  ...newPlayer,
+                  ...playerAfterAttack,
                 };
 
                 enemyAP -= 2;
@@ -494,21 +506,33 @@ export const RoomLogic: FC<{
             // Make enemy attack player if they can attack
             if (!cannotAttack) {
               let enemyAP = newEnemy.actionPoints;
+              let newPlayer = player;
               while (enemyAP >= 2) {
                 if (!enemyPosition) {
                   console.error('Enemy position not found!');
                   return;
                 }
-                const enemyAfterAttack = await handleEnemyAttack(
-                  newEnemy,
-                  enemyPosition,
-                  playerPosition
-                );
+                const [enemyAfterAttack, playerAfterAttack] =
+                  await handleEnemyAttack(
+                    newEnemy,
+                    enemyPosition,
+                    player,
+                    playerPosition
+                  );
 
                 newEnemy = {
                   ...newEnemy,
                   ...enemyAfterAttack,
                 };
+
+                newPlayer = {
+                  ...newPlayer,
+                  ...playerAfterAttack,
+                };
+
+                if (newPlayer.health <= 0) {
+                  return;
+                }
 
                 enemyAP -= 2;
                 setEnemy(newEnemy);
@@ -594,13 +618,28 @@ export const RoomLogic: FC<{
             ),
             type: 'info',
           });
+
+          prevTurnCycle.current = [...turnCycle];
+          await sleep(1000);
           endTurn();
         }
       }
     };
 
     if (!isGameOver) {
-      handleDoT();
+      console.log(
+        'prevTurnCycle',
+        prevTurnCycle.current[0].entityType + '_' + prevTurnCycle.current[0].id,
+        turnCycle[0].entityType + '_' + turnCycle[0].id
+      );
+      if (
+        prevTurnCycle.current[0].entityType +
+          '_' +
+          prevTurnCycle.current[0].id !==
+        turnCycle[0].entityType + '_' + turnCycle[0].id
+      ) {
+        handleDoT();
+      }
     }
   }, [turnCycle, turnCycle.length, isGameOver]);
 
@@ -1590,17 +1629,19 @@ export const RoomLogic: FC<{
   const handleEnemyAttack = async (
     enemy: IEnemy,
     enemyPosition: [number, number],
+    player: IPlayer,
     playerPosition: [number, number]
-  ): Promise<IEnemy> => {
+  ): Promise<[IEnemy, IPlayer]> => {
     console.log('handleEnemyAttack');
 
     let newEnemy: IEnemy = { ...enemy };
     const [enemyRow, enemyCol] = enemyPosition;
+    let newPlayer: IPlayer = { ...player };
     const [playerRow, playerCol] = playerPosition;
 
     if (!enemyRow || !enemyCol || !playerRow || !playerCol) {
       addLog({ message: 'Enemy or player position not found!', type: 'error' });
-      return newEnemy;
+      return [newEnemy, newPlayer];
     }
 
     const canAttackPlayer =
@@ -1657,7 +1698,7 @@ export const RoomLogic: FC<{
           type: 'info',
         });
 
-        return newEnemy;
+        return [newEnemy, newPlayer];
       } else {
         // Calculate damage
         const baseDamage = newEnemy.damage;
@@ -1715,6 +1756,11 @@ export const RoomLogic: FC<{
         newEnemy = {
           ...newEnemy,
           actionPoints: newEnemy.actionPoints - 2,
+        };
+
+        newPlayer = {
+          ...newPlayer,
+          health: playerHealth < 0 ? 0 : playerHealth,
         };
 
         if (playerHealth <= 0) {
@@ -1798,14 +1844,14 @@ export const RoomLogic: FC<{
             type: 'info',
           });
 
-          return newEnemy;
+          return [newEnemy, newPlayer];
         }
 
-        return newEnemy;
+        return [newEnemy, newPlayer];
       }
     }
 
-    return newEnemy;
+    return [newEnemy, newPlayer];
   };
 
   // console.log('targetZones', targetZones.current);
