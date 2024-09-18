@@ -2479,7 +2479,13 @@ export const RoomLogic: FC<{
                   } else if (tileType === TILE_TYPE.FLOOR) {
                     handlePlayerMove(rowIndex, columnIndex);
                   } else if (tileType === TILE_TYPE.CHEST) {
-                    setIsChestOpen(true);
+                    // Only open chest if player is within 1 tile of the chest
+                    if (
+                      Math.abs(playerRow - rowIndex) <= 1 &&
+                      Math.abs(playerCol - columnIndex) <= 1
+                    ) {
+                      setIsChestOpen(true);
+                    }
                   }
 
                   return;
