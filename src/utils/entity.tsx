@@ -643,32 +643,36 @@ export const setEntityAnimationIdle = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // setTimeout(() => {
-      //   entitySpriteSheetContainer.classList.add('animate-entityAnimate20');
-      // }, 1);
+      setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
+        entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
+      }, 1);
     } else if (spriteDirection === ENTITY_SPRITE_DIRECTION.LEFT) {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // setTimeout(() => {
-      //   // entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft20');
-      // }, 1);
+      setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
+        entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
+      }, 1);
     }
   } else if (entity.entityType === ENTITY_TYPE.ENEMY) {
     if (spriteDirection === ENTITY_SPRITE_DIRECTION.RIGHT) {
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // setTimeout(() => {
-      //   entitySpriteSheetContainer.classList.add('animate-entityAnimate08');
-      // }, 1);
+      setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
+        entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
+      }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // setTimeout(() => {
-      //   entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft08');
-      // }, 1);
+      setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
+        entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
+      }, 1);
     }
   }
 };
@@ -686,8 +690,6 @@ export const setEntityAnimationWalk = (
     return;
   }
 
-  removeEntityAnimationClasses(entitySpriteSheetContainer);
-
   const topPosition = -entity.spriteSize * entity.spritesheetMovementRow + 'px';
 
   if (entity.entityType === ENTITY_TYPE.PLAYER) {
@@ -696,6 +698,7 @@ export const setEntityAnimationWalk = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
@@ -703,6 +706,7 @@ export const setEntityAnimationWalk = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -712,6 +716,7 @@ export const setEntityAnimationWalk = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
@@ -719,6 +724,7 @@ export const setEntityAnimationWalk = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -738,8 +744,6 @@ export const setEntityAnimationAttack = (
     return;
   }
 
-  removeEntityAnimationClasses(entitySpriteSheetContainer);
-
   const topPosition = -entity.spriteSize * entity.spritesheetAttackRow + 'px';
 
   if (entity.entityType === ENTITY_TYPE.ENEMY) {
@@ -748,6 +752,7 @@ export const setEntityAnimationAttack = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateOnce05');
       }, 1);
 
@@ -760,6 +765,7 @@ export const setEntityAnimationAttack = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add(
           'animate-entityAnimateLeftOnce05'
         );
@@ -786,8 +792,6 @@ export const setEntityAnimationDamaged = (
     return;
   }
 
-  removeEntityAnimationClasses(entitySpriteSheetContainer);
-
   const topPosition = -entity.spriteSize * entity.spritesheetDamagedRow + 'px';
 
   if (entity.entityType === ENTITY_TYPE.PLAYER) {
@@ -796,6 +800,7 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       });
     } else {
@@ -803,6 +808,7 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       });
     }
@@ -812,6 +818,7 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
@@ -819,6 +826,7 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -838,21 +846,23 @@ export const setEntityAnimationDefeat = (
     return;
   }
 
-  removeEntityAnimationClasses(entitySpriteSheetContainer);
-
   const topPosition = -entity.spriteSize * entity.spritesheetDefeatRow + 'px';
 
   if (entity.entityType === ENTITY_TYPE.PLAYER) {
     if (spriteDirection === ENTITY_SPRITE_DIRECTION.RIGHT) {
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
+
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
+
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
       }, 1);
     }
@@ -862,6 +872,7 @@ export const setEntityAnimationDefeat = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add('animate-entityAnimateOnce08');
       }, 1);
     } else {
@@ -869,6 +880,7 @@ export const setEntityAnimationDefeat = (
       entitySpriteSheetContainer.style.top = topPosition;
 
       setTimeout(() => {
+        removeEntityAnimationClasses(entitySpriteSheetContainer);
         entitySpriteSheetContainer.classList.add(
           'animate-entityAnimateLeftOnce08'
         );
