@@ -16,8 +16,7 @@ const equipmentCardClasses = 'relative mb-5';
 const EQUIPMENT_ICON_SIZE = 96;
 
 export const CharacterSheet: FC = () => {
-  const { getPlayer, getPlayerTotalStats } = usePlayerStore();
-  const player = getPlayer();
+  const { player, getPlayerTotalStats } = usePlayerStore();
   const { weapon, helmet, chestpiece, legging } = player.equipment;
   const playerStats = getPlayerTotalStats();
 

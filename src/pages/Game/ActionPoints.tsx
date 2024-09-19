@@ -5,9 +5,7 @@ import { usePlayerStore } from '../../stores/player';
 
 // Display action points as circles
 export const ActionPoints: FC = () => {
-  const { playerMovementAPCost, getPlayer } = usePlayerStore();
-
-  const player = getPlayer();
+  const { playerMovementAPCost, player } = usePlayerStore();
 
   const {
     actionPoints,

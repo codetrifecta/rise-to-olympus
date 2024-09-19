@@ -83,8 +83,7 @@ export const GameRoom: FC = () => {
 
   const { floor, currentRoom, setCurrentRoom } = useFloorStore();
 
-  const { getPlayer } = usePlayerStore();
-  const player = getPlayer();
+  const { player } = usePlayerStore();
 
   const { setEnemies } = useEnemyStore();
 

@@ -12,9 +12,7 @@ export const TurnInfo: FC<{
   setCurrentHoveredEntity: (entity: IEntity | null) => void;
 }> = ({ currentHoveredEntity, setCurrentHoveredEntity }) => {
   const { turnCycle } = useGameStateStore();
-
-  const { getPlayer } = usePlayerStore();
-  const player = getPlayer();
+  const { player } = usePlayerStore();
 
   const { enemies } = useEnemyStore();
 

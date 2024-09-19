@@ -14,10 +14,10 @@ import {
 } from '../types';
 import { getPlayerMaxHealth } from '../utils/entity';
 
-interface IPlayerStore extends IPlayer {
+interface IPlayerStore {
+  player: IPlayer;
   playerMovementAPCost: number;
   setPlayerMovementAPCost: (playerMovementAPCost: number) => void;
-  getPlayer: () => IPlayer;
   getPlayerBaseAttackDamage: () => number;
   getPlayerBonusDamage: () => number;
   getPlayerTotalStats: () => IStats;
@@ -38,45 +38,17 @@ interface IPlayerStore extends IPlayer {
 }
 
 export const usePlayerStore = create<IPlayerStore>((set, get) => ({
-  ...getDefaultPlayer(),
+  player: getDefaultPlayer(),
 
   playerMovementAPCost: 0,
 
   setPlayerMovementAPCost: (playerMovementAPCost: number) =>
     set({ playerMovementAPCost }),
 
-  getPlayer: () => {
-    const player: IPlayer = {
-      id: get().id,
-      name: get().name,
-      sprite: get().sprite,
-      spriteSize: get().spriteSize,
-      spritesheetRows: get().spritesheetRows,
-      spritesheetColumns: get().spritesheetColumns,
-      spritesheetIdleRow: get().spritesheetIdleRow,
-      spritesheetMovementRow: get().spritesheetMovementRow,
-      spritesheetAttackRow: get().spritesheetAttackRow,
-      spritesheetDamagedRow: get().spritesheetDamagedRow,
-      spritesheetDefeatRow: get().spritesheetDefeatRow,
-      entityType: get().entityType,
-      health: get().health,
-      maxHealth: get().maxHealth,
-      damageBonus: get().damageBonus,
-      movementRange: get().movementRange,
-      actionPoints: get().actionPoints,
-      skills: get().skills,
-      statuses: get().statuses,
-      state: get().state,
-      equipment: get().equipment,
-      healthPotions: get().healthPotions,
-    };
-    return player;
-  },
-
   getPlayerBaseAttackDamage: () => {
     const totalStrength = get().getPlayerTotalStrength();
     const totalIntelligence = get().getPlayerTotalIntelligence();
-    const weapon = get().equipment.weapon;
+    const weapon = get().player.equipment.weapon;
 
     if (weapon === null) {
       return 0;
@@ -94,7 +66,7 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
   },
 
   getPlayerBonusDamage: () => {
-    const bonusDamage = get().statuses.reduce(
+    const bonusDamage = get().player.statuses.reduce(
       (acc, status) => acc + status.effect.damageBonus,
       0
     );
@@ -116,17 +88,18 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
   },
 
   getPlayerTotalStrength: () => {
-    const weaponStrength = get().equipment.weapon?.stats.strength || 0;
-    const helmetStrength = get().equipment.helmet?.stats.strength || 0;
-    const chestpieceStrength = get().equipment.chestpiece?.stats.strength || 0;
-    const leggingStrength = get().equipment.legging?.stats.strength || 0;
+    const weaponStrength = get().player.equipment.weapon?.stats.strength || 0;
+    const helmetStrength = get().player.equipment.helmet?.stats.strength || 0;
+    const chestpieceStrength =
+      get().player.equipment.chestpiece?.stats.strength || 0;
+    const leggingStrength = get().player.equipment.legging?.stats.strength || 0;
 
     const totalStrength =
       weaponStrength + helmetStrength + chestpieceStrength + leggingStrength;
 
     // 0, 0, 1, 1, 0.6, 1.2 = 0.8
 
-    const strengthMultiplier = get().statuses.reduce((acc, status) => {
+    const strengthMultiplier = get().player.statuses.reduce((acc, status) => {
       // console.log('status', status);
 
       if (status.effect.strengthMultiplier === 0) return acc;
@@ -144,22 +117,27 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
   },
 
   getPlayerTotalIntelligence: () => {
-    const weaponIntelligence = get().equipment.weapon?.stats.intelligence || 0;
-    const helmetIntelligence = get().equipment.helmet?.stats.intelligence || 0;
+    const weaponIntelligence =
+      get().player.equipment.weapon?.stats.intelligence || 0;
+    const helmetIntelligence =
+      get().player.equipment.helmet?.stats.intelligence || 0;
     const chestpieceIntelligence =
-      get().equipment.chestpiece?.stats.intelligence || 0;
+      get().player.equipment.chestpiece?.stats.intelligence || 0;
     const leggingIntelligence =
-      get().equipment.legging?.stats.intelligence || 0;
+      get().player.equipment.legging?.stats.intelligence || 0;
 
-    const intelligenceMultiplier = get().statuses.reduce((acc, status) => {
-      if (status.effect.intelligenceMultiplier === 0) return acc;
+    const intelligenceMultiplier = get().player.statuses.reduce(
+      (acc, status) => {
+        if (status.effect.intelligenceMultiplier === 0) return acc;
 
-      if (status.effect.intelligenceMultiplier > 1) {
-        return acc + (status.effect.intelligenceMultiplier - 1);
-      } else {
-        return acc - (1 - status.effect.intelligenceMultiplier);
-      }
-    }, 1);
+        if (status.effect.intelligenceMultiplier > 1) {
+          return acc + (status.effect.intelligenceMultiplier - 1);
+        } else {
+          return acc - (1 - status.effect.intelligenceMultiplier);
+        }
+      },
+      1
+    );
 
     const totalIntelligence =
       weaponIntelligence +
@@ -171,18 +149,19 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
   },
 
   getPlayerTotalDefense: () => {
-    const weaponDefense = get().equipment.weapon?.stats.defense || 0;
-    const helmetDefense = get().equipment.helmet?.stats.defense || 0;
-    const chestpieceDefense = get().equipment.chestpiece?.stats.defense || 0;
-    const leggingDefense = get().equipment.legging?.stats.defense || 0;
+    const weaponDefense = get().player.equipment.weapon?.stats.defense || 0;
+    const helmetDefense = get().player.equipment.helmet?.stats.defense || 0;
+    const chestpieceDefense =
+      get().player.equipment.chestpiece?.stats.defense || 0;
+    const leggingDefense = get().player.equipment.legging?.stats.defense || 0;
 
     // Get defense from status effects
-    const totalDefenseFromStatuses = get().statuses.reduce(
+    const totalDefenseFromStatuses = get().player.statuses.reduce(
       (acc, status) => acc + status.effect.incomingDamageReduction,
       0
     );
 
-    const defenseMultiplier = get().statuses.reduce((acc, status) => {
+    const defenseMultiplier = get().player.statuses.reduce((acc, status) => {
       if (status.effect.defenseMultiplier === 0) return acc;
 
       if (status.effect.defenseMultiplier > 1) {
@@ -202,12 +181,14 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
   },
 
   getPlayerTotalConstitution: () => {
-    const weaponConstitution = get().equipment.weapon?.stats.constitution || 0;
-    const helmetConstitution = get().equipment.helmet?.stats.constitution || 0;
+    const weaponConstitution =
+      get().player.equipment.weapon?.stats.constitution || 0;
+    const helmetConstitution =
+      get().player.equipment.helmet?.stats.constitution || 0;
     const chestpieceConstitution =
-      get().equipment.chestpiece?.stats.constitution || 0;
+      get().player.equipment.chestpiece?.stats.constitution || 0;
     const leggingConstitution =
-      get().equipment.legging?.stats.constitution || 0;
+      get().player.equipment.legging?.stats.constitution || 0;
 
     const totalConstitution =
       weaponConstitution +
@@ -219,7 +200,7 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
   },
 
   getPlayerLifestealMultiplier: () => {
-    const lifestealMultiplier = get().statuses.reduce(
+    const lifestealMultiplier = get().player.statuses.reduce(
       (acc, status) => acc + status.effect.lifesteal,
       0
     );
@@ -227,38 +208,66 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
     return lifestealMultiplier;
   },
 
-  setPlayer: (player: IPlayer) => set({ ...player }),
+  setPlayer: (player: IPlayer) => set({ player }),
 
-  setPlayerActionPoints: (actionPoints: number) => set({ actionPoints }),
+  setPlayerActionPoints: (actionPoints: number) =>
+    set({ player: { ...get().player, actionPoints } }),
 
-  setPlayerSkills: (skills: ISkill[]) => set({ skills }),
+  setPlayerSkills: (skills: ISkill[]) =>
+    set({ player: { ...get().player, skills } }),
 
-  setPlayerStatuses: (statuses: IStatus[]) => set({ statuses }),
+  setPlayerStatuses: (statuses: IStatus[]) =>
+    set({ player: { ...get().player, statuses } }),
 
-  setPlayerState: (state: IPlayerState) => set({ state }),
+  setPlayerState: (state: IPlayerState) =>
+    set({ player: { ...get().player, state } }),
 
   setPlayerWeapon: (weapon: IWeapon | null) => {
-    const newEquipment = { ...get().equipment, weapon };
-    const newPlayer = { ...get().getPlayer(), equipment: newEquipment };
-    const maxHealth = getPlayerMaxHealth(newPlayer);
-    set({ maxHealth, equipment: { ...get().equipment, weapon } });
+    const player = get().player;
+    const newEquipment = { ...player.equipment, weapon };
+    const newMaxHealth = getPlayerMaxHealth(player);
+    const newPlayer = {
+      ...player,
+      equipment: newEquipment,
+      maxHealth: newMaxHealth,
+    };
+
+    set({ player: newPlayer });
   },
   setPlayerHelmet: (helmet: IHelmet | null) => {
-    const newEquipment = { ...get().equipment, helmet };
-    const newPlayer = { ...get().getPlayer(), equipment: newEquipment };
-    const maxHealth = getPlayerMaxHealth(newPlayer);
-    set({ maxHealth, equipment: { ...get().equipment, helmet } });
+    const player = get().player;
+    const newEquipment = { ...player.equipment, helmet };
+    const newMaxHealth = getPlayerMaxHealth(player);
+    const newPlayer = {
+      ...player,
+      equipment: newEquipment,
+      maxHealth: newMaxHealth,
+    };
+
+    set({ player: newPlayer });
   },
   setPlayerChestpiece: (chestpiece: IChestpiece | null) => {
-    const newEquipment = { ...get().equipment, chestpiece };
-    const newPlayer = { ...get().getPlayer(), equipment: newEquipment };
-    const maxHealth = getPlayerMaxHealth(newPlayer);
-    set({ maxHealth, equipment: { ...get().equipment, chestpiece } });
+    const player = get().player;
+    const newEquipment = { ...player.equipment, chestpiece };
+    const newMaxHealth = getPlayerMaxHealth(player);
+    const newPlayer = {
+      ...player,
+      equipment: newEquipment,
+      maxHealth: newMaxHealth,
+    };
+
+    set({ player: newPlayer });
   },
   setPlayerLegging: (legging: ILegging | null) => {
-    const newEquipment = { ...get().equipment, legging };
-    const newPlayer = { ...get().getPlayer(), equipment: newEquipment };
-    const maxHealth = getPlayerMaxHealth(newPlayer);
-    set({ maxHealth, equipment: { ...get().equipment, legging } });
+    const player = get().player;
+    const newEquipment = { ...player.equipment, legging };
+    const newMaxHealth = getPlayerMaxHealth(player);
+    const newPlayer = {
+      ...player,
+      equipment: newEquipment,
+      maxHealth: newMaxHealth,
+    };
+
+    set({ player: newPlayer });
   },
 }));

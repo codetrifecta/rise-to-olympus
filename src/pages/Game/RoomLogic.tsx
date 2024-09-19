@@ -103,13 +103,12 @@ export const RoomLogic: FC<{
   const {
     playerMovementAPCost,
     setPlayerMovementAPCost,
-    getPlayer,
+    player,
     getPlayerLifestealMultiplier,
     setPlayer,
     setPlayerActionPoints,
     setPlayerState,
   } = usePlayerStore();
-  const player = getPlayer();
   const playerLifestealMultiplier = getPlayerLifestealMultiplier();
 
   const { enemies, setEnemies, setEnemy } = useEnemyStore();
@@ -249,7 +248,7 @@ export const RoomLogic: FC<{
       if (player.actionPoints === 0 && !isRoomOver && enemies.length > 0) {
         console.log('automaticallyEndPlayerTurn');
         prevTurnCycle.current = [...turnCycle];
-        handlePlayerEndTurn(turnCycle, getPlayer, setPlayer, endTurn);
+        handlePlayerEndTurn(turnCycle, player, setPlayer, endTurn);
         addLog({
           message: (
             <>

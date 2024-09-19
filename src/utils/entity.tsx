@@ -10,20 +10,18 @@ import { IEnemy, IEntity, IPlayer, IStatus } from '../types';
 /**
  * Handle player end turn
  * @param turnCycle IEntity[] representing the turn cycle
- * @param getPlayer function to get the player
+ * @param player player entity
  * @param setPlayer function to set the player
  * @param endTurn   function to end the turn
  */
 export const handlePlayerEndTurn = (
   turnCycle: IEntity[],
-  getPlayer: () => IPlayer,
+  player: IPlayer,
   setPlayer: (player: IPlayer) => void,
   endTurn: () => void
 ) => {
   // If current turn is player, end player's turn and give action points and reduce skill cooldown and status effects duration
   if (turnCycle[0] && turnCycle[0].entityType === ENTITY_TYPE.PLAYER) {
-    const player = getPlayer();
-
     let playerActionPoints = player.actionPoints;
 
     // Check if player has statuses that change action points gained

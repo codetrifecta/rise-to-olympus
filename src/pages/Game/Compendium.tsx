@@ -16,8 +16,7 @@ import { Button } from './Button';
 const ICON_SIZE = 50;
 
 export const Compendium: FC = () => {
-  const { getPlayer, setPlayerSkills } = usePlayerStore();
-  const player = getPlayer();
+  const { player, setPlayerSkills } = usePlayerStore();
 
   const [equippedSkills, setEquippedSkills] = useState<ISkill[]>(player.skills);
 

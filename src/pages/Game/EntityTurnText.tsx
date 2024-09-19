@@ -9,8 +9,7 @@ export const EntityTurnText: FC = () => {
   const { turnCycle } = useGameStateStore();
   const { enemies } = useEnemyStore();
 
-  const { getPlayer } = usePlayerStore();
-  const player = getPlayer();
+  const { player } = usePlayerStore();
 
   // Map turn cycle to entities (player and enemies)
   // This is to ensure that the correct entity is displayed in the turn cycle as the player and enemies are updated

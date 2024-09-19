@@ -7,11 +7,13 @@ import { useCampaignStore } from '../../stores/campaign';
 import { useScriptStore } from '../../stores/script';
 import { GameRoom } from './GameRoom';
 import { StartRoomEscModalOverlay } from '../../overlays/StartRoomEscModalOverlay';
+import { usePlayerStore } from '../../stores/player';
 
 export const Game = () => {
   const { campaigns, setSelectedCampaign } = useCampaignStore();
   const { currentScript, setCurrentScript } = useScriptStore();
   const { selectedCampaign } = useCampaignStore();
+  const { player, setPlayer } = usePlayerStore();
 
   const [escModalOpen, setEscModalOpen] = useState(false);
 
@@ -62,6 +64,9 @@ export const Game = () => {
       setCurrentScript(SCRIPT_TUTORIAL);
       console.log('Showing tutorial');
     }
+
+    // Set player
+    setPlayer({ ...player, name: campaign.playerName });
   }, [searchParams, campaigns]);
 
   if (!selectedCampaign) return null;
