@@ -1,8 +1,11 @@
 import { FC } from 'react';
-import { IEntity } from '../../types';
+import { getPlayerMaxHealth } from '../../utils/entity';
+import { usePlayerStore } from '../../stores/player';
 
-export const Healthbar: FC<{ entity: IEntity }> = ({ entity }) => {
-  const { health, maxHealth } = entity;
+export const Healthbar: FC = () => {
+  const { player } = usePlayerStore();
+  const { health } = player;
+  const maxHealth = getPlayerMaxHealth(player);
 
   const healthPercentage = (health / maxHealth) * 100;
 

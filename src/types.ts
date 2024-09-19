@@ -7,7 +7,7 @@ import { SPRITE_ID } from './constants/sprite';
 import { TILE_TYPE } from './constants/tile';
 import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './constants/weapon';
 import { ITEM_TYPE } from './constants/item';
-import { ARMOR_TYPE } from './constants/armor';
+import { ARMOR_PART } from './constants/armor';
 
 interface IScriptsCompleted {
   tutorial: boolean;
@@ -173,7 +173,7 @@ export interface IStats {
 }
 
 export interface IArmor extends IItemBase {
-  armorType: ARMOR_TYPE;
+  armorPart: ARMOR_PART;
   stats: IStats;
 }
 
@@ -205,7 +205,6 @@ export interface IRoom {
   artObstacle: string;
   artWall: string;
   nextFloor: IFloor; // All rooms in floor will have the same nextFloor
-  chestItems: Item[];
 }
 
 export type IFloor = IRoom[][];

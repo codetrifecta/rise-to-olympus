@@ -773,27 +773,27 @@ export const setEntityAnimationAttack = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // removeEntityAnimationClasses(entitySpriteSheetContainer);
-      entitySpriteSheetContainer.classList.add('animate-entityAnimateOnce05');
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClassesExceptOne(
-          entitySpriteSheetContainer,
-          'animate-entityAnimateOnce05'
-        );
+        entitySpriteSheetContainer.classList.add('animate-entityAnimateOnce05');
+        // removeEntityAnimationClassesExceptOne(
+        //   entitySpriteSheetContainer,
+        //   'animate-entityAnimateOnce05'
+        // );
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // removeEntityAnimationClasses(entitySpriteSheetContainer);
-      entitySpriteSheetContainer.classList.add(
-        'animate-entityAnimateLeftOnce05'
-      );
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClassesExceptOne(
-          entitySpriteSheetContainer,
+        entitySpriteSheetContainer.classList.add(
           'animate-entityAnimateLeftOnce05'
         );
+        // removeEntityAnimationClassesExceptOne(
+        //   entitySpriteSheetContainer,
+        //   'animate-entityAnimateLeftOnce05'
+        // );
       }, 1);
     }
   }

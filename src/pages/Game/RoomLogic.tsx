@@ -224,7 +224,7 @@ export const RoomLogic: FC<{
     setRoomCompletion();
   }, [enemies.length]);
 
-  // When room is cleared, log a message
+  // When room is cleared, log a message and reset player's action points
   useEffect(() => {
     if (
       currentRoom &&
@@ -238,8 +238,9 @@ export const RoomLogic: FC<{
         ),
         type: 'info',
       });
+      setPlayerActionPoints(STARTING_ACTION_POINTS);
     }
-  }, [currentRoom]);
+  }, [currentRoom, player]);
 
   // When player's action points reach 0 and there are still enemies in the room (room is not over),
   // Automatically end player's turn

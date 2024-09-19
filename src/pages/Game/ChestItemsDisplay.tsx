@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useGameStateStore } from '../../stores/game';
 import { useFloorStore } from '../../stores/floor';
 import { IArmor, IConsumable, Item, IWeapon } from '../../types';
@@ -7,10 +7,134 @@ import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 import clsx from 'clsx';
 import { ITEM_TYPE } from '../../constants/item';
+import { usePlayerStore } from '../../stores/player';
+import { ARMOR_PART } from '../../constants/armor';
+import { DEFAULT_CHEST_ITEM_COUNT } from '../../constants/floor';
 
 export const ChestItemsDisplay: FC = () => {
   const { setIsChestOpen, setIsCharacterSheetOpen } = useGameStateStore();
-  const { currentRoom } = useFloorStore();
+  const { currentRoom, floorChestItems, setFloorChestItems } = useFloorStore();
+  const { player, setPlayer } = usePlayerStore();
+
+  // Chest items for the current room
+  const roomChestItems: Item[] = useMemo(() => {
+    console.log('floorChestItems:', floorChestItems);
+    if (currentRoom === null) {
+      console.error('ChestItemsDisplay: roomChestItems: No current room');
+      return [];
+    }
+
+    const roomPositionString =
+      currentRoom.position[0] + ',' + currentRoom.position[1];
+    const roomChestItems = floorChestItems.get(roomPositionString) || [];
+
+    return roomChestItems;
+  }, [currentRoom, floorChestItems]);
+
+  // Switch item in chest with player's equipment
+  const handleSwitchItem = (item: Item, itemIndex: number) => {
+    if (currentRoom === null) {
+      console.error('handleSwitchItem: No current room');
+      return;
+    }
+
+    console.log('Switching item:', item);
+
+    let switchedItem = null;
+    let newPlayer = { ...player };
+
+    switch (item.itemType) {
+      case ITEM_TYPE.WEAPON: {
+        const weaponInChest = item as IWeapon;
+        const playerWeapon = newPlayer.equipment.weapon;
+        newPlayer = {
+          ...newPlayer,
+          equipment: { ...newPlayer.equipment, weapon: weaponInChest },
+        };
+
+        if (playerWeapon?.name === 'Fists') {
+          switchedItem = null;
+        } else {
+          switchedItem = playerWeapon;
+        }
+        break;
+      }
+      case ITEM_TYPE.ARMOR: {
+        const armorInChest = item as IArmor;
+
+        console.log('armorInChest:', armorInChest);
+        switch (armorInChest.armorPart) {
+          case ARMOR_PART.HELMET: {
+            const playerHelmet = newPlayer.equipment.helmet;
+            newPlayer = {
+              ...newPlayer,
+              equipment: { ...newPlayer.equipment, helmet: armorInChest },
+            };
+            switchedItem = playerHelmet;
+            break;
+          }
+          case ARMOR_PART.CHESTPIECE: {
+            const playerChestpiece = newPlayer.equipment.chestpiece;
+            newPlayer = {
+              ...newPlayer,
+              equipment: { ...newPlayer.equipment, chestpiece: armorInChest },
+            };
+            switchedItem = playerChestpiece;
+            console.log('switchedItem:', switchedItem);
+            break;
+          }
+          case ARMOR_PART.LEGGING: {
+            const playerLegging = newPlayer.equipment.legging;
+            newPlayer = {
+              ...newPlayer,
+              equipment: { ...newPlayer.equipment, legging: armorInChest },
+            };
+            switchedItem = playerLegging;
+            break;
+          }
+          default:
+            break;
+        }
+        break;
+      }
+      case ITEM_TYPE.CONSUMABLE: {
+        // For now, consumables are only health potions
+        newPlayer = {
+          ...newPlayer,
+          healthPotions: newPlayer.healthPotions + 1,
+        };
+        break;
+      }
+      default:
+        break;
+    }
+
+    // Update chest item
+    const roomPositionString =
+      currentRoom.position[0] + ',' + currentRoom.position[1];
+    const newRoomChestItems = [...roomChestItems];
+
+    // Check if item index is within bounds
+    if (itemIndex < 0 || itemIndex >= newRoomChestItems.length) {
+      console.error('handleSwitchItem: Item index out of bounds');
+      return;
+    }
+
+    console.log('itemIndex:', itemIndex);
+
+    if (switchedItem) {
+      newRoomChestItems[itemIndex] = switchedItem;
+    } else {
+      // Pull items to the front
+      newRoomChestItems.splice(itemIndex, 1);
+    }
+
+    // Update room chest items and player
+    const newFloorChestItems = new Map(floorChestItems);
+    newFloorChestItems.set(roomPositionString, newRoomChestItems);
+    setFloorChestItems(newFloorChestItems);
+    setPlayer(newPlayer);
+  };
 
   return (
     <div className="bg-zinc-900 p-5 border border-white h-full w-full">
@@ -26,65 +150,52 @@ export const ChestItemsDisplay: FC = () => {
         </div>
         <h2 className="mb-5 pb-3 w-full border-b">Chest Items</h2>
       </div>
-      <div className="flex justify-center items-center h-full gap-2">
-        {currentRoom &&
-          currentRoom.chestItems &&
-          currentRoom.chestItems.map((item: Item) => {
-            if (item.itemType === ITEM_TYPE.WEAPON) {
-              const weapon = item as IWeapon;
-              return (
-                <WeaponCard
-                  key={weapon.id}
-                  weapon={weapon}
-                  active={false}
-                  onClick={() => {
-                    // if (player.state.isAttacking === false) {
-                    //   setPlayerWeapon(null);
-                    // }
-                  }}
-                />
-              );
-            } else if (item.itemType === ITEM_TYPE.ARMOR) {
-              const armor = item as IArmor;
-              return (
-                <ArmorCard
-                  key={armor.id}
-                  armor={armor}
-                  active={false}
-                  onClick={() => {
-                    // if (player.state.isAttacking === false) {
-                    //   setPlayerWeapon(null);
-                    // }
-                  }}
-                />
-              );
-            } else if (item.itemType === ITEM_TYPE.CONSUMABLE) {
-              const consumable = item as IConsumable;
-              return (
-                <ConsumableCard
-                  key={consumable.id}
-                  consumable={consumable}
-                  active={false}
-                  onClick={() => {
-                    // if (player.state.isAttacking === false) {
-                    //   setPlayerWeapon(null);
-                    // }
-                  }}
-                />
-              );
-            }
-          })}
-        {currentRoom &&
-          currentRoom.chestItems &&
-          currentRoom.chestItems.length < 5 &&
-          Array.from({ length: 5 - currentRoom.chestItems.length }).map(
-            (_, index) => (
-              <div
-                key={index}
-                className="w-14 h-14 bg-zinc-500 border border-white"
-              ></div>
-            )
-          )}
+      <div className="grid grid-rows-2 grid-cols-5 justify-center items-center h-full gap-2">
+        {roomChestItems.map((item: Item) => {
+          if (item.itemType === ITEM_TYPE.WEAPON) {
+            const weapon = item as IWeapon;
+            return (
+              <WeaponCard
+                key={weapon.id}
+                weapon={weapon}
+                active={false}
+                onClick={() => {
+                  handleSwitchItem(item, roomChestItems.indexOf(item));
+                }}
+              />
+            );
+          } else if (item.itemType === ITEM_TYPE.ARMOR) {
+            const armor = item as IArmor;
+            return (
+              <ArmorCard
+                key={armor.id}
+                armor={armor}
+                active={false}
+                onClick={() => {
+                  handleSwitchItem(item, roomChestItems.indexOf(item));
+                }}
+              />
+            );
+          } else if (item.itemType === ITEM_TYPE.CONSUMABLE) {
+            const consumable = item as IConsumable;
+            return (
+              <ConsumableCard
+                key={consumable.id}
+                consumable={consumable}
+                active={false}
+                onClick={() => {
+                  handleSwitchItem(item, roomChestItems.indexOf(item));
+                }}
+              />
+            );
+          }
+        })}
+        {roomChestItems.length < DEFAULT_CHEST_ITEM_COUNT &&
+          Array.from({
+            length: DEFAULT_CHEST_ITEM_COUNT - roomChestItems.length,
+          }).map((_, index) => (
+            <div key={index} className="w-14 h-14 bg-zinc-800"></div>
+          ))}
       </div>
     </div>
   );
