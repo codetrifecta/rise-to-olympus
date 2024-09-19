@@ -207,7 +207,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'Deal critical damage to an enemy. Damage is doubled if used when hidden. Deal bleeding to an enemy for 1 turns.',
-    damageMultiplier: 1.5,
+    damageMultiplier: 1.2,
     range: 1,
     cooldown: 2,
     cooldownCounter: 0,
@@ -248,7 +248,7 @@ export const SKILLS: ISkill[] = [
     skillType: SKILL_TYPE.ST,
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description: 'Strike a target, applying disabled on them for 1 turns.',
-    damageMultiplier: 1.2,
+    damageMultiplier: 1,
     range: 1,
     cooldown: 3,
     cooldownCounter: 0,
@@ -262,7 +262,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'Puncture a target with a strike that wounds them. Applies wounded to a target for 2 turns.',
-    damageMultiplier: 1.2,
+    damageMultiplier: 1,
     range: 1,
     cooldown: 4,
     cooldownCounter: 0,
@@ -276,7 +276,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.AOE, SKILL_TAG.DAMAGE],
     description:
       'Slash the air in front of you, dealing damage to enemies at further range.',
-    damageMultiplier: 1.3,
+    damageMultiplier: 0.8,
     range: 6,
     cooldown: 3,
     cooldownCounter: 0,
@@ -308,7 +308,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.AOE, SKILL_TAG.DAMAGE],
     description:
       'A powerful burst of energy that damages all enemies in a target area. Deals heavy AoE damage.',
-    damageMultiplier: 2.7,
+    damageMultiplier: 2,
     range: 2,
     cooldown: 3,
     cooldownCounter: 0,
@@ -322,7 +322,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       "The caster's hand ignites with fire, allowing them to deal fire damage to a single target within melee range. The target also receives a guaranteed burn status, dealing additional damage over 4 turns.",
-    damageMultiplier: 2,
+    damageMultiplier: 1.5,
     range: 1,
     cooldown: 3,
     cooldownCounter: 0,
@@ -364,7 +364,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'The caster’s hand chills with frost, allowing them to deal frost damage to a single target within melee range. The target also receives a guaranteed freeze status for 3 turns.',
-    damageMultiplier: 1.5,
+    damageMultiplier: 1.1,
     range: 1,
     cooldown: 3,
     cooldownCounter: 0,
@@ -391,7 +391,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.AOE, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'Summon a blizzard to deal frost damage to all enemies in a target area. Has a 50% chance to freeze targets hit for 2 turns.',
-    damageMultiplier: 2,
+    damageMultiplier: 1,
     range: 8,
     cooldown: 3,
     cooldownCounter: 0,
@@ -405,7 +405,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'The caster’s hand crackles with electricity, allowing them to deal shock damage to a single target within melee range. The target also receives a guaranteed shock status for 4 turns.',
-    damageMultiplier: 1.7,
+    damageMultiplier: 1.3,
     range: 1,
     cooldown: 3,
     cooldownCounter: 0,
@@ -433,7 +433,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'Strike a target with a lighning bolt. Has a 50% chance to shock target for 2 turn.',
-    damageMultiplier: 1.5,
+    damageMultiplier: 1,
     range: 10,
     cooldown: 2,
     cooldownCounter: 0,
@@ -504,7 +504,7 @@ export const SKILLS: ISkill[] = [
     skillType: SKILL_TYPE.SELF,
     tags: [SKILL_TAG.SELF, SKILL_TAG.STATUS],
     description:
-      'Applies Stone Skin on self for 3 turns. Stone Skin increases defense by 30%.',
+      'Applies Stone Skin on self for 3 turns. Stone Skin increases defense by 100%.',
     damageMultiplier: 0,
     range: 0,
     cooldown: 3,
@@ -785,7 +785,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.AOE, SKILL_TAG.DAMAGE, SKILL_TAG.MOVEMENT],
     description:
       'Leap slam to a location and deal damage around your landing position.',
-    damageMultiplier: 1,
+    damageMultiplier: 0.8,
     range: 6,
     cooldown: 3,
     cooldownCounter: 0,
@@ -817,7 +817,7 @@ export const SKILLS: ISkill[] = [
     skillType: SKILL_TYPE.AOE,
     tags: [SKILL_TAG.AOE, SKILL_TAG.DAMAGE, SKILL_TAG.MOVEMENT],
     description: 'Leap to a target and deal damage.',
-    damageMultiplier: 1,
+    damageMultiplier: 0.8,
     range: 4,
     cooldown: 2,
     cooldownCounter: 0,

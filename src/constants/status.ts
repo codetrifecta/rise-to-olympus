@@ -90,12 +90,12 @@ export const STATUSES: IStatus[] = [
     id: STATUS_ID.STONE_SKIN,
     name: 'Stone Skin',
     icon: ICON_ID.STATUS_DEFENSE_UP,
-    description: 'Increased defense by 30%.',
+    description: 'Increased defense by 100%.',
     duration: 3,
     durationCounter: 3,
     effect: {
       ...BASE_STATUS_EFFECTS,
-      defenseMultiplier: 1.3,
+      defenseMultiplier: 2,
     },
   },
   {

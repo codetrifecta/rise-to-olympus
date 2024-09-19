@@ -446,7 +446,7 @@ export const RoomLogic: FC<{
           if (!cannotMove) {
             // Move enemy to a random adjacent tile
             const [enemyAfterMove, enemyPosition] =
-              await handleEnemyMovement(newEnemy);
+              await handleEnemyMove(newEnemy);
 
             newEnemy = {
               ...newEnemy,
@@ -1185,7 +1185,7 @@ export const RoomLogic: FC<{
   const handlePlayerMove = async (row: number, col: number) => {
     console.log('handlePlayerMove');
 
-    if (isEntityMoving) {
+    if (isEntityMoving || isChestOpen) {
       return;
     }
 
@@ -1440,10 +1440,10 @@ export const RoomLogic: FC<{
 
   // Handle enemy movement (naive)
   // For now, just move the enemy to a random adjacent tile
-  const handleEnemyMovement = async (
+  const handleEnemyMove = async (
     enemy: IEnemy
   ): Promise<[IEnemy, [number, number]]> => {
-    console.log('handleEnemyMovement');
+    console.log('handleEnemyMove');
 
     let newEnemy = { ...enemy };
     const [playerRow, playerCol] = playerPosition;
