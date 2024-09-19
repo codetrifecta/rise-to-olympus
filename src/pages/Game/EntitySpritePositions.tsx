@@ -16,10 +16,9 @@ const PLAYER_STATE_INDICATOR_SIZE = 35;
 export const EntitySpritePositions: FC<{
   setCurrentHoveredEntity: (entity: IEntity | null) => void;
 }> = ({ setCurrentHoveredEntity }) => {
-  const { getPlayer } = usePlayerStore();
+  const { player } = usePlayerStore();
   const { enemies } = useEnemyStore();
 
-  const player = getPlayer();
   const { roomEntityPositions, roomTileMatrix } = useGameStateStore();
 
   const roomEntityPositionsFlipped: [

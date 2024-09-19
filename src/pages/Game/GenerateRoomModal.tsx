@@ -33,8 +33,7 @@ export const GenerateRoomModal: FC = () => {
 
   const { setEnemies } = useEnemyStore();
 
-  const { getPlayer, setPlayer } = usePlayerStore();
-  const player = getPlayer();
+  const { player, setPlayer } = usePlayerStore();
 
   const lastRoomLengthInput = useRef<string>(ROOM_LENGTH.toString());
   const [roomLengthInput, setRoomLengthInput] = useState<string>(

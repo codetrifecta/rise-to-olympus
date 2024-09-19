@@ -1,4 +1,4 @@
-# Return to Olympus
+# Rise to Olympus
 
 Turn-Based Roguelike RPG based on Greek Mythology
 
@@ -7,8 +7,8 @@ Turn-Based Roguelike RPG based on Greek Mythology
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/codetrifecta/return-to-olympus.git
-   cd return-to-olympus
+   git clone https://github.com/codetrifecta/rise-to-olympus.git
+   cd rise-to-olympus
    ```
 
 2. Install dependencies:

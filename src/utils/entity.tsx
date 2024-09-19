@@ -10,20 +10,18 @@ import { IEnemy, IEntity, IPlayer, IStatus } from '../types';
 /**
  * Handle player end turn
  * @param turnCycle IEntity[] representing the turn cycle
- * @param getPlayer function to get the player
+ * @param player player entity
  * @param setPlayer function to set the player
  * @param endTurn   function to end the turn
  */
 export const handlePlayerEndTurn = (
   turnCycle: IEntity[],
-  getPlayer: () => IPlayer,
+  player: IPlayer,
   setPlayer: (player: IPlayer) => void,
   endTurn: () => void
 ) => {
   // If current turn is player, end player's turn and give action points and reduce skill cooldown and status effects duration
   if (turnCycle[0] && turnCycle[0].entityType === ENTITY_TYPE.PLAYER) {
-    const player = getPlayer();
-
     let playerActionPoints = player.actionPoints;
 
     // Check if player has statuses that change action points gained
@@ -833,13 +831,13 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // removeEntityAnimationClasses(entitySpriteSheetContainer);
-      entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClassesExceptOne(
-          entitySpriteSheetContainer,
-          'animate-entityAnimateLeft10'
-        );
+        entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
+        // removeEntityAnimationClassesExceptOne(
+        //   entitySpriteSheetContainer,
+        //   'animate-entityAnimateLeft10'
+        // );
       });
     }
   } else if (entity.entityType === ENTITY_TYPE.ENEMY) {
@@ -847,25 +845,25 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // removeEntityAnimationClasses(entitySpriteSheetContainer);
-      entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClassesExceptOne(
-          entitySpriteSheetContainer,
-          'animate-entityAnimate10'
-        );
+        entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
+        // removeEntityAnimationClassesExceptOne(
+        //   entitySpriteSheetContainer,
+        //   'animate-entityAnimate10'
+        // );
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // removeEntityAnimationClasses(entitySpriteSheetContainer);
-      entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClassesExceptOne(
-          entitySpriteSheetContainer,
-          'animate-entityAnimateLeft10'
-        );
+        entitySpriteSheetContainer.classList.add('animate-entityAnimateLeft10');
+        // removeEntityAnimationClassesExceptOne(
+        //   entitySpriteSheetContainer,
+        //   'animate-entityAnimateLeft10'
+        // );
       }, 1);
     }
   }
@@ -909,27 +907,27 @@ export const setEntityAnimationDefeat = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // removeEntityAnimationClasses(entitySpriteSheetContainer);
-      entitySpriteSheetContainer.classList.add('animate-entityAnimateOnce08');
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClassesExceptOne(
-          entitySpriteSheetContainer,
-          'animate-entityAnimateOnce08'
-        );
+        entitySpriteSheetContainer.classList.add('animate-entityAnimateOnce08');
+        // removeEntityAnimationClassesExceptOne(
+        //   entitySpriteSheetContainer,
+        //   'animate-entityAnimateOnce08'
+        // );
       }, 1);
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // removeEntityAnimationClasses(entitySpriteSheetContainer);
-      entitySpriteSheetContainer.classList.add(
-        'animate-entityAnimateLeftOnce08'
-      );
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClassesExceptOne(
-          entitySpriteSheetContainer,
+        entitySpriteSheetContainer.classList.add(
           'animate-entityAnimateLeftOnce08'
         );
+        // removeEntityAnimationClassesExceptOne(
+        //   entitySpriteSheetContainer,
+        //   'animate-entityAnimateLeftOnce08'
+        // );
       }, 1);
     }
   }

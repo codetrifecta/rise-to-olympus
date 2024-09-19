@@ -36,6 +36,7 @@ import helmet_diamond_2 from '../assets/icons/helmets/icon_helmet_diamond_2.png'
 // CHESTPIECES
 import chestpiece_leather_1 from '../assets/icons/chestpieces/icon_chestpiece_leather_1.png';
 import chestpiece_leather_2 from '../assets/icons/chestpieces/icon_chestpiece_leather_2.png';
+import chestpiece_leather_3 from '../assets/icons/chestpieces/icon_chestpiece_leather_3.png';
 import chestpiece_steel_1 from '../assets/icons/chestpieces/icon_chestpiece_steel_1.png';
 import chestpiece_steel_2 from '../assets/icons/chestpieces/icon_chestpiece_steel_2.png';
 import chestpiece_gold_1 from '../assets/icons/chestpieces/icon_chestpiece_gold_1.png';
@@ -169,6 +170,7 @@ export enum ICON_ID {
   // CHESTPIECES
   CHESTPIECE_LEATHER_1 = 'chestpiece_leather_1',
   CHESTPIECE_LEATHER_2 = 'chestpiece_leather_2',
+  CHESTPIECE_LEATHER_3 = 'chestpiece_leather_3',
   CHESTPIECE_STEEL_1 = 'chestpiece_steel_1',
   CHESTPIECE_STEEL_2 = 'chestpiece_steel_2',
   CHESTPIECE_GOLD_1 = 'chestpiece_gold_1',
@@ -304,6 +306,7 @@ const ICONS: Record<ICON_ID, string> = {
   // CHESTPIECES
   [ICON_ID.CHESTPIECE_LEATHER_1]: chestpiece_leather_1,
   [ICON_ID.CHESTPIECE_LEATHER_2]: chestpiece_leather_2,
+  [ICON_ID.CHESTPIECE_LEATHER_3]: chestpiece_leather_3,
   [ICON_ID.CHESTPIECE_STEEL_1]: chestpiece_steel_1,
   [ICON_ID.CHESTPIECE_STEEL_2]: chestpiece_steel_2,
   [ICON_ID.CHESTPIECE_GOLD_1]: chestpiece_gold_1,

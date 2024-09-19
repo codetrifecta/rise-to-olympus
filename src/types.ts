@@ -6,6 +6,8 @@ import { SKILL_ID, SKILL_TAG, SKILL_TYPE } from './constants/skill';
 import { SPRITE_ID } from './constants/sprite';
 import { TILE_TYPE } from './constants/tile';
 import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './constants/weapon';
+import { ITEM_TYPE } from './constants/item';
+import { ARMOR_TYPE } from './constants/armor';
 
 interface IScriptsCompleted {
   tutorial: boolean;
@@ -143,10 +145,18 @@ export interface IStatusEffect {
   extraAPPerTurn: number;
 }
 
-export interface IWeapon {
+export type Item = IConsumable | IWeapon | IArmor;
+
+export interface IItemBase {
   id: number;
   name: string;
   icon: ICON_ID;
+  itemType: ITEM_TYPE;
+}
+
+export interface IConsumable extends IItemBase {}
+
+export interface IWeapon extends IItemBase {
   attackType: WEAPON_ATTACK_TYPE.MELEE | WEAPON_ATTACK_TYPE.RANGED;
   type: WEAPON_TYPE;
   damageMultiplier: number;
@@ -162,10 +172,8 @@ export interface IStats {
   constitution: number;
 }
 
-export interface IArmor {
-  id: number;
-  name: string;
-  icon: ICON_ID;
+export interface IArmor extends IItemBase {
+  armorType: ARMOR_TYPE;
   stats: IStats;
 }
 
@@ -197,6 +205,7 @@ export interface IRoom {
   artObstacle: string;
   artWall: string;
   nextFloor: IFloor; // All rooms in floor will have the same nextFloor
+  chestItems: Item[];
 }
 
 export type IFloor = IRoom[][];

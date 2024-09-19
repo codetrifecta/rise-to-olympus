@@ -6,8 +6,7 @@ import { usePlayerStore } from '../../stores/player';
 import { Healthbar } from './Healthbar';
 
 export const PlayerInfo: FC = () => {
-  const { getPlayer } = usePlayerStore();
-  const player = getPlayer();
+  const { player } = usePlayerStore();
   const { isRoomOver } = useGameStateStore();
 
   return (

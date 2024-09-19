@@ -90,24 +90,25 @@ export const RoomLogic: FC<{
     isGameOver,
     isCameraMoving,
     isEntityMoving,
+    isChestOpen,
     setIsChestOpen,
     setIsGameOver,
     setIsRoomOver,
     setIsFloorCleared,
     setHoveredTile,
     setIsEntityMoving,
+    setIsCharacterSheetOpen,
   } = useGameStateStore();
   const { setCurrentSkillAnimation } = useSkillAnimationStore();
   const {
     playerMovementAPCost,
     setPlayerMovementAPCost,
-    getPlayer,
+    player,
     getPlayerLifestealMultiplier,
     setPlayer,
     setPlayerActionPoints,
     setPlayerState,
   } = usePlayerStore();
-  const player = getPlayer();
   const playerLifestealMultiplier = getPlayerLifestealMultiplier();
 
   const { enemies, setEnemies, setEnemy } = useEnemyStore();
@@ -247,7 +248,7 @@ export const RoomLogic: FC<{
       if (player.actionPoints === 0 && !isRoomOver && enemies.length > 0) {
         console.log('automaticallyEndPlayerTurn');
         prevTurnCycle.current = [...turnCycle];
-        handlePlayerEndTurn(turnCycle, getPlayer, setPlayer, endTurn);
+        handlePlayerEndTurn(turnCycle, player, setPlayer, endTurn);
         addLog({
           message: (
             <>
@@ -445,7 +446,7 @@ export const RoomLogic: FC<{
           if (!cannotMove) {
             // Move enemy to a random adjacent tile
             const [enemyAfterMove, enemyPosition] =
-              await handleEnemyMovement(newEnemy);
+              await handleEnemyMove(newEnemy);
 
             newEnemy = {
               ...newEnemy,
@@ -1184,7 +1185,7 @@ export const RoomLogic: FC<{
   const handlePlayerMove = async (row: number, col: number) => {
     console.log('handlePlayerMove');
 
-    if (isEntityMoving) {
+    if (isEntityMoving || isChestOpen) {
       return;
     }
 
@@ -1439,10 +1440,10 @@ export const RoomLogic: FC<{
 
   // Handle enemy movement (naive)
   // For now, just move the enemy to a random adjacent tile
-  const handleEnemyMovement = async (
+  const handleEnemyMove = async (
     enemy: IEnemy
   ): Promise<[IEnemy, [number, number]]> => {
-    console.log('handleEnemyMovement');
+    console.log('handleEnemyMove');
 
     let newEnemy = { ...enemy };
     const [playerRow, playerCol] = playerPosition;
@@ -2564,7 +2565,13 @@ export const RoomLogic: FC<{
                       Math.abs(playerRow - rowIndex) <= 1 &&
                       Math.abs(playerCol - columnIndex) <= 1
                     ) {
-                      setIsChestOpen(true);
+                      if (isChestOpen) {
+                        setIsChestOpen(false);
+                        setIsCharacterSheetOpen(false);
+                      } else {
+                        setIsChestOpen(true);
+                        setIsCharacterSheetOpen(true);
+                      }
                     }
                   }
 

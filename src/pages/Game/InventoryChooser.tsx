@@ -24,14 +24,12 @@ export const InventoryChooser: FC = () => {
   const { setIsInventoryOpen } = useGameStateStore();
 
   const {
-    getPlayer,
+    player,
     setPlayerWeapon,
     setPlayerHelmet,
     setPlayerChestpiece,
     setPlayerLegging,
   } = usePlayerStore();
-
-  const player = getPlayer();
 
   return (
     <div className="bg-zinc-900 p-5 border-l border-white h-full">

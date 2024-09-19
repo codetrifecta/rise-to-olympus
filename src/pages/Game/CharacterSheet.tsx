@@ -16,8 +16,7 @@ const equipmentCardClasses = 'relative mb-5';
 const EQUIPMENT_ICON_SIZE = 96;
 
 export const CharacterSheet: FC = () => {
-  const { getPlayer, getPlayerTotalStats } = usePlayerStore();
-  const player = getPlayer();
+  const { player, getPlayerTotalStats } = usePlayerStore();
   const { weapon, helmet, chestpiece, legging } = player.equipment;
   const playerStats = getPlayerTotalStats();
 
@@ -194,7 +193,7 @@ export const CharacterSheet: FC = () => {
         <p>Strength: {playerStats.strength}</p>
         <p>Intelligence: {playerStats.intelligence}</p>
         <p>Defense: {playerStats.defense}</p>
-        <p>Constituion: {playerStats.constitution}</p>
+        <p>Constitution: {playerStats.constitution}</p>
       </div>
     </div>
   );

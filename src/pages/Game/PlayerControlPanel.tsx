@@ -42,7 +42,7 @@ export const PlayerControlPanel: FC = () => {
   } = useGameStateStore();
 
   const {
-    getPlayer,
+    player,
     getPlayerTotalStrength,
     getPlayerTotalIntelligence,
     getPlayerBonusDamage,
@@ -50,7 +50,6 @@ export const PlayerControlPanel: FC = () => {
     setPlayerState,
   } = usePlayerStore();
 
-  const player = getPlayer();
   const weaponDamage = getPlayerWeaponDamage(player);
   const totalStrength = getPlayerTotalStrength();
   const totalIntelligence = getPlayerTotalIntelligence();
@@ -67,7 +66,7 @@ export const PlayerControlPanel: FC = () => {
       isMoving: false,
       isUsingSkill: false,
     });
-    handlePlayerEndTurn(turnCycle, getPlayer, setPlayer, endTurn);
+    handlePlayerEndTurn(turnCycle, player, setPlayer, endTurn);
   };
 
   const renderSkillButtonTooltip = (skill: ISkill) => {

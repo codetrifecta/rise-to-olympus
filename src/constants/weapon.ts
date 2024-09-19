@@ -1,5 +1,6 @@
 import { IWeapon } from '../types';
 import { ICON_ID } from './icon';
+import { ITEM_TYPE } from './item';
 
 export enum WEAPON_ATTACK_TYPE {
   MELEE = 'melee',
@@ -21,6 +22,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_FIST,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
     type: WEAPON_TYPE.ONE_HANDED,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.6,
     stats: {
       strength: 5,
@@ -37,6 +39,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_SWORD,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
     type: WEAPON_TYPE.ONE_HANDED,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.6,
     stats: {
       strength: 8,
@@ -53,6 +56,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_KATANA,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
     type: WEAPON_TYPE.ONE_HANDED,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.6,
     stats: {
       strength: 10,
@@ -69,6 +73,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_GREATSWORD,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
     type: WEAPON_TYPE.TWO_HANDED,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 1,
     stats: {
       strength: 12,
@@ -85,6 +90,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_GLAIVE,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
     type: WEAPON_TYPE.TWO_HANDED,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 1,
     stats: {
       strength: 14,
@@ -101,6 +107,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_BOW,
     attackType: WEAPON_ATTACK_TYPE.RANGED,
     type: WEAPON_TYPE.BOW,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.3,
     stats: {
       strength: 8,
@@ -117,6 +124,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_MAGIC_WAND,
     attackType: WEAPON_ATTACK_TYPE.RANGED,
     type: WEAPON_TYPE.WAND,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.4,
     stats: {
       strength: 1,
@@ -133,6 +141,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_MAGIC_STAFF,
     attackType: WEAPON_ATTACK_TYPE.RANGED,
     type: WEAPON_TYPE.STAFF,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.3,
     stats: {
       strength: 1,
@@ -149,6 +158,7 @@ export const WEAPONS: IWeapon[] = [
     icon: ICON_ID.WEAPON_GREATSWORD,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
     type: WEAPON_TYPE.TWO_HANDED,
+    itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 1,
     stats: {
       strength: 100,
