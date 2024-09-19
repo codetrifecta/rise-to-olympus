@@ -90,12 +90,14 @@ export const RoomLogic: FC<{
     isGameOver,
     isCameraMoving,
     isEntityMoving,
+    isChestOpen,
     setIsChestOpen,
     setIsGameOver,
     setIsRoomOver,
     setIsFloorCleared,
     setHoveredTile,
     setIsEntityMoving,
+    setIsCharacterSheetOpen,
   } = useGameStateStore();
   const { setCurrentSkillAnimation } = useSkillAnimationStore();
   const {
@@ -2564,7 +2566,13 @@ export const RoomLogic: FC<{
                       Math.abs(playerRow - rowIndex) <= 1 &&
                       Math.abs(playerCol - columnIndex) <= 1
                     ) {
-                      setIsChestOpen(true);
+                      if (isChestOpen) {
+                        setIsChestOpen(false);
+                        setIsCharacterSheetOpen(false);
+                      } else {
+                        setIsChestOpen(true);
+                        setIsCharacterSheetOpen(true);
+                      }
                     }
                   }
 

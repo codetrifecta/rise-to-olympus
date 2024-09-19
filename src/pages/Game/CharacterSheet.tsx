@@ -194,7 +194,7 @@ export const CharacterSheet: FC = () => {
         <p>Strength: {playerStats.strength}</p>
         <p>Intelligence: {playerStats.intelligence}</p>
         <p>Defense: {playerStats.defense}</p>
-        <p>Constituion: {playerStats.constitution}</p>
+        <p>Constitution: {playerStats.constitution}</p>
       </div>
     </div>
   );

@@ -16,6 +16,8 @@ import art_room_tutorial_obstacle_4 from '../assets/sprites/tiles/tutorial/room_
 
 import art_room_tartarus_camp_floor from '../assets/sprites/tiles/tartarus/room_tartarus_camp_floor.png';
 import art_room_tartarus_camp_wall from '../assets/sprites/tiles/tartarus/room_tartarus_camp_wall.png';
+import { ICON_ID } from './icon';
+import { ITEM_TYPE } from './item';
 
 export const TARTARUS_CAMP_FLOOR: IFloor = [
   [
@@ -265,6 +267,50 @@ const createTutorialFloor = () => {
     ],
     artFloor: art_room_tutorial_floor,
     artObstacle: art_room_tutorial_obstacle,
+    chestItems: [
+      {
+        id: 1,
+        name: 'Leather Chestplate',
+        icon: ICON_ID.CHESTPIECE_LEATHER_1,
+        itemType: ITEM_TYPE.ARMOR,
+        stats: {
+          defense: 5,
+          strength: 3,
+          intelligence: 1,
+          constitution: 5,
+        },
+      },
+      {
+        id: 2,
+        name: 'Leather Robe',
+        icon: ICON_ID.CHESTPIECE_LEATHER_2,
+        itemType: ITEM_TYPE.ARMOR,
+        stats: {
+          defense: 5,
+          strength: 1,
+          intelligence: 3,
+          constitution: 5,
+        },
+      },
+      {
+        id: 3,
+        name: 'Leather Brigandine',
+        icon: ICON_ID.CHESTPIECE_LEATHER_3,
+        itemType: ITEM_TYPE.ARMOR,
+        stats: {
+          defense: 5,
+          strength: 2,
+          intelligence: 2,
+          constitution: 5,
+        },
+      },
+      {
+        id: 4,
+        name: 'Health Potion',
+        icon: ICON_ID.HEALTH_POTION,
+        itemType: ITEM_TYPE.CONSUMABLE,
+      },
+    ],
   };
 
   return tutorialFloor;

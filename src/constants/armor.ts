@@ -1,11 +1,20 @@
 import { IHelmet, IChestpiece, ILegging } from '../types';
 import { ICON_ID } from './icon';
+import { ITEM_TYPE } from './item';
+
+export enum ARMOR_TYPE {
+  HELMET = 'HELMET',
+  CHESTPIECE = 'CHESTPIECE',
+  LEGGING = 'LEGGING',
+}
 
 export const HELMETS: IHelmet[] = [
   {
     id: 1,
     name: 'Leather Helmet',
     icon: ICON_ID.HELMET_LEATHER_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.HELMET,
     stats: {
       defense: 3,
       strength: 2,
@@ -17,6 +26,8 @@ export const HELMETS: IHelmet[] = [
     id: 2,
     name: 'Leather Wizard Hat',
     icon: ICON_ID.HELMET_LEATHER_2,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.HELMET,
     stats: {
       defense: 3,
       strength: 0,
@@ -28,6 +39,8 @@ export const HELMETS: IHelmet[] = [
     id: 3,
     name: 'Steel Helmet',
     icon: ICON_ID.HELMET_STEEL_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.HELMET,
     stats: {
       defense: 4,
       strength: 3,
@@ -39,6 +52,8 @@ export const HELMETS: IHelmet[] = [
     id: 4,
     name: 'Steel Wizard Hat',
     icon: ICON_ID.HELMET_STEEL_2,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.HELMET,
     stats: {
       defense: 4,
       strength: 1,
@@ -50,6 +65,8 @@ export const HELMETS: IHelmet[] = [
     id: 5,
     name: 'Gold Helmet',
     icon: ICON_ID.HELMET_GOLD_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.HELMET,
     stats: {
       defense: 5,
       strength: 3,
@@ -61,6 +78,8 @@ export const HELMETS: IHelmet[] = [
     id: 6,
     name: 'Gold Wizard Hat',
     icon: ICON_ID.HELMET_GOLD_2,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.HELMET,
     stats: {
       defense: 5,
       strength: 1,
@@ -72,6 +91,8 @@ export const HELMETS: IHelmet[] = [
     id: 7,
     name: 'Diamond Helmet',
     icon: ICON_ID.HELMET_DIAMOND_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.HELMET,
     stats: {
       defense: 6,
       strength: 4,
@@ -83,6 +104,8 @@ export const HELMETS: IHelmet[] = [
     id: 8,
     name: 'Diamond Wizard Hat',
     icon: ICON_ID.HELMET_DIAMOND_2,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.HELMET,
     stats: {
       defense: 6,
       strength: 1,
@@ -97,6 +120,8 @@ export const CHESTPIECES: IChestpiece[] = [
     id: 1,
     name: 'Leather Chestpiece',
     icon: ICON_ID.CHESTPIECE_LEATHER_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.CHESTPIECE,
     stats: {
       defense: 5,
       strength: 3,
@@ -108,6 +133,8 @@ export const CHESTPIECES: IChestpiece[] = [
     id: 2,
     name: 'Leather Wizard Robes',
     icon: ICON_ID.CHESTPIECE_LEATHER_2,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.CHESTPIECE,
     stats: {
       defense: 5,
       strength: 0,
@@ -119,6 +146,8 @@ export const CHESTPIECES: IChestpiece[] = [
     id: 3,
     name: 'Steel Chestpiece',
     icon: ICON_ID.CHESTPIECE_STEEL_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.CHESTPIECE,
     stats: {
       defense: 6,
       strength: 4,
@@ -130,6 +159,8 @@ export const CHESTPIECES: IChestpiece[] = [
     id: 4,
     name: 'Steel Wizard Robes',
     icon: ICON_ID.CHESTPIECE_STEEL_2,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.CHESTPIECE,
     stats: {
       defense: 6,
       strength: 1,
@@ -141,6 +172,8 @@ export const CHESTPIECES: IChestpiece[] = [
     id: 5,
     name: 'Gold Chestpiece',
     icon: ICON_ID.CHESTPIECE_GOLD_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.CHESTPIECE,
     stats: {
       defense: 7,
       strength: 5,
@@ -152,6 +185,8 @@ export const CHESTPIECES: IChestpiece[] = [
     id: 6,
     name: 'Gold Wizard Robes',
     icon: ICON_ID.CHESTPIECE_GOLD_2,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.CHESTPIECE,
     stats: {
       defense: 7,
       strength: 1,
@@ -163,6 +198,8 @@ export const CHESTPIECES: IChestpiece[] = [
     id: 7,
     name: 'Diamond Chestpiece',
     icon: ICON_ID.CHESTPIECE_DIAMOND_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.CHESTPIECE,
     stats: {
       defense: 8,
       strength: 6,
@@ -174,6 +211,8 @@ export const CHESTPIECES: IChestpiece[] = [
     id: 8,
     name: 'Diamond Wizard Robes',
     icon: ICON_ID.CHESTPIECE_DIAMOND_2,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.CHESTPIECE,
     stats: {
       defense: 8,
       strength: 1,
@@ -188,10 +227,12 @@ export const LEGGINGS: ILegging[] = [
     id: 1,
     name: 'Leather Pants',
     icon: ICON_ID.LEGGING_LEATHER_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.LEGGING,
     stats: {
       defense: 5,
-      strength: 0,
-      intelligence: 0,
+      strength: 1,
+      intelligence: 1,
       constitution: 5,
     },
   },
@@ -199,10 +240,12 @@ export const LEGGINGS: ILegging[] = [
     id: 2,
     name: 'Steel Leggings',
     icon: ICON_ID.LEGGING_STEEL_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.LEGGING,
     stats: {
       defense: 7,
-      strength: 1,
-      intelligence: 1,
+      strength: 2,
+      intelligence: 2,
       constitution: 7,
     },
   },
@@ -210,10 +253,12 @@ export const LEGGINGS: ILegging[] = [
     id: 3,
     name: 'Gold Leggings',
     icon: ICON_ID.LEGGING_GOLD_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.LEGGING,
     stats: {
       defense: 9,
-      strength: 1,
-      intelligence: 1,
+      strength: 3,
+      intelligence: 3,
       constitution: 9,
     },
   },
@@ -221,10 +266,12 @@ export const LEGGINGS: ILegging[] = [
     id: 4,
     name: 'Diamond Leggings',
     icon: ICON_ID.LEGGING_DIAMOND_1,
+    itemType: ITEM_TYPE.ARMOR,
+    armorType: ARMOR_TYPE.LEGGING,
     stats: {
       defense: 11,
-      strength: 1,
-      intelligence: 1,
+      strength: 4,
+      intelligence: 4,
       constitution: 11,
     },
   },
