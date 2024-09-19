@@ -132,7 +132,7 @@ export const WEAPONS: IWeapon[] = [
       defense: 0,
       constitution: 0,
     },
-    range: 3,
+    range: 4,
     cost: 1,
   },
   {
@@ -149,7 +149,7 @@ export const WEAPONS: IWeapon[] = [
       defense: 2,
       constitution: 0,
     },
-    range: 4,
+    range: 6,
     cost: 2,
   },
   {

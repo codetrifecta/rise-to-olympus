@@ -2,11 +2,9 @@ import { FC } from 'react';
 import { ActionPoints } from './ActionPoints';
 import { useGameStateStore } from '../../stores/game';
 import clsx from 'clsx';
-import { usePlayerStore } from '../../stores/player';
 import { Healthbar } from './Healthbar';
 
 export const PlayerInfo: FC = () => {
-  const { player } = usePlayerStore();
   const { isRoomOver } = useGameStateStore();
 
   return (
@@ -32,7 +30,7 @@ export const PlayerInfo: FC = () => {
             'flex items-center w-[400px] py-2 px-3 bg-neutral-900'
           )}
         >
-          <Healthbar entity={player} />
+          <Healthbar />
         </div>
       </div>
     </div>

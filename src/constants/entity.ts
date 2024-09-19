@@ -78,7 +78,7 @@ export const PLAYER: IPlayer = {
     chestpiece: null,
     legging: LEGGINGS.find((legging) => legging.id === 1) || null,
   },
-  healthPotions: 2,
+  healthPotions: 0,
 };
 
 // const equippedSkills = [SKILL_ID.CLEAVE, SKILL_ID.FIREBALL, SKILL_ID.FOCUS].map(

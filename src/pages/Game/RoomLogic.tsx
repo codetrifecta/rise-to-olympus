@@ -84,7 +84,9 @@ export const RoomLogic: FC<{
     roomEntityPositions,
     setRoomEntityPositions,
     turnCycle,
+    prevTurnCycle,
     setTurnCycle,
+    // setPrevTurnCycle,
     endTurn,
     isRoomOver,
     isGameOver,
@@ -118,8 +120,6 @@ export const RoomLogic: FC<{
 
   const { addLog } = useLogStore();
 
-  const prevTurnCycle = useRef<IEntity[]>(turnCycle);
-
   // When player changes room, check if the room is over and set it to true if it is
   useEffect(() => {
     console.log('handleRoomChange');
@@ -142,10 +142,10 @@ export const RoomLogic: FC<{
   // remove it from the turn cycle and,
   // check if the room is over and log a message if it is.
   useEffect(() => {
-    console.log('updateEnemyPositionsWhenEnemyDefeated');
-
     // Update enemy positions when enemy is defeated
     const updateEnemyPositionsWhenEnemyDefeated = () => {
+      console.log('updateEnemyPositionsWhenEnemyDefeated');
+
       // Delete enemy from room entity positions
       const newRoomEntityPositions = new Map<string, [ENTITY_TYPE, number]>(
         roomEntityPositions
@@ -165,6 +165,7 @@ export const RoomLogic: FC<{
 
     // Update turn cycle to remove defeated enemies
     const updateTurnCycleWhenEnemyDefeated = () => {
+      console.log('updateTurnCycleWhenEnemyDefeated');
       if (turnCycle.length > 0) {
         const newTurnCycle = turnCycle.filter((entity) => {
           if (entity.entityType === ENTITY_TYPE.ENEMY) {
@@ -176,7 +177,7 @@ export const RoomLogic: FC<{
           return true;
         });
 
-        prevTurnCycle.current = [...turnCycle];
+        // prevTurnCycle.current = [...turnCycle];
         // Update game store turn cycle
         setTurnCycle(newTurnCycle);
       }
@@ -224,7 +225,7 @@ export const RoomLogic: FC<{
     setRoomCompletion();
   }, [enemies.length]);
 
-  // When room is cleared, log a message
+  // When room is cleared, log a message and reset player's action points
   useEffect(() => {
     if (
       currentRoom &&
@@ -239,7 +240,7 @@ export const RoomLogic: FC<{
         type: 'info',
       });
     }
-  }, [currentRoom]);
+  }, [currentRoom, player]);
 
   // When player's action points reach 0 and there are still enemies in the room (room is not over),
   // Automatically end player's turn
@@ -247,7 +248,6 @@ export const RoomLogic: FC<{
     const automaticallyEndPlayerTurn = () => {
       if (player.actionPoints === 0 && !isRoomOver && enemies.length > 0) {
         console.log('automaticallyEndPlayerTurn');
-        prevTurnCycle.current = [...turnCycle];
         handlePlayerEndTurn(turnCycle, player, setPlayer, endTurn);
         addLog({
           message: (
@@ -620,7 +620,6 @@ export const RoomLogic: FC<{
             type: 'info',
           });
 
-          prevTurnCycle.current = [...turnCycle];
           await sleep(1000);
           endTurn();
         }
@@ -628,21 +627,22 @@ export const RoomLogic: FC<{
     };
 
     if (!isGameOver) {
-      console.log(
-        'prevTurnCycle',
-        prevTurnCycle.current[0].entityType + '_' + prevTurnCycle.current[0].id,
-        turnCycle[0].entityType + '_' + turnCycle[0].id
-      );
+      if (prevTurnCycle.length > 0) {
+        console.log(
+          'prevTurnCycle',
+          prevTurnCycle[0].entityType + '_' + prevTurnCycle[0].id,
+          turnCycle[0].entityType + '_' + turnCycle[0].id
+        );
+      }
       if (
-        prevTurnCycle.current[0].entityType +
-          '_' +
-          prevTurnCycle.current[0].id !==
-        turnCycle[0].entityType + '_' + turnCycle[0].id
+        prevTurnCycle.length === 0 ||
+        prevTurnCycle[0].entityType + '_' + prevTurnCycle[0].id !==
+          turnCycle[0].entityType + '_' + turnCycle[0].id
       ) {
         handleDoT();
       }
     }
-  }, [turnCycle, turnCycle.length, isGameOver]);
+  }, [turnCycle, prevTurnCycle, turnCycle.length, isGameOver]);
 
   // Handle player defeat
   useEffect(() => {

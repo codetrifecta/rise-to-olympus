@@ -11,6 +11,7 @@ interface IGameStateStore {
   roomTileMatrix: TILE_TYPE[][];
   roomEntityPositions: Map<string, [ENTITY_TYPE, number]>;
   turnCycle: IEntity[];
+  prevTurnCycle: IEntity[];
   isRoomOver: boolean;
   isGameOver: boolean;
   isFloorCleared: boolean;
@@ -43,6 +44,7 @@ interface IGameStateStore {
   setIsGenerateRoomOpen: (isGenerateRoomOpen: boolean) => void;
   setIsMinimapOpen: (isMinimapOpen: boolean) => void;
   setTurnCycle: (turnCycle: IEntity[]) => void;
+  setPrevTurnCycle: (prevTurnCycle: IEntity[]) => void;
   setIsRoomOver: (isRoomOver: boolean) => void;
   setIsGameOver: (isGameOver: boolean) => void;
   setIsFloorCleared: (isFloorCleared: boolean) => void;
@@ -64,6 +66,7 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   roomTileMatrix: [],
   roomEntityPositions: new Map(),
   turnCycle: [],
+  prevTurnCycle: [],
   isRoomOver: false,
   isGameOver: false,
   isFloorCleared: false,
@@ -109,19 +112,18 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
 
   // Remove current turn entity from turn cycle and add it to the end
   endTurn: () => {
-    const currentTurnCycle = get().turnCycle;
-    const currentTurnEntity = get().turnCycle.shift();
+    const currentTurnCycle = [...get().turnCycle];
+    const newTurnCycle = [...currentTurnCycle];
+    const currentTurnEntity = newTurnCycle.shift();
 
     if (!currentTurnEntity) {
       console.error('No current turn entity in turn cycle!');
       return;
     }
 
-    currentTurnCycle.push(currentTurnEntity);
+    newTurnCycle.push(currentTurnEntity);
 
-    const newTurnCycle = [...currentTurnCycle];
-
-    set({ turnCycle: newTurnCycle });
+    set({ turnCycle: [...newTurnCycle] });
   },
 
   setIsInventoryOpen: (isInventoryOpen: boolean) => set({ isInventoryOpen }),
@@ -141,6 +143,8 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   setIsMinimapOpen: (isMinimapOpen: boolean) => set({ isMinimapOpen }),
 
   setTurnCycle: (turnCycle: IEntity[]) => set({ turnCycle }),
+
+  setPrevTurnCycle: (prevTurnCycle: IEntity[]) => set({ prevTurnCycle }),
 
   setIsRoomOver: (isRoomOver: boolean) => set({ isRoomOver }),
 
