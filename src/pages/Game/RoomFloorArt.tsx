@@ -60,7 +60,15 @@ export const RoomFloorArt: FC<{
 
       context.drawImage(image, 0, 0, width, height);
     };
-  }, [canvasRef.current, width, height, grayscale, isRoomOver, floorArtFile]);
+  }, [
+    canvasRef.current,
+    width,
+    height,
+    grayscale,
+    isRoomOver,
+    floorArtFile,
+    currentRoom,
+  ]);
 
   return (
     <canvas

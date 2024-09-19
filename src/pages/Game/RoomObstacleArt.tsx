@@ -42,6 +42,11 @@ export const RoomObstacleArt: FC<{
       return;
     }
 
+    // If current room has no obstacle art, don't draw anything
+    if (!currentRoom.artObstacle) {
+      return;
+    }
+
     let imgSrc = currentRoom.artObstacle;
 
     if (!imgSrc) {

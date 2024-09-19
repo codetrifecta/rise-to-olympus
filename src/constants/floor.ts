@@ -14,6 +14,35 @@ import art_room_tutorial_obstacle_3 from '../assets/sprites/tiles/tutorial/room_
 import art_room_tutorial_floor_4 from '../assets/sprites/tiles/tutorial/room_tutorial_floor_4.png';
 import art_room_tutorial_obstacle_4 from '../assets/sprites/tiles/tutorial/room_tutorial_obstacle_4.png';
 
+import art_room_tartarus_camp_floor from '../assets/sprites/tiles/tartarus/room_tartarus_camp_floor.png';
+import art_room_tartarus_camp_wall from '../assets/sprites/tiles/tartarus/room_tartarus_camp_wall.png';
+
+export const TARTARUS_CAMP_FLOOR: IFloor = [
+  [
+    {
+      ...BASE_ROOM,
+      id: 1,
+      type: ROOM_TYPE.START,
+      roomLength: 9,
+      position: [0, 0],
+      roomTileMatrix: [
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        [3, 3, 3, 4, 4, 4, 3, 3, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 1, 1, 1, 1, 1, 1, 1, 3],
+        [3, 3, 3, 3, 3, 3, 3, 3, 3],
+      ],
+      artFloor: art_room_tartarus_camp_floor,
+      artObstacle: '',
+      artWall: art_room_tartarus_camp_wall,
+    },
+  ],
+];
+
 const createTutorialFloor = () => {
   let id = 0;
   const tutorialFloor: IFloor = [];
@@ -49,6 +78,7 @@ const createTutorialFloor = () => {
           [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
           [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
         ],
+        nextFloor: TARTARUS_CAMP_FLOOR,
       };
     }
   }
@@ -163,11 +193,21 @@ const createTutorialFloor = () => {
         ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
         id: 3,
       },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 4,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 5,
+      },
     ],
     roomEntityPositions: new Map([
       ['12,9', [ENTITY_TYPE.ENEMY, 1]],
       ['5,14', [ENTITY_TYPE.ENEMY, 2]],
       ['16,16', [ENTITY_TYPE.ENEMY, 3]],
+      ['14,10', [ENTITY_TYPE.ENEMY, 4]],
+      ['6,16', [ENTITY_TYPE.ENEMY, 5]],
     ]),
     roomTileMatrix: [
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],

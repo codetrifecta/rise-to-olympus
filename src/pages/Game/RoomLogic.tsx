@@ -64,6 +64,7 @@ import {
 } from '../../constants/skillAnimation';
 import { useFloorStore } from '../../stores/floor';
 import { sleep } from '../../utils/general';
+import { ROOM_TYPE } from '../../constants/room';
 
 export const RoomLogic: FC<{
   currentHoveredEntity: IEntity | null;
@@ -92,6 +93,7 @@ export const RoomLogic: FC<{
     setIsChestOpen,
     setIsGameOver,
     setIsRoomOver,
+    setIsFloorCleared,
     setHoveredTile,
     setIsEntityMoving,
   } = useGameStateStore();
@@ -115,6 +117,8 @@ export const RoomLogic: FC<{
 
   const { addLog } = useLogStore();
 
+  const prevTurnCycle = useRef<IEntity[]>(turnCycle);
+
   // When player changes room, check if the room is over and set it to true if it is
   useEffect(() => {
     console.log('handleRoomChange');
@@ -122,6 +126,10 @@ export const RoomLogic: FC<{
     const handleRoomChange = () => {
       if (currentRoom?.enemies.length === 0 || currentRoom?.isCleared) {
         setIsRoomOver(true);
+
+        if (currentRoom.type === ROOM_TYPE.BOSS) {
+          setIsFloorCleared(true);
+        }
       }
     };
 
@@ -167,6 +175,7 @@ export const RoomLogic: FC<{
           return true;
         });
 
+        prevTurnCycle.current = [...turnCycle];
         // Update game store turn cycle
         setTurnCycle(newTurnCycle);
       }
@@ -237,6 +246,7 @@ export const RoomLogic: FC<{
     const automaticallyEndPlayerTurn = () => {
       if (player.actionPoints === 0 && !isRoomOver && enemies.length > 0) {
         console.log('automaticallyEndPlayerTurn');
+        prevTurnCycle.current = [...turnCycle];
         handlePlayerEndTurn(turnCycle, getPlayer, setPlayer, endTurn);
         addLog({
           message: (
@@ -254,7 +264,7 @@ export const RoomLogic: FC<{
 
   // When turn cycle changes,
   // Handle DoT effects,
-  // Handle enemy turn (Move closest to player and attack if within range)
+  // Handle enemy turn (Move closer to player and attack if within range)
   useEffect(() => {
     console.log('handleDoT');
 
@@ -445,17 +455,25 @@ export const RoomLogic: FC<{
 
             if (!cannotAttack) {
               let enemyAP = newEnemy.actionPoints;
+              let newPlayer = player;
               while (enemyAP >= 2) {
                 // Make enemy attack player if they can attack
-                const enemyAfterAttack = await handleEnemyAttack(
-                  newEnemy,
-                  enemyPosition,
-                  playerPosition
-                );
+                const [enemyAfterAttack, playerAfterAttack] =
+                  await handleEnemyAttack(
+                    newEnemy,
+                    enemyPosition,
+                    newPlayer,
+                    playerPosition
+                  );
 
                 newEnemy = {
                   ...newEnemy,
                   ...enemyAfterAttack,
+                };
+
+                newPlayer = {
+                  ...newPlayer,
+                  ...playerAfterAttack,
                 };
 
                 enemyAP -= 2;
@@ -488,21 +506,33 @@ export const RoomLogic: FC<{
             // Make enemy attack player if they can attack
             if (!cannotAttack) {
               let enemyAP = newEnemy.actionPoints;
+              let newPlayer = player;
               while (enemyAP >= 2) {
                 if (!enemyPosition) {
                   console.error('Enemy position not found!');
                   return;
                 }
-                const enemyAfterAttack = await handleEnemyAttack(
-                  newEnemy,
-                  enemyPosition,
-                  playerPosition
-                );
+                const [enemyAfterAttack, playerAfterAttack] =
+                  await handleEnemyAttack(
+                    newEnemy,
+                    enemyPosition,
+                    player,
+                    playerPosition
+                  );
 
                 newEnemy = {
                   ...newEnemy,
                   ...enemyAfterAttack,
                 };
+
+                newPlayer = {
+                  ...newPlayer,
+                  ...playerAfterAttack,
+                };
+
+                if (newPlayer.health <= 0) {
+                  return;
+                }
 
                 enemyAP -= 2;
                 setEnemy(newEnemy);
@@ -588,13 +618,28 @@ export const RoomLogic: FC<{
             ),
             type: 'info',
           });
+
+          prevTurnCycle.current = [...turnCycle];
+          await sleep(1000);
           endTurn();
         }
       }
     };
 
     if (!isGameOver) {
-      handleDoT();
+      console.log(
+        'prevTurnCycle',
+        prevTurnCycle.current[0].entityType + '_' + prevTurnCycle.current[0].id,
+        turnCycle[0].entityType + '_' + turnCycle[0].id
+      );
+      if (
+        prevTurnCycle.current[0].entityType +
+          '_' +
+          prevTurnCycle.current[0].id !==
+        turnCycle[0].entityType + '_' + turnCycle[0].id
+      ) {
+        handleDoT();
+      }
     }
   }, [turnCycle, turnCycle.length, isGameOver]);
 
@@ -1139,6 +1184,10 @@ export const RoomLogic: FC<{
   const handlePlayerMove = async (row: number, col: number) => {
     console.log('handlePlayerMove');
 
+    if (isEntityMoving) {
+      return;
+    }
+
     // Set player's state to not moving to turn off effect tiles
     setPlayerState({
       ...player.state,
@@ -1170,17 +1219,30 @@ export const RoomLogic: FC<{
 
     setIsEntityMoving(true);
 
+    const spriteDirection = getEntitySpriteDirection(player);
+    if (col < newPlayerPosition[1]) {
+      setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.LEFT);
+    } else if (col > newPlayerPosition[1]) {
+      setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.RIGHT);
+    } else {
+      setEntityAnimationWalk(player, spriteDirection);
+    }
+
     while (path.length > 0) {
       const [row, col] = path[0];
 
       // Update player walking animation direction based on movement path if player is not already facing that direction
       const spriteDirection = getEntitySpriteDirection(player);
-      if (col < newPlayerPosition[1]) {
+      if (
+        col < newPlayerPosition[1] &&
+        spriteDirection !== ENTITY_SPRITE_DIRECTION.LEFT
+      ) {
         setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.LEFT);
-      } else if (col > newPlayerPosition[1]) {
+      } else if (
+        col > newPlayerPosition[1] &&
+        spriteDirection !== ENTITY_SPRITE_DIRECTION.RIGHT
+      ) {
         setEntityAnimationWalk(player, ENTITY_SPRITE_DIRECTION.RIGHT);
-      } else {
-        setEntityAnimationWalk(player, spriteDirection);
       }
 
       // Update player's position in the entity positions map
@@ -1205,7 +1267,7 @@ export const RoomLogic: FC<{
 
       // Delete the first element in the path array
       path = path.slice(1);
-      await sleep(isRoomOver ? 400 : 500);
+      await sleep(isRoomOver ? 250 : 500);
 
       if (path.length === 0) {
         setIsEntityMoving(false);
@@ -1494,17 +1556,32 @@ export const RoomLogic: FC<{
 
     setIsEntityMoving(true);
 
+    // Update enemy walking animation direction based on movement path
+    const [, col] = shortestPath[0];
+    const spriteDirection = getEntitySpriteDirection(enemy);
+    if (col < newEnemyPosition[1]) {
+      setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.LEFT);
+    } else if (col > newEnemyPosition[1]) {
+      setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.RIGHT);
+    } else {
+      setEntityAnimationWalk(enemy, spriteDirection);
+    }
+
     while (shortestPath.length > 0) {
       const [row, col] = shortestPath[0];
 
       // Update enemy walking animation direction based on movement path
       const spriteDirection = getEntitySpriteDirection(enemy);
-      if (col < newEnemyPosition[1]) {
+      if (
+        col < newEnemyPosition[1] &&
+        spriteDirection !== ENTITY_SPRITE_DIRECTION.LEFT
+      ) {
         setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.LEFT);
-      } else if (col > newEnemyPosition[1]) {
+      } else if (
+        col > newEnemyPosition[1] &&
+        spriteDirection !== ENTITY_SPRITE_DIRECTION.RIGHT
+      ) {
         setEntityAnimationWalk(enemy, ENTITY_SPRITE_DIRECTION.RIGHT);
-      } else {
-        setEntityAnimationWalk(enemy, spriteDirection);
       }
 
       // Update enemy's position in the entity positions map
@@ -1552,17 +1629,19 @@ export const RoomLogic: FC<{
   const handleEnemyAttack = async (
     enemy: IEnemy,
     enemyPosition: [number, number],
+    player: IPlayer,
     playerPosition: [number, number]
-  ): Promise<IEnemy> => {
+  ): Promise<[IEnemy, IPlayer]> => {
     console.log('handleEnemyAttack');
 
     let newEnemy: IEnemy = { ...enemy };
     const [enemyRow, enemyCol] = enemyPosition;
+    let newPlayer: IPlayer = { ...player };
     const [playerRow, playerCol] = playerPosition;
 
     if (!enemyRow || !enemyCol || !playerRow || !playerCol) {
       addLog({ message: 'Enemy or player position not found!', type: 'error' });
-      return newEnemy;
+      return [newEnemy, newPlayer];
     }
 
     const canAttackPlayer =
@@ -1619,7 +1698,7 @@ export const RoomLogic: FC<{
           type: 'info',
         });
 
-        return newEnemy;
+        return [newEnemy, newPlayer];
       } else {
         // Calculate damage
         const baseDamage = newEnemy.damage;
@@ -1677,6 +1756,11 @@ export const RoomLogic: FC<{
         newEnemy = {
           ...newEnemy,
           actionPoints: newEnemy.actionPoints - 2,
+        };
+
+        newPlayer = {
+          ...newPlayer,
+          health: playerHealth < 0 ? 0 : playerHealth,
         };
 
         if (playerHealth <= 0) {
@@ -1760,14 +1844,14 @@ export const RoomLogic: FC<{
             type: 'info',
           });
 
-          return newEnemy;
+          return [newEnemy, newPlayer];
         }
 
-        return newEnemy;
+        return [newEnemy, newPlayer];
       }
     }
 
-    return newEnemy;
+    return [newEnemy, newPlayer];
   };
 
   // console.log('targetZones', targetZones.current);
@@ -2475,7 +2559,13 @@ export const RoomLogic: FC<{
                   } else if (tileType === TILE_TYPE.FLOOR) {
                     handlePlayerMove(rowIndex, columnIndex);
                   } else if (tileType === TILE_TYPE.CHEST) {
-                    setIsChestOpen(true);
+                    // Only open chest if player is within 1 tile of the chest
+                    if (
+                      Math.abs(playerRow - rowIndex) <= 1 &&
+                      Math.abs(playerCol - columnIndex) <= 1
+                    ) {
+                      setIsChestOpen(true);
+                    }
                   }
 
                   return;

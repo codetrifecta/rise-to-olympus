@@ -187,7 +187,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
   [ENEMY_PRESET_ID.CERBERUS_PUP]: {
     ...BASE_ENTITY,
     id: 0,
-    name: 'Cerberus Cat',
+    name: 'Corrupted Cat',
     sprite: SPRITE_ID.CERBERUS_PUP,
     spriteSize: TILE_SIZE * 2,
     spritesheetRows: 5,

@@ -13,6 +13,7 @@ interface IGameStateStore {
   turnCycle: IEntity[];
   isRoomOver: boolean;
   isGameOver: boolean;
+  isFloorCleared: boolean;
   isLoading: boolean;
   isInventoryOpen: boolean;
   isGameLogOpen: boolean;
@@ -44,6 +45,7 @@ interface IGameStateStore {
   setTurnCycle: (turnCycle: IEntity[]) => void;
   setIsRoomOver: (isRoomOver: boolean) => void;
   setIsGameOver: (isGameOver: boolean) => void;
+  setIsFloorCleared: (isFloorCleared: boolean) => void;
   setIsLoading: (isLoading: boolean) => void;
   setIsChestOpen: (isChestOpen: boolean) => void;
   setFile: (file: string) => void;
@@ -64,14 +66,15 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   turnCycle: [],
   isRoomOver: false,
   isGameOver: false,
+  isFloorCleared: false,
   isLoading: true,
   isInventoryOpen: false,
-  isGameLogOpen: true,
+  isGameLogOpen: false,
   isCharacterSheetOpen: false,
   isGenerateRoomOpen: false,
   isCompendiumOpen: false,
   isChestOpen: false,
-  isMinimapOpen: true,
+  isMinimapOpen: false,
   file: '',
   floorArtFile: '',
   wallArtFile: '',
@@ -142,6 +145,8 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   setIsRoomOver: (isRoomOver: boolean) => set({ isRoomOver }),
 
   setIsGameOver: (isGameOver: boolean) => set({ isGameOver }),
+
+  setIsFloorCleared: (isFloorCleared: boolean) => set({ isFloorCleared }),
 
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
 

@@ -151,7 +151,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.AOE, SKILL_TAG.DAMAGE],
     description:
       'Spin around dealing damage to all adjacent enemies. Range is dependent on weapon.',
-    damageMultiplier: 1,
+    damageMultiplier: 1.3,
     range: 1,
     cooldown: 3,
     cooldownCounter: 0,

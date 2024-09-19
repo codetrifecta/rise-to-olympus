@@ -20,13 +20,10 @@ import { ChestItemsDisplay } from './ChestItemsDisplay';
 import { Minimap } from './Minimap';
 import { useFloorStore } from '../../stores/floor';
 import { ROOM_TYPE } from '../../constants/room';
-import { ENTITY_TYPE } from '../../constants/entity';
-
-// Flag for first room render
-
-// Camera movement speed
-// const cameraStraightMoveSpeed = 7;
-// const cameraDiagonalMoveSpeed = Math.sqrt(cameraStraightMoveSpeed ** 2 / 2);
+import { ENTITY_SPRITE_DIRECTION, ENTITY_TYPE } from '../../constants/entity';
+import { useCampaignStore } from '../../stores/campaign';
+import { ProceedToNextFloor } from './ProceedToNextFloor';
+import { setEntityAnimationIdle } from '../../utils/entity';
 
 const MAX_CAMERA_STRIGHT_MOVE_SPEED = 8;
 const MAX_CAMERA_DIAGONAL_MOVE_SPEED = Math.sqrt(
@@ -60,6 +57,7 @@ export const GameRoom: FC = () => {
 
   const {
     isRoomOver,
+    isFloorCleared,
     isChestOpen,
     turnCycle,
     isInventoryOpen,
@@ -89,6 +87,8 @@ export const GameRoom: FC = () => {
   const player = getPlayer();
 
   const { setEnemies } = useEnemyStore();
+
+  const { selectedCampaign } = useCampaignStore();
 
   // Initialize key press handlers
   useEffect(() => {
@@ -156,6 +156,14 @@ export const GameRoom: FC = () => {
     }
   }, [floor.length]);
 
+  useEffect(() => {
+    // Check if the starter script is over
+    if (selectedCampaign?.scriptsCompleted.tutorial) {
+      setIsGameLogOpen(true);
+      setIsMinimapOpen(true);
+    }
+  }, [selectedCampaign]);
+
   // When room changes, initialize game state according to the room
   useEffect(() => {
     console.log('handleRoomInitialization', currentRoom);
@@ -206,6 +214,18 @@ export const GameRoom: FC = () => {
           // Setup entities
           setEnemies(roomEnemies);
           setRoomEntityPositions(roomEntityPositions);
+
+          // Setup animations for enemies
+          setTimeout(() => {
+            roomEnemies.forEach((enemy) => {
+              setEntityAnimationIdle(
+                enemy,
+                Math.random() > 0.5
+                  ? ENTITY_SPRITE_DIRECTION.RIGHT
+                  : ENTITY_SPRITE_DIRECTION.LEFT
+              );
+            });
+          }, 100);
 
           // Set turn cycle
           setTurnCycle([player, ...roomEnemies]);
@@ -524,6 +544,7 @@ export const GameRoom: FC = () => {
           </section>
         ) : null}
 
+        {/* Game Log */}
         <div
           className={clsx('fixed left-10 xl:w-[20%] w-[23%] max-h-[200px]', {
             'z-[50]': isGameLogOpen,
@@ -534,6 +555,7 @@ export const GameRoom: FC = () => {
           <Logger />
         </div>
 
+        {/* Character Sheet */}
         <div
           className={clsx(
             'fixed left-0 w-[400px] shadow-lg transition-all ease duration-300 delay-0 z-[51]'
@@ -648,6 +670,18 @@ export const GameRoom: FC = () => {
         >
           <PlayerControlPanel />
         </section>
+
+        {/* Proceed to Next Floor Button */}
+        {isFloorCleared && isRoomOver && (
+          <section
+            className="z-50 fixed right-10"
+            style={{
+              bottom: `calc(${PLAYER_CONTROL_PANEL_HEIGHT}px + 2rem)`,
+            }}
+          >
+            <ProceedToNextFloor />
+          </section>
+        )}
         {/* </div> */}
       </div>
     </>

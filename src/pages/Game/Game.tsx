@@ -69,7 +69,7 @@ export const Game = () => {
   return (
     <>
       <div
-        className="fixed bottom-0 z-50 bottom-0 transition duration-500 ease-in-out"
+        className="fixed bottom-0 z-[500] bottom-0 transition duration-500 ease-in-out"
         style={{
           transform:
             currentScript && currentScript.length > 0
