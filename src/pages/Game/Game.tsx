@@ -9,9 +9,16 @@ import { GameRoom } from './GameRoom';
 import { StartRoomEscModalOverlay } from '../../overlays/StartRoomEscModalOverlay';
 import { usePlayerStore } from '../../stores/player';
 import { useLogStore } from '../../stores/log';
-import { LOG_TUTORIAL_START_ROOM } from '../../constants/log';
+import {
+  LOGS_TUTORIAL_START_ROOM,
+  LOGS_TUTORIAL_TARTARUS_CAMP,
+} from '../../constants/log';
 import { useFloorStore } from '../../stores/floor';
-import { FLOOR_TARTARUS_CAMP, FLOOR_TUTORIAL } from '../../constants/floor';
+import {
+  FLOOR_TARTARUS_CAMP,
+  FLOOR_TUTORIAL,
+  FLOOR_TUTORIAL_CHEST_ITEMS,
+} from '../../constants/floor';
 import { useGameStateStore } from '../../stores/game';
 
 export const Game = () => {
@@ -20,7 +27,7 @@ export const Game = () => {
   const { currentScript, setCurrentScript } = useScriptStore();
   const { player, setPlayer } = usePlayerStore();
   const { setLogs } = useLogStore();
-  const { setFloor } = useFloorStore();
+  const { setFloor, setFloorChestItems } = useFloorStore();
   const { setIsMinimapOpen, setIsGameLogOpen } = useGameStateStore();
 
   const [escModalOpen, setEscModalOpen] = useState(false);
@@ -51,7 +58,7 @@ export const Game = () => {
   // and set the logs to the tutorial start room logs.
   // If no campaign ID is found, redirect to the home page.
   useEffect(() => {
-    const skipTutorial = searchParams.get('skipTutorial');
+    const skipTutorial = searchParams.get('skipTutorial') ? true : false;
     const campaignId = searchParams.get('campaignId');
 
     console.log('skipTutorial:', skipTutorial);
@@ -77,16 +84,28 @@ export const Game = () => {
 
     console.log('Campaign:', campaign);
 
-    if (!skipTutorial && !campaign.scriptsCompleted.tutorial) {
+    if (
+      skipTutorial === false &&
+      campaign.scriptsCompleted.tutorial === false
+    ) {
+      // If no skipping tutorial and tutorial is not completed
       if (!campaign.scriptsCompleted.tutorialStartRoom) {
+        // If tutorial start room script is not completed
         setCurrentScript(SCRIPT_TUTORIAL_START_ROOM);
         setIsGameLogOpen(false);
         setIsMinimapOpen(false);
       }
-      setLogs(LOG_TUTORIAL_START_ROOM);
+      setLogs(LOGS_TUTORIAL_START_ROOM);
       setFloor(FLOOR_TUTORIAL);
+      setFloorChestItems(FLOOR_TUTORIAL_CHEST_ITEMS);
       console.log('Showing tutorial');
-    } else if (skipTutorial && !campaign.scriptsCompleted.tutorial) {
+    } else if (
+      skipTutorial === true &&
+      campaign.scriptsCompleted.tutorial === false
+    ) {
+      // If skipping tutorial and tutorial is not completed,
+      // skip tutorial and go to camp
+
       // Set campaign's tutorial to completed
       const newCampaigns = campaigns.map((c) =>
         c.id === campaign.id
@@ -98,11 +117,12 @@ export const Game = () => {
       );
       setCampaigns(newCampaigns);
 
-      setLogs([]);
+      setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
       setFloor(FLOOR_TARTARUS_CAMP);
       console.log('Skipping tutorial and going to camp');
     } else {
-      setLogs([]);
+      // The case where the tutorial script is completed
+      setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
       setFloor(FLOOR_TARTARUS_CAMP);
       console.log('Skipping tutorial and going to camp');
     }

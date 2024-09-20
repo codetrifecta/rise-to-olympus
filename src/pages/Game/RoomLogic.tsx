@@ -1242,10 +1242,12 @@ export const RoomLogic: FC<{
     }
 
     // Set player's state to not moving to turn off effect tiles
-    setPlayerState({
-      ...player.state,
-      isMoving: false,
-    });
+    if (!isRoomOver) {
+      setPlayerState({
+        ...player.state,
+        isMoving: false,
+      });
+    }
 
     let newPlayerPosition = playerPosition;
     let newRoomEntityPositions = new Map([...roomEntityPositions]);

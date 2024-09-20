@@ -299,7 +299,7 @@ export const FLOOR_TUTORIAL: IFloor = {
 };
 
 let id = 0;
-export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
+export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
   [
     '2,1',
     [

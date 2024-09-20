@@ -21,4 +21,4 @@ export const BASE_CAMPAIGN: ICampaign = {
   },
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
-};
+} as const;

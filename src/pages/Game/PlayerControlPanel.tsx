@@ -420,7 +420,7 @@ export const PlayerControlPanel: FC = () => {
                       ...newPlayer,
                       health: newPlayer.health + healAmount,
                       healthPotions: player.healthPotions - 1,
-                      actionPoints: player.actionPoints - 1,
+                      actionPoints: isRoomOver ? 0 : player.actionPoints - 1,
                     });
 
                     healEntity(

@@ -5,14 +5,21 @@ import { useGameStateStore } from '../../stores/game';
 import { FLOOR_ID, FLOOR_TARTARUS_CAMP } from '../../constants/floor';
 import { ICampaign, IFloor } from '../../types';
 import { useCampaignStore } from '../../stores/campaign';
+import { useLogStore } from '../../stores/log';
+import { LOGS_TUTORIAL_TARTARUS_CAMP } from '../../constants/log';
+import { usePlayerStore } from '../../stores/player';
 
 export const ProceedToNextFloor: FC = () => {
-  const { currentRoom, floor, setFloor } = useFloorStore();
-  const { setIsFloorCleared } = useGameStateStore();
+  const { currentRoom, floor, setCurrentRoom, setFloor } = useFloorStore();
+  const { setIsFloorCleared, resetGameState } = useGameStateStore();
   const { selectedCampaign, campaigns, setCampaigns, setSelectedCampaign } =
     useCampaignStore();
+  const { setLogs } = useLogStore();
+  const { resetPlayerStore } = usePlayerStore();
 
   const handleProceedButtonClick = () => {
+    console.log('Proceed to next floor');
+
     if (!floor) {
       console.error('Floor not found!');
       return;
@@ -53,7 +60,7 @@ export const ProceedToNextFloor: FC = () => {
       return;
     }
 
-    const newSelectedCampaign: ICampaign | null = {
+    let newSelectedCampaign: ICampaign | null = {
       ...selectedCampaign,
     };
 
@@ -67,7 +74,13 @@ export const ProceedToNextFloor: FC = () => {
         break;
       case 'TARTARUS_CAMP':
         // setFloor(FLOOR_TARTARUS_CAMP);
-        newSelectedCampaign.scriptsCompleted.tutorial = true;
+        newSelectedCampaign = {
+          ...newSelectedCampaign,
+          scriptsCompleted: {
+            ...newSelectedCampaign.scriptsCompleted,
+            tutorial: true,
+          },
+        };
         break;
       default:
         console.error('ProceedToNextFloor: Unknown next floor ID');
@@ -85,6 +98,14 @@ export const ProceedToNextFloor: FC = () => {
       )
     );
 
+    // Set logs for the next floor
+    if (nextFloor.id === FLOOR_ID.TARTARUS_CAMP) {
+      setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
+    }
+
+    resetGameState();
+    resetPlayerStore();
+    setCurrentRoom(null);
     setFloor(nextFloor);
     setIsFloorCleared(false);
   };

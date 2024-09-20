@@ -119,6 +119,8 @@ export const GameRoom: FC = () => {
   useEffect(() => {
     if (floor && currentRoom === null) {
       console.log('Floor initialized');
+      setFirstRoomRender(true);
+
       // Set first room to START room
       let startRoom: IRoom | null = null;
 
@@ -158,6 +160,8 @@ export const GameRoom: FC = () => {
     }
   }, [floor]);
 
+  // When selected campaign changes, check if the tutorial start room script is over.
+  // If it is, open the game log and minimap
   useEffect(() => {
     // Check if the starter script is over
     if (selectedCampaign?.scriptsCompleted.tutorialStartRoom) {
@@ -166,7 +170,7 @@ export const GameRoom: FC = () => {
     }
   }, [selectedCampaign, floor]);
 
-  // When room changes, initialize game state according to the room
+  // When room changes, initialize game state according to the room specifications
   useEffect(() => {
     const handleRoomInitialization = () => {
       console.log('handleRoomInitialization', currentRoom);
@@ -241,35 +245,43 @@ export const GameRoom: FC = () => {
 
   // When room container ref value changes, (in this case when the room container is mounted).
   // Scroll into the middle of the room container (to view the room)
-  useEffect(() => {
-    const scrollIntoMiddleOfRoom = () => {
-      if (roomContainerRef.current !== null && firstRoomRender) {
-        setTimeout(() => {
-          if (
-            roomContainerRef.current !== null &&
-            roomScrollRef.current !== null
-          ) {
-            const roomContainerX = roomContainerRef.current.offsetWidth / 2;
-            const roomContainerY = roomContainerRef.current.offsetHeight / 2;
-
-            roomScrollRef.current.scrollLeft =
-              roomContainerX - window.innerWidth / 2;
-            roomScrollRef.current.scrollTop =
-              roomContainerY - window.innerHeight / 2 + 50;
-
-            bufferArtRender();
-          }
-        }, 200);
-      }
-    };
-
-    const bufferArtRender = () =>
+  const scrollIntoMiddleOfRoom = () => {
+    if (
+      roomContainerRef.current !== null &&
+      roomScrollRef.current !== null &&
+      firstRoomRender
+    ) {
+      //   await sleep(200);
       setTimeout(() => {
-        setFirstRoomRender(false);
-      }, 100);
+        if (
+          roomContainerRef.current !== null &&
+          roomScrollRef.current !== null
+        ) {
+          const roomContainerX = roomContainerRef.current.offsetWidth / 2;
+          const roomContainerY = roomContainerRef.current.offsetHeight / 2;
 
-    scrollIntoMiddleOfRoom();
-  }, [roomContainerRef.current, roomScrollRef.current]);
+          roomScrollRef.current.scrollLeft =
+            roomContainerX - window.innerWidth / 2;
+          roomScrollRef.current.scrollTop =
+            roomContainerY - window.innerHeight / 2 + 50;
+        }
+
+        setFirstRoomRender(false);
+      }, 200);
+    }
+  };
+
+  useEffect(() => {
+    const handleRoomContainerRefChange = () => {
+      scrollIntoMiddleOfRoom();
+    };
+    handleRoomContainerRefChange();
+  }, [
+    roomContainerRef.current,
+    roomScrollRef.current,
+    currentRoom,
+    firstRoomRender,
+  ]);
 
   // Check every 50ms to check input to move camera
   useEffect(() => {
@@ -490,7 +502,7 @@ export const GameRoom: FC = () => {
   return (
     <>
       {firstRoomRender === true ? (
-        <h1 className="fixed w-screen h-screen flex justify-center items-center z-[100] bg-black"></h1>
+        <h1 className="fixed w-screen h-screen flex justify-center items-center z-[1000] bg-black"></h1>
       ) : null}
       <div className="relative max-w-screen h-screen flex flex-col justify-start overflow-hidden">
         {/* Chest Items Display (Only display when chest is clicked and room is over) */}
@@ -651,16 +663,16 @@ export const GameRoom: FC = () => {
         </section>
 
         {/* Proceed to Next Floor Button */}
-        {/* {isFloorCleared && isRoomOver && ( */}
-        <section
-          className="z-50 fixed right-10"
-          style={{
-            bottom: `calc(${PLAYER_CONTROL_PANEL_HEIGHT}px + 2rem)`,
-          }}
-        >
-          <ProceedToNextFloor />
-        </section>
-        {/* )} */}
+        {isFloorCleared && isRoomOver && (
+          <section
+            className="z-50 fixed right-10"
+            style={{
+              bottom: `calc(${PLAYER_CONTROL_PANEL_HEIGHT}px + 2rem)`,
+            }}
+          >
+            <ProceedToNextFloor />
+          </section>
+        )}
       </div>
     </>
   );

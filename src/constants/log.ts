@@ -1,6 +1,6 @@
 import { ILog } from '../types';
 
-export const LOG_TUTORIAL_START_ROOM: ILog[] = [
+export const LOGS_TUTORIAL_START_ROOM: ILog[] = [
   {
     type: 'info',
     message: 'Welcome to the tutorial!',
@@ -40,6 +40,51 @@ export const LOG_TUTORIAL_START_ROOM: ILog[] = [
     message:
       'You can use the log to keep track of the actions you have taken and the events that have occurred.',
   },
+  {
+    type: 'info',
+    message: 'You can press ESC to go back to the main menu to exit the game.',
+  },
+  {
+    type: 'info',
+    message: 'Good luck and have fun!',
+  },
+];
+
+export const LOGS_TUTORIAL_TARTARUS_CAMP: ILog[] = [
+  {
+    type: 'info',
+    message: 'Welcome to the Camp!',
+  },
+  {
+    type: 'info',
+    message:
+      'You have successfully completed the tutorial and will soon take on the challenges of Tartarus.',
+  },
+  {
+    type: 'info',
+    message:
+      'Before you embark, try accessing the compendium by clicking on the book icon on the bottom left or pressing K. The compendium contains all the available skills that you can unlock and use in combat.',
+  },
+  {
+    type: 'info',
+    message:
+      'You will notice that you only have 3 total slots for skills. You will unlock more slots after clearing floors.',
+  },
+  {
+    type: 'info',
+    message:
+      'When you are ready, proceed to the next floor by clicking on the door right above you.',
+  },
+  //   {
+  //     type: 'info',
+  //     message:
+  //       'You can now explore the camp, interact with the NPCs, and take on quests to gain experience and loot.',
+  //   },
+  //   {
+  //     type: 'info',
+  //     message:
+  //       'You can also visit the shop to buy and sell items, the blacksmith to upgrade your gear, and the tavern to rest and recover.',
+  //   },
   {
     type: 'info',
     message: 'You can press ESC to go back to the main menu to exit the game.',

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { ILog } from '../types';
-import { LOG_TUTORIAL_START_ROOM } from '../constants/log';
+import { LOGS_TUTORIAL_START_ROOM } from '../constants/log';
 
 interface ILogStore {
   logs: ILog[];
@@ -10,7 +10,7 @@ interface ILogStore {
 }
 
 export const useLogStore = create<ILogStore>((set, get) => ({
-  logs: LOG_TUTORIAL_START_ROOM,
+  logs: LOGS_TUTORIAL_START_ROOM,
   addLog: (log) => set({ logs: [...get().logs, log] }),
   clearLogs: () => set({ logs: [] }),
   setLogs: (logs) => set({ logs }),

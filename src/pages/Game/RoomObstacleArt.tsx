@@ -65,11 +65,6 @@ export const RoomObstacleArt: FC<{
         return;
       }
 
-      console.log(
-        'RoomObstacleArt: Drawing obstacle art',
-        currentRoom.artObstacle
-      );
-
       if (grayscale) {
         context.filter = 'grayscale(1)';
       }

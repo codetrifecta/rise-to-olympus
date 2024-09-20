@@ -33,14 +33,26 @@ export const ScriptOverlay: FC = () => {
 
     if (!selectedCampaign || !currentScript) return;
 
-    const editedCampaign: ICampaign = {
+    let editedCampaign: ICampaign = {
       ...selectedCampaign,
     };
 
     if (currentScript[0].parent === SCRIPT_PARENT.TUTORIAL_START_ROOM) {
-      editedCampaign.scriptsCompleted.tutorialStartRoom = true;
+      editedCampaign = {
+        ...editedCampaign,
+        scriptsCompleted: {
+          ...editedCampaign.scriptsCompleted,
+          tutorialStartRoom: true,
+        },
+      };
     } else if (currentScript[0].parent === SCRIPT_PARENT.TUTORIAL) {
-      editedCampaign.scriptsCompleted.tutorial = true;
+      editedCampaign = {
+        ...editedCampaign,
+        scriptsCompleted: {
+          ...editedCampaign.scriptsCompleted,
+          tutorial: true,
+        },
+      };
     }
 
     const newCampaigns = campaigns.map((c) =>

@@ -6,7 +6,7 @@ interface IFloorStore {
   setFloor: (floor: IFloor) => void;
 
   currentRoom: IRoom | null;
-  setCurrentRoom: (currentRoom: IRoom) => void;
+  setCurrentRoom: (currentRoom: IRoom | null) => void;
 
   floorChestItems: Map<string, Item[]>;
   setFloorChestItems: (floorChestItems: Map<string, Item[]>) => void;
@@ -19,7 +19,7 @@ export const useFloorStore = create<IFloorStore>((set) => ({
   setFloor: (floor: IFloor) => set({ floor }),
 
   currentRoom: null,
-  setCurrentRoom: (currentRoom: IRoom) => set({ currentRoom }),
+  setCurrentRoom: (currentRoom: IRoom | null) => set({ currentRoom }),
 
   floorChestItems: new Map(),
   setFloorChestItems: (floorChestItems: Map<string, Item[]>) =>
