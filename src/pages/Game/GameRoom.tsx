@@ -48,7 +48,6 @@ const keyPressed: Record<string, boolean> = {};
 export const GameRoom: FC = () => {
   const [firstRoomRender, setFirstRoomRender] = useState(true);
 
-  const [headerOpen, setHeaderOpen] = useState(false);
   const [currentHoveredEntity, setCurrentHoveredEntity] =
     useState<IEntity | null>(null);
 
@@ -118,15 +117,19 @@ export const GameRoom: FC = () => {
 
   // When floor is initialized, set current room to the start room
   useEffect(() => {
-    if (floor) {
+    if (floor && currentRoom === null) {
       console.log('Floor initialized');
+      setFirstRoomRender(true);
+
       // Set first room to START room
       let startRoom: IRoom | null = null;
 
-      for (let row = 0; row < floor.length; row++) {
-        for (let col = 0; col < floor[row].length; col++) {
-          if (floor[row][col].type === ROOM_TYPE.START) {
-            startRoom = floor[row][col];
+      const rooms = floor.rooms;
+
+      for (let row = 0; row < rooms.length; row++) {
+        for (let col = 0; col < rooms[row].length; col++) {
+          if (rooms[row][col].type === ROOM_TYPE.START) {
+            startRoom = rooms[row][col];
             break;
           }
         }
@@ -151,23 +154,26 @@ export const GameRoom: FC = () => {
         ]),
       };
 
+      console.log('Setting current room to start room', newStartRoom);
+
       setCurrentRoom(newStartRoom);
     }
-  }, [floor.length]);
+  }, [floor]);
 
+  // When selected campaign changes, check if the tutorial start room script is over.
+  // If it is, open the game log and minimap
   useEffect(() => {
     // Check if the starter script is over
-    if (selectedCampaign?.scriptsCompleted.tutorial) {
+    if (selectedCampaign?.scriptsCompleted.tutorialStartRoom) {
       setIsGameLogOpen(true);
       setIsMinimapOpen(true);
     }
-  }, [selectedCampaign]);
+  }, [selectedCampaign, floor]);
 
-  // When room changes, initialize game state according to the room
+  // When room changes, initialize game state according to the room specifications
   useEffect(() => {
-    console.log('handleRoomInitialization', currentRoom);
-
     const handleRoomInitialization = () => {
+      console.log('handleRoomInitialization', currentRoom);
       if (currentRoom !== null) {
         const roomEnemies = currentRoom.enemies;
         const roomEntityPositions = currentRoom.roomEntityPositions;
@@ -239,35 +245,43 @@ export const GameRoom: FC = () => {
 
   // When room container ref value changes, (in this case when the room container is mounted).
   // Scroll into the middle of the room container (to view the room)
-  useEffect(() => {
-    const scrollIntoMiddleOfRoom = () => {
-      if (roomContainerRef.current !== null && firstRoomRender) {
-        setTimeout(() => {
-          if (
-            roomContainerRef.current !== null &&
-            roomScrollRef.current !== null
-          ) {
-            const roomContainerX = roomContainerRef.current.offsetWidth / 2;
-            const roomContainerY = roomContainerRef.current.offsetHeight / 2;
-
-            roomScrollRef.current.scrollLeft =
-              roomContainerX - window.innerWidth / 2;
-            roomScrollRef.current.scrollTop =
-              roomContainerY - window.innerHeight / 2 + 50;
-
-            bufferArtRender();
-          }
-        }, 200);
-      }
-    };
-
-    const bufferArtRender = () =>
+  const scrollIntoMiddleOfRoom = () => {
+    if (
+      roomContainerRef.current !== null &&
+      roomScrollRef.current !== null &&
+      firstRoomRender
+    ) {
+      //   await sleep(200);
       setTimeout(() => {
-        setFirstRoomRender(false);
-      }, 100);
+        if (
+          roomContainerRef.current !== null &&
+          roomScrollRef.current !== null
+        ) {
+          const roomContainerX = roomContainerRef.current.offsetWidth / 2;
+          const roomContainerY = roomContainerRef.current.offsetHeight / 2;
 
-    scrollIntoMiddleOfRoom();
-  }, [roomContainerRef.current, roomScrollRef.current]);
+          roomScrollRef.current.scrollLeft =
+            roomContainerX - window.innerWidth / 2;
+          roomScrollRef.current.scrollTop =
+            roomContainerY - window.innerHeight / 2 + 50;
+        }
+
+        setFirstRoomRender(false);
+      }, 200);
+    }
+  };
+
+  useEffect(() => {
+    const handleRoomContainerRefChange = () => {
+      scrollIntoMiddleOfRoom();
+    };
+    handleRoomContainerRefChange();
+  }, [
+    roomContainerRef.current,
+    roomScrollRef.current,
+    currentRoom,
+    firstRoomRender,
+  ]);
 
   // Check every 50ms to check input to move camera
   useEffect(() => {
@@ -488,31 +502,9 @@ export const GameRoom: FC = () => {
   return (
     <>
       {firstRoomRender === true ? (
-        <h1 className="fixed w-screen h-screen flex justify-center items-center z-[100] bg-black"></h1>
+        <h1 className="fixed w-screen h-screen flex justify-center items-center z-[1000] bg-black"></h1>
       ) : null}
       <div className="relative max-w-screen h-screen flex flex-col justify-start overflow-hidden">
-        <header className="absolute top-0 w-full z-[100]">
-          <div
-            className="absolute h-[20px] w-full z-20"
-            onMouseEnter={() => setHeaderOpen(true)}
-            onMouseLeave={() => setHeaderOpen(false)}
-          ></div>
-          <div
-            className={clsx(
-              'absolute h-[135px] pt-3 w-full flex flex-col justify-start items-center bg-neutral-900 transition-all ease duration-300 delay-0',
-              { 'top-[-135px] ': !headerOpen },
-              { 'top-0': headerOpen }
-            )}
-          >
-            <h1 className="mb-2 uppercase">
-              R<span className="text-4xl">ise</span>{' '}
-              <span className="text-4xl">to</span> O
-              <span className="text-4xl">lympus</span>
-            </h1>
-            <h2>Combat Simulator</h2>
-          </div>
-        </header>
-
         {/* Chest Items Display (Only display when chest is clicked and room is over) */}
         {isRoomOver && isChestOpen ? (
           <section
@@ -545,11 +537,11 @@ export const GameRoom: FC = () => {
 
         {/* Game Log */}
         <div
-          className={clsx('fixed left-10 xl:w-[20%] w-[23%] max-h-[200px]', {
+          className={clsx('fixed left-10 xl:w-[23%] w-[28%]', {
             'z-[50]': isGameLogOpen,
             'z-[-10] opacity-0': !isGameLogOpen,
           })}
-          style={{ bottom: PLAYER_CONTROL_PANEL_HEIGHT + 300 }}
+          style={{ bottom: `calc(${PLAYER_CONTROL_PANEL_HEIGHT}px + 2.1rem)` }}
         >
           <Logger />
         </div>
@@ -681,7 +673,6 @@ export const GameRoom: FC = () => {
             <ProceedToNextFloor />
           </section>
         )}
-        {/* </div> */}
       </div>
     </>
   );

@@ -94,7 +94,7 @@ export const PLAYER: IPlayer = {
 const equippedSkills = [
   SKILL_ID.CLEAVE,
   SKILL_ID.FIREBALL,
-  SKILL_ID.FOCUS,
+  // SKILL_ID.FOCUS,
   SKILL_ID.FLY,
 ].map((id) => SKILLS.find((skill) => skill.id === id));
 

@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { IScriptItem } from '../types';
+import { ICampaign, IScriptItem } from '../types';
 import {
   SCRIPT_PARENT,
   SCRIPT_SHOP_BUY,
@@ -33,16 +33,26 @@ export const ScriptOverlay: FC = () => {
 
     if (!selectedCampaign || !currentScript) return;
 
-    const editedCampaign = {
+    let editedCampaign: ICampaign = {
       ...selectedCampaign,
-      scriptsCompleted: {
-        ...selectedCampaign.scriptsCompleted,
-        tutorial: true,
-      },
     };
 
-    if (currentScript[0].parent === SCRIPT_PARENT.TUTORIAL) {
-      editedCampaign.scriptsCompleted.tutorial = true;
+    if (currentScript[0].parent === SCRIPT_PARENT.TUTORIAL_START_ROOM) {
+      editedCampaign = {
+        ...editedCampaign,
+        scriptsCompleted: {
+          ...editedCampaign.scriptsCompleted,
+          tutorialStartRoom: true,
+        },
+      };
+    } else if (currentScript[0].parent === SCRIPT_PARENT.TUTORIAL) {
+      editedCampaign = {
+        ...editedCampaign,
+        scriptsCompleted: {
+          ...editedCampaign.scriptsCompleted,
+          tutorial: true,
+        },
+      };
     }
 
     const newCampaigns = campaigns.map((c) =>
@@ -107,10 +117,10 @@ export const ScriptOverlay: FC = () => {
     if (!scriptItem.speakerNames) return null;
 
     return (
-      <>
+      <div className="container mx-auto px-40 text-xl">
         <p>{scriptItem.speakerNames.join(', ')}</p>
         <p>{scriptItem.text}</p>
-      </>
+      </div>
     );
   };
 
@@ -118,7 +128,11 @@ export const ScriptOverlay: FC = () => {
     if (!scriptItem) return null;
     if (scriptItem.type !== SCRIPT_TYPE.NARRATOR) return null;
 
-    return <p className="italic">{scriptItem.text}</p>;
+    return (
+      <div className="relative container mx-auto px-40 flex justify-center items-center h-full text-xl">
+        <p className="italic">{scriptItem.text}</p>
+      </div>
+    );
   };
 
   const renderChoiceScriptItem = (scriptItem: IScriptItem) => {
@@ -126,7 +140,7 @@ export const ScriptOverlay: FC = () => {
     if (scriptItem.type !== SCRIPT_TYPE.CHOICE) return null;
 
     return (
-      <>
+      <div className="container mx-auto px-40 text-xl">
         <p className="mb-3">{scriptItem.text}</p>
         <ul>
           {scriptItem.choices?.map((choice, index) => (
@@ -185,17 +199,15 @@ export const ScriptOverlay: FC = () => {
             </li>
           ))}
         </ul>
-      </>
+      </div>
     );
   };
 
   if (currentScript === null) return null;
 
   return (
-    <div className=" bg-black w-screen min-h-[200px] py-5 px-10 shadow-sm shadow-white">
-      <div className="container mx-auto px-40 text-xl">
-        {renderTextScriptItem(currentScript[currentScriptItemIndex])}
-      </div>
+    <div className="relative bg-black w-screen h-[200px] py-5 px-10 shadow-sm shadow-white">
+      {renderTextScriptItem(currentScript[currentScriptItemIndex])}
 
       {/* Buttons */}
       <div className="absolute bottom-5 right-5">

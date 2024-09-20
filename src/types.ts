@@ -8,9 +8,11 @@ import { TILE_TYPE } from './constants/tile';
 import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './constants/weapon';
 import { ITEM_TYPE } from './constants/item';
 import { ARMOR_PART } from './constants/armor';
+import { FLOOR_ID } from './constants/floor';
 
-interface IScriptsCompleted {
+export interface IScriptsCompleted {
   tutorial: boolean;
+  tutorialStartRoom: boolean;
   shopTutorial: boolean;
   floor1: boolean;
   floor2: boolean;
@@ -192,6 +194,7 @@ export interface IRoom {
   id: number;
   position: [number, number];
   type: ROOM_TYPE;
+  isKnown: boolean; // For minimap vision
   isCleared: boolean; // For minimap vision
   northDoor: boolean;
   southDoor: boolean;
@@ -204,10 +207,14 @@ export interface IRoom {
   artFloor: string;
   artObstacle: string;
   artWall: string;
-  nextFloor: IFloor; // All rooms in floor will have the same nextFloor
 }
 
-export type IFloor = IRoom[][];
+export interface IFloor {
+  id: FLOOR_ID;
+  name: string;
+  rooms: IRoom[][];
+  nextFloorID: FLOOR_ID | null;
+}
 
 export interface ISkillAnimation {
   sprite: SPRITE_ID;

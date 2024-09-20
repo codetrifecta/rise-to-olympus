@@ -401,7 +401,7 @@ export const displayGeneralMessage = (elementID: string, message: string) => {
   // Remove message numbers after 1.5 seconds
   setTimeout(() => {
     messageDisplay.remove();
-  }, 2000);
+  }, 1500);
 };
 
 const displayDamageNumbers = (elementID: string, damage: number) => {
@@ -819,13 +819,13 @@ export const setEntityAnimationDamaged = (
       entitySpriteSheetContainer.style.left = '0px';
       entitySpriteSheetContainer.style.top = topPosition;
 
-      // removeEntityAnimationClasses(entitySpriteSheetContainer);
-      entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
+      removeEntityAnimationClasses(entitySpriteSheetContainer);
       setTimeout(() => {
-        removeEntityAnimationClassesExceptOne(
-          entitySpriteSheetContainer,
-          'animate-entityAnimate10'
-        );
+        entitySpriteSheetContainer.classList.add('animate-entityAnimate10');
+        // removeEntityAnimationClassesExceptOne(
+        //   entitySpriteSheetContainer,
+        //   'animate-entityAnimate10'
+        // );
       });
     } else {
       entitySpriteSheetContainer.style.left = entity.spriteSize + 'px';

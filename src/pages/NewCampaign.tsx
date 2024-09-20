@@ -18,9 +18,7 @@ export const NewCampaign = () => {
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log('campaignName:', campaignName);
-    console.log('playerName:', playerName);
-    console.log('skipTutorial:', skipTutorial);
+    console.log('Creating new campaign...');
 
     // Create new campaign object
     const newCampaign: ICampaign = {

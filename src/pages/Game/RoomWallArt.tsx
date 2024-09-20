@@ -12,7 +12,7 @@ export const RoomWallArt: FC<{
 }> = ({ width, height, grayscale }) => {
   const { isRoomOver, wallArtFile } = useGameStateStore();
 
-  const { currentRoom } = useFloorStore();
+  const { currentRoom, floor } = useFloorStore();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -31,6 +31,8 @@ export const RoomWallArt: FC<{
       console.error('RoomWallArt: No current room');
       return;
     }
+
+    // console.log('RoomWallArt', currentRoom);
 
     const image = new Image();
 
@@ -60,7 +62,16 @@ export const RoomWallArt: FC<{
 
       context.drawImage(image, 0, 0, width, height);
     };
-  }, [canvasRef.current, width, height, grayscale, isRoomOver, wallArtFile]);
+  }, [
+    canvasRef.current,
+    width,
+    height,
+    grayscale,
+    isRoomOver,
+    wallArtFile,
+    currentRoom,
+    floor,
+  ]);
 
   return (
     <canvas

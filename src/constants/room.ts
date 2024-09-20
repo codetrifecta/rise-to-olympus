@@ -17,6 +17,7 @@ export const BASE_ROOM: IRoom = {
   id: 0,
   position: [0, 0],
   type: ROOM_TYPE.NULL,
+  isKnown: false,
   isCleared: false,
   northDoor: false,
   southDoor: false,
@@ -51,5 +52,4 @@ export const BASE_ROOM: IRoom = {
   artFloor: art_room_tutorial_floor,
   artObstacle: art_room_tutorial_obstacle,
   artWall: art_room_tutorial_wall,
-  nextFloor: [],
 };

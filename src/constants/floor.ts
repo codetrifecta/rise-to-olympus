@@ -1,4 +1,4 @@
-import { IArmor, IFloor, Item, IWeapon } from '../types';
+import { IArmor, IFloor, IRoom, Item, IWeapon } from '../types';
 import { ENEMY_PRESET_ID, ENEMY_PRESETS, ENTITY_TYPE } from './entity';
 import { BASE_ROOM, ROOM_TYPE } from './room';
 
@@ -23,35 +23,50 @@ import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './weapon';
 
 export const DEFAULT_CHEST_ITEM_COUNT = 10;
 
-export const TARTARUS_CAMP_FLOOR: IFloor = [
-  [
-    {
-      ...BASE_ROOM,
-      id: 1,
-      type: ROOM_TYPE.START,
-      roomLength: 9,
-      position: [0, 0],
-      roomTileMatrix: [
-        [3, 3, 3, 3, 3, 3, 3, 3, 3],
-        [3, 3, 3, 3, 3, 3, 3, 3, 3],
-        [3, 3, 3, 4, 4, 4, 3, 3, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 3, 3, 3, 3, 3, 3, 3, 3],
-      ],
-      artFloor: art_room_tartarus_camp_floor,
-      artObstacle: '',
-      artWall: art_room_tartarus_camp_wall,
-    },
-  ],
-];
+export enum FLOOR_ID {
+  TUTORIAL = 'TUTORIAL',
+  TARTARUS_CAMP = 'TARTARUS_CAMP',
+  FLOOR_1 = 'FLOOR_1',
+  FLOOR_2 = 'FLOOR_2',
+  FLOOR_3 = 'FLOOR_3',
+}
 
-const createTutorialFloor = () => {
+export const FLOOR_TARTARUS_CAMP: IFloor = {
+  id: FLOOR_ID.TARTARUS_CAMP,
+  name: 'Tartarus Camp',
+  rooms: [
+    [
+      {
+        ...BASE_ROOM,
+        id: 1,
+        type: ROOM_TYPE.START,
+        isKnown: true,
+        isCleared: true,
+        roomLength: 9,
+        position: [0, 0],
+        roomTileMatrix: [
+          [3, 3, 3, 3, 3, 3, 3, 3, 3],
+          [3, 3, 3, 3, 3, 3, 3, 3, 3],
+          [3, 3, 3, 4, 4, 4, 3, 3, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        ],
+        artFloor: art_room_tartarus_camp_floor,
+        artObstacle: '',
+        artWall: art_room_tartarus_camp_wall,
+      },
+    ],
+  ],
+  nextFloorID: FLOOR_ID.FLOOR_1,
+};
+
+const createTutorialFloorRooms = () => {
   let id = 0;
-  const tutorialFloor: IFloor = [];
+  const tutorialFloor: IRoom[][] = [];
 
   for (let row = 0; row < 3; row++) {
     tutorialFloor[row] = [];
@@ -84,7 +99,6 @@ const createTutorialFloor = () => {
           [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
           [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
         ],
-        nextFloor: TARTARUS_CAMP_FLOOR,
       };
     }
   }
@@ -245,6 +259,7 @@ const createTutorialFloor = () => {
     ...tutorialFloor[2][1],
     type: ROOM_TYPE.START,
     eastDoor: true,
+    isKnown: true,
     isCleared: true,
     roomTileMatrix: [
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -276,10 +291,15 @@ const createTutorialFloor = () => {
   return tutorialFloor;
 };
 
-export const TUTORIAL_FLOOR: IFloor = createTutorialFloor();
+export const FLOOR_TUTORIAL: IFloor = {
+  id: FLOOR_ID.TUTORIAL,
+  name: 'Tutorial',
+  rooms: [...createTutorialFloorRooms()],
+  nextFloorID: FLOOR_ID.TARTARUS_CAMP,
+};
 
 let id = 0;
-export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
+export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
   [
     '2,1',
     [
@@ -290,8 +310,8 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.CHESTPIECE,
         stats: {
-          strength: 3,
-          intelligence: 1,
+          strength: 6,
+          intelligence: 2,
           defense: 5,
           constitution: 5,
         },
@@ -303,8 +323,8 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.CHESTPIECE,
         stats: {
-          strength: 1,
-          intelligence: 3,
+          strength: 2,
+          intelligence: 6,
           defense: 5,
           constitution: 5,
         },
@@ -316,8 +336,8 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.CHESTPIECE,
         stats: {
-          strength: 2,
-          intelligence: 2,
+          strength: 4,
+          intelligence: 4,
           defense: 5,
           constitution: 5,
         },
@@ -388,7 +408,7 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.WEAPON,
         damageMultiplier: 0.6,
         stats: {
-          strength: 10,
+          strength: 9,
           intelligence: 1,
           defense: 8,
           constitution: 0,
@@ -444,7 +464,7 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
           defense: 2,
           constitution: 0,
         },
-        range: 4,
+        range: 6,
         cost: 2,
       } as IWeapon,
       {
@@ -465,10 +485,10 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.HELMET,
         stats: {
-          strength: 2,
-          intelligence: 1,
-          defense: 3,
-          constitution: 3,
+          strength: 6,
+          intelligence: 2,
+          defense: 5,
+          constitution: 5,
         },
       } as IArmor,
       {
@@ -478,10 +498,10 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.HELMET,
         stats: {
-          strength: 1,
-          intelligence: 3,
-          defense: 3,
-          constitution: 3,
+          strength: 2,
+          intelligence: 6,
+          defense: 5,
+          constitution: 5,
         },
       } as IArmor,
       {

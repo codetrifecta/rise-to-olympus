@@ -35,6 +35,7 @@ interface IPlayerStore {
   setPlayerHelmet: (helmet: IHelmet | null) => void;
   setPlayerChestpiece: (chestpiece: IChestpiece | null) => void;
   setPlayerLegging: (legging: ILegging | null) => void;
+  resetPlayerStore: () => void;
 }
 
 export const usePlayerStore = create<IPlayerStore>((set, get) => ({
@@ -270,4 +271,6 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
 
     set({ player: newPlayer });
   },
+
+  resetPlayerStore: () => set({ player: getDefaultPlayer() }),
 }));
