@@ -190,49 +190,54 @@ export const RoomLogic: FC<{
         setIsRoomOver(true);
 
         // Mark current room as cleared
-        const newFloor = floor.map((row) =>
-          row.map((room) =>
-            room.id === currentRoom?.id ? { ...room, isCleared: true } : room
-          )
-        );
+        const newFloor = {
+          ...floor,
+          rooms: floor.rooms.map((row) =>
+            row.map((room) =>
+              room.id === currentRoom?.id ? { ...room, isCleared: true } : room
+            )
+          ),
+        };
+
+        const rooms = newFloor.rooms;
 
         // Check cardinal directions for boss room,
         // and make it known if there is a boss room in that direction
         const [row, col] = currentRoom.position;
         if (
           currentRoom.northDoor &&
-          floor[row - 1][col] &&
-          floor[row - 1][col].type === ROOM_TYPE.BOSS
+          rooms[row - 1][col] &&
+          rooms[row - 1][col].type === ROOM_TYPE.BOSS
         ) {
-          newFloor[row - 1][col] = {
-            ...newFloor[row - 1][col],
+          newFloor.rooms[row - 1][col] = {
+            ...newFloor.rooms[row - 1][col],
             isKnown: true,
           };
         } else if (
           currentRoom.eastDoor &&
-          floor[row][col + 1] &&
-          floor[row][col + 1].type === ROOM_TYPE.BOSS
+          rooms[row][col + 1] &&
+          rooms[row][col + 1].type === ROOM_TYPE.BOSS
         ) {
-          newFloor[row][col + 1] = {
-            ...newFloor[row][col + 1],
+          newFloor.rooms[row][col + 1] = {
+            ...newFloor.rooms[row][col + 1],
             isKnown: true,
           };
         } else if (
           currentRoom.southDoor &&
-          floor[row + 1][col] &&
-          floor[row + 1][col].type === ROOM_TYPE.BOSS
+          rooms[row + 1][col] &&
+          rooms[row + 1][col].type === ROOM_TYPE.BOSS
         ) {
-          newFloor[row + 1][col] = {
-            ...newFloor[row + 1][col],
+          newFloor.rooms[row + 1][col] = {
+            ...newFloor.rooms[row + 1][col],
             isKnown: true,
           };
         } else if (
           currentRoom.westDoor &&
-          floor[row][col - 1] &&
-          floor[row][col - 1].type === ROOM_TYPE.BOSS
+          rooms[row][col - 1] &&
+          rooms[row][col - 1].type === ROOM_TYPE.BOSS
         ) {
-          newFloor[row][col - 1] = {
-            ...newFloor[row][col - 1],
+          newFloor.rooms[row][col - 1] = {
+            ...newFloor.rooms[row][col - 1],
             isKnown: true,
           };
         }
@@ -1372,18 +1377,21 @@ export const RoomLogic: FC<{
     // Remove player position from current room to be updated in the floor state
     const newRoomEntityPositions = new Map(roomEntityPositions);
     newRoomEntityPositions.delete(`${playerRow},${playerCol}`);
-    const newFloor = floor.map((row) => {
-      return row.map((room) => {
-        if (room.id === currentRoom.id) {
-          return {
-            ...room,
-            roomEntityPositions: newRoomEntityPositions,
-          };
-        } else {
-          return room;
-        }
-      });
-    });
+    const newFloor = {
+      ...floor,
+      rooms: floor.rooms.map((row) => {
+        return row.map((room) => {
+          if (room.id === currentRoom.id) {
+            return {
+              ...room,
+              roomEntityPositions: newRoomEntityPositions,
+            };
+          } else {
+            return room;
+          }
+        });
+      }),
+    };
 
     let nextRoom: IRoom | null = null;
 
@@ -1398,8 +1406,8 @@ export const RoomLogic: FC<{
       // Remove room entity position for player for current room
 
       nextRoom = {
-        ...floor[currentRoom.position[0] - 1][currentRoom.position[1]],
-        roomEntityPositions: floor[currentRoom.position[0] - 1][
+        ...floor.rooms[currentRoom.position[0] - 1][currentRoom.position[1]],
+        roomEntityPositions: floor.rooms[currentRoom.position[0] - 1][
           currentRoom.position[1]
         ].roomEntityPositions.set(
           `${roomLength - 2},${Math.floor(roomLength / 2)}`,
@@ -1411,8 +1419,8 @@ export const RoomLogic: FC<{
       console.log('South Door');
 
       nextRoom = {
-        ...floor[currentRoom.position[0] + 1][currentRoom.position[1]],
-        roomEntityPositions: floor[currentRoom.position[0] + 1][
+        ...floor.rooms[currentRoom.position[0] + 1][currentRoom.position[1]],
+        roomEntityPositions: floor.rooms[currentRoom.position[0] + 1][
           currentRoom.position[1]
         ].roomEntityPositions.set(`3,${Math.floor(roomLength / 2)}`, [
           ENTITY_TYPE.PLAYER,
@@ -1424,8 +1432,8 @@ export const RoomLogic: FC<{
       console.log('West Door');
 
       nextRoom = {
-        ...floor[currentRoom.position[0]][currentRoom.position[1] - 1],
-        roomEntityPositions: floor[currentRoom.position[0]][
+        ...floor.rooms[currentRoom.position[0]][currentRoom.position[1] - 1],
+        roomEntityPositions: floor.rooms[currentRoom.position[0]][
           currentRoom.position[1] - 1
         ].roomEntityPositions.set(
           `${Math.floor(roomLength / 2)},${roomLength - 2}`,
@@ -1437,8 +1445,8 @@ export const RoomLogic: FC<{
       console.log('East Door');
 
       nextRoom = {
-        ...floor[currentRoom.position[0]][currentRoom.position[1] + 1],
-        roomEntityPositions: floor[currentRoom.position[0]][
+        ...floor.rooms[currentRoom.position[0]][currentRoom.position[1] + 1],
+        roomEntityPositions: floor.rooms[currentRoom.position[0]][
           currentRoom.position[1] + 1
         ].roomEntityPositions.set(`${Math.floor(roomLength / 2)},${1}`, [
           ENTITY_TYPE.PLAYER,
@@ -1458,7 +1466,7 @@ export const RoomLogic: FC<{
       ?.classList.remove('transition-all');
 
     // Set next room to be known in the floor state
-    newFloor[nextRoom.position[0]][nextRoom.position[1]] = {
+    newFloor.rooms[nextRoom.position[0]][nextRoom.position[1]] = {
       ...nextRoom,
       isKnown: true,
     };

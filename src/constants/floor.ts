@@ -1,4 +1,4 @@
-import { IArmor, IFloor, Item, IWeapon } from '../types';
+import { IArmor, IFloor, IRoom, Item, IWeapon } from '../types';
 import { ENEMY_PRESET_ID, ENEMY_PRESETS, ENTITY_TYPE } from './entity';
 import { BASE_ROOM, ROOM_TYPE } from './room';
 
@@ -23,36 +23,49 @@ import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './weapon';
 
 export const DEFAULT_CHEST_ITEM_COUNT = 10;
 
-export const FLOOR_TARTARUS_CAMP: IFloor = [
-  [
-    {
-      ...BASE_ROOM,
-      id: 1,
-      type: ROOM_TYPE.START,
-      isKnown: true,
-      roomLength: 9,
-      position: [0, 0],
-      roomTileMatrix: [
-        [3, 3, 3, 3, 3, 3, 3, 3, 3],
-        [3, 3, 3, 3, 3, 3, 3, 3, 3],
-        [3, 3, 3, 4, 4, 4, 3, 3, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 1, 1, 1, 1, 1, 1, 1, 3],
-        [3, 3, 3, 3, 3, 3, 3, 3, 3],
-      ],
-      artFloor: art_room_tartarus_camp_floor,
-      artObstacle: '',
-      artWall: art_room_tartarus_camp_wall,
-    },
-  ],
-];
+export enum FLOOR_ID {
+  TUTORIAL = 'TUTORIAL',
+  TARTARUS_CAMP = 'TARTARUS_CAMP',
+  FLOOR_1 = 'FLOOR_1',
+  FLOOR_2 = 'FLOOR_2',
+  FLOOR_3 = 'FLOOR_3',
+}
 
-const createTutorialFloor = () => {
+export const FLOOR_TARTARUS_CAMP: IFloor = {
+  id: FLOOR_ID.TARTARUS_CAMP,
+  name: 'Tartarus Camp',
+  rooms: [
+    [
+      {
+        ...BASE_ROOM,
+        id: 1,
+        type: ROOM_TYPE.START,
+        isKnown: true,
+        roomLength: 9,
+        position: [0, 0],
+        roomTileMatrix: [
+          [3, 3, 3, 3, 3, 3, 3, 3, 3],
+          [3, 3, 3, 3, 3, 3, 3, 3, 3],
+          [3, 3, 3, 4, 4, 4, 3, 3, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 1, 1, 1, 1, 1, 1, 1, 3],
+          [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        ],
+        artFloor: art_room_tartarus_camp_floor,
+        artObstacle: '',
+        artWall: art_room_tartarus_camp_wall,
+      },
+    ],
+  ],
+  nextFloorID: FLOOR_ID.FLOOR_1,
+};
+
+const createTutorialFloorRooms = () => {
   let id = 0;
-  const tutorialFloor: IFloor = [];
+  const tutorialFloor: IRoom[][] = [];
 
   for (let row = 0; row < 3; row++) {
     tutorialFloor[row] = [];
@@ -85,7 +98,6 @@ const createTutorialFloor = () => {
           [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
           [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
         ],
-        nextFloor: FLOOR_TARTARUS_CAMP,
       };
     }
   }
@@ -278,7 +290,12 @@ const createTutorialFloor = () => {
   return tutorialFloor;
 };
 
-export const FLOOR_TUTORIAL: IFloor = createTutorialFloor();
+export const FLOOR_TUTORIAL: IFloor = {
+  id: FLOOR_ID.TUTORIAL,
+  name: 'Tutorial',
+  rooms: [...createTutorialFloorRooms()],
+  nextFloorID: FLOOR_ID.TARTARUS_CAMP,
+};
 
 let id = 0;
 export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([

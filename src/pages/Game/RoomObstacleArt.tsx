@@ -20,7 +20,7 @@ export const RoomObstacleArt: FC<{
     hoveredTile,
   } = useGameStateStore();
 
-  const { currentRoom } = useFloorStore();
+  const { currentRoom, floor } = useFloorStore();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -39,6 +39,11 @@ export const RoomObstacleArt: FC<{
 
     if (!currentRoom) {
       console.error('RoomFloorArt: No current room');
+      return;
+    }
+
+    if (!floor) {
+      console.error('RoomFloorArt: No current floor');
       return;
     }
 
@@ -200,6 +205,7 @@ export const RoomObstacleArt: FC<{
     roomEntityPositions,
     hoveredTile,
     currentRoom,
+    floor,
   ]);
 
   return (

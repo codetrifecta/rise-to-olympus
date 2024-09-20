@@ -122,10 +122,12 @@ export const GameRoom: FC = () => {
       // Set first room to START room
       let startRoom: IRoom | null = null;
 
-      for (let row = 0; row < floor.length; row++) {
-        for (let col = 0; col < floor[row].length; col++) {
-          if (floor[row][col].type === ROOM_TYPE.START) {
-            startRoom = floor[row][col];
+      const rooms = floor.rooms;
+
+      for (let row = 0; row < rooms.length; row++) {
+        for (let col = 0; col < rooms[row].length; col++) {
+          if (rooms[row][col].type === ROOM_TYPE.START) {
+            startRoom = rooms[row][col];
             break;
           }
         }
@@ -152,7 +154,7 @@ export const GameRoom: FC = () => {
 
       setCurrentRoom(newStartRoom);
     }
-  }, [floor.length]);
+  }, [floor.rooms.length]);
 
   useEffect(() => {
     // Check if the starter script is over
@@ -658,7 +660,6 @@ export const GameRoom: FC = () => {
             <ProceedToNextFloor />
           </section>
         )}
-        {/* </div> */}
       </div>
     </>
   );

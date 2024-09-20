@@ -9,7 +9,7 @@ export const Minimap: FC = () => {
 
   return (
     <div className="relative bg-zinc-900 p-5 border-white border inline-block w-full h-full">
-      {floor.map((row, rowIndex) => (
+      {floor.rooms.map((row, rowIndex) => (
         <div key={rowIndex} className="flex">
           {row.map((room, roomIndex) => {
             return (
