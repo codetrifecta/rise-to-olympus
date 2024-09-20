@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { IFloor, IRoom, Item } from '../types';
-import { TUTORIAL_FLOOR, TUTORIAL_FLOOR_CHEST_ITEMS } from '../constants/floor';
+import { FLOOR_TUTORIAL, TUTORIAL_FLOOR_CHEST_ITEMS } from '../constants/floor';
 
 interface IFloorStore {
   floor: IFloor;
@@ -14,7 +14,7 @@ interface IFloorStore {
 }
 
 export const useFloorStore = create<IFloorStore>((set) => ({
-  floor: TUTORIAL_FLOOR,
+  floor: FLOOR_TUTORIAL,
   setFloor: (floor: IFloor) => set({ floor }),
 
   currentRoom: null,

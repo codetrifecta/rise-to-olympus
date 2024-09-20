@@ -1,19 +1,25 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ScriptOverlay } from '../../overlays/ScriptOverlay';
 import { useEffect, useState } from 'react';
-import { SCRIPT_TUTORIAL } from '../../constants/scripts';
+import { SCRIPT_TUTORIAL_START_ROOM } from '../../constants/scripts';
 import { useCampaignStore } from '../../stores/campaign';
 // import { StartRoom } from './StartRoom';
 import { useScriptStore } from '../../stores/script';
 import { GameRoom } from './GameRoom';
 import { StartRoomEscModalOverlay } from '../../overlays/StartRoomEscModalOverlay';
 import { usePlayerStore } from '../../stores/player';
+import { useLogStore } from '../../stores/log';
+import { LOG_TUTORIAL_START_ROOM } from '../../constants/log';
+import { useFloorStore } from '../../stores/floor';
+import { FLOOR_TARTARUS_CAMP, FLOOR_TUTORIAL } from '../../constants/floor';
 
 export const Game = () => {
   const { campaigns, setSelectedCampaign } = useCampaignStore();
   const { currentScript, setCurrentScript } = useScriptStore();
   const { selectedCampaign } = useCampaignStore();
   const { player, setPlayer } = usePlayerStore();
+  const { setLogs } = useLogStore();
+  const { setFloor } = useFloorStore();
 
   const [escModalOpen, setEscModalOpen] = useState(false);
 
@@ -61,8 +67,17 @@ export const Game = () => {
     }
 
     if (!skipTutorial && !campaign.scriptsCompleted.tutorial) {
-      setCurrentScript(SCRIPT_TUTORIAL);
+      if (!campaign.scriptsCompleted.tutorialStartRoom) {
+        setCurrentScript(SCRIPT_TUTORIAL_START_ROOM);
+      }
+      setLogs(LOG_TUTORIAL_START_ROOM);
+      setFloor(FLOOR_TUTORIAL);
       console.log('Showing tutorial');
+    } else {
+      // setCurrentScript('');
+      setLogs([]);
+      setFloor(FLOOR_TARTARUS_CAMP);
+      console.log('Skipping tutorial and goign to camp');
     }
 
     // Set player

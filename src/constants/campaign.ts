@@ -7,6 +7,7 @@ export const BASE_CAMPAIGN: ICampaign = {
   numberOfDeaths: 0,
   scriptsCompleted: {
     tutorial: false,
+    tutorialStartRoom: false,
     shopTutorial: false,
     floor1: false,
     floor2: false,

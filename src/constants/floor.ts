@@ -23,7 +23,7 @@ import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './weapon';
 
 export const DEFAULT_CHEST_ITEM_COUNT = 10;
 
-export const TARTARUS_CAMP_FLOOR: IFloor = [
+export const FLOOR_TARTARUS_CAMP: IFloor = [
   [
     {
       ...BASE_ROOM,
@@ -85,7 +85,7 @@ const createTutorialFloor = () => {
           [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
           [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
         ],
-        nextFloor: TARTARUS_CAMP_FLOOR,
+        nextFloor: FLOOR_TARTARUS_CAMP,
       };
     }
   }
@@ -278,7 +278,7 @@ const createTutorialFloor = () => {
   return tutorialFloor;
 };
 
-export const TUTORIAL_FLOOR: IFloor = createTutorialFloor();
+export const FLOOR_TUTORIAL: IFloor = createTutorialFloor();
 
 let id = 0;
 export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([

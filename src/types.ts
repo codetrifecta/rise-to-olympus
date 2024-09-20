@@ -9,8 +9,9 @@ import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './constants/weapon';
 import { ITEM_TYPE } from './constants/item';
 import { ARMOR_PART } from './constants/armor';
 
-interface IScriptsCompleted {
+export interface IScriptsCompleted {
   tutorial: boolean;
+  tutorialStartRoom: boolean;
   shopTutorial: boolean;
   floor1: boolean;
   floor2: boolean;

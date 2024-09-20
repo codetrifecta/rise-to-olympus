@@ -156,11 +156,11 @@ export const GameRoom: FC = () => {
 
   useEffect(() => {
     // Check if the starter script is over
-    if (selectedCampaign?.scriptsCompleted.tutorial) {
+    if (selectedCampaign?.scriptsCompleted.tutorialStartRoom) {
       setIsGameLogOpen(true);
       setIsMinimapOpen(true);
     }
-  }, [selectedCampaign]);
+  }, [selectedCampaign, floor]);
 
   // When room changes, initialize game state according to the room
   useEffect(() => {
