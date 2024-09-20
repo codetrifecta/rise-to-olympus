@@ -48,7 +48,6 @@ const keyPressed: Record<string, boolean> = {};
 export const GameRoom: FC = () => {
   const [firstRoomRender, setFirstRoomRender] = useState(true);
 
-  const [headerOpen, setHeaderOpen] = useState(false);
   const [currentHoveredEntity, setCurrentHoveredEntity] =
     useState<IEntity | null>(null);
 
@@ -491,28 +490,6 @@ export const GameRoom: FC = () => {
         <h1 className="fixed w-screen h-screen flex justify-center items-center z-[100] bg-black"></h1>
       ) : null}
       <div className="relative max-w-screen h-screen flex flex-col justify-start overflow-hidden">
-        <header className="absolute top-0 w-full z-[100]">
-          <div
-            className="absolute h-[20px] w-full z-20"
-            onMouseEnter={() => setHeaderOpen(true)}
-            onMouseLeave={() => setHeaderOpen(false)}
-          ></div>
-          <div
-            className={clsx(
-              'absolute h-[135px] pt-3 w-full flex flex-col justify-start items-center bg-neutral-900 transition-all ease duration-300 delay-0',
-              { 'top-[-135px] ': !headerOpen },
-              { 'top-0': headerOpen }
-            )}
-          >
-            <h1 className="mb-2 uppercase">
-              R<span className="text-4xl">ise</span>{' '}
-              <span className="text-4xl">to</span> O
-              <span className="text-4xl">lympus</span>
-            </h1>
-            <h2>Combat Simulator</h2>
-          </div>
-        </header>
-
         {/* Chest Items Display (Only display when chest is clicked and room is over) */}
         {isRoomOver && isChestOpen ? (
           <section

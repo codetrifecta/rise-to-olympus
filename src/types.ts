@@ -192,6 +192,7 @@ export interface IRoom {
   id: number;
   position: [number, number];
   type: ROOM_TYPE;
+  isKnown: boolean; // For minimap vision
   isCleared: boolean; // For minimap vision
   northDoor: boolean;
   southDoor: boolean;

@@ -338,7 +338,7 @@ export const SKILLS: ISkill[] = [
       'Launch a fireball at a target area. Has a 60% chance to burn targets hit for 3 turns.',
     damageMultiplier: 1,
     range: 8,
-    cooldown: 2,
+    cooldown: 3,
     cooldownCounter: 0,
     cost: 2,
   },

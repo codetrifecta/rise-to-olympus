@@ -196,6 +196,47 @@ export const RoomLogic: FC<{
           )
         );
 
+        // Check cardinal directions for boss room,
+        // and make it known if there is a boss room in that direction
+        const [row, col] = currentRoom.position;
+        if (
+          currentRoom.northDoor &&
+          floor[row - 1][col] &&
+          floor[row - 1][col].type === ROOM_TYPE.BOSS
+        ) {
+          newFloor[row - 1][col] = {
+            ...newFloor[row - 1][col],
+            isKnown: true,
+          };
+        } else if (
+          currentRoom.eastDoor &&
+          floor[row][col + 1] &&
+          floor[row][col + 1].type === ROOM_TYPE.BOSS
+        ) {
+          newFloor[row][col + 1] = {
+            ...newFloor[row][col + 1],
+            isKnown: true,
+          };
+        } else if (
+          currentRoom.southDoor &&
+          floor[row + 1][col] &&
+          floor[row + 1][col].type === ROOM_TYPE.BOSS
+        ) {
+          newFloor[row + 1][col] = {
+            ...newFloor[row + 1][col],
+            isKnown: true,
+          };
+        } else if (
+          currentRoom.westDoor &&
+          floor[row][col - 1] &&
+          floor[row][col - 1].type === ROOM_TYPE.BOSS
+        ) {
+          newFloor[row][col - 1] = {
+            ...newFloor[row][col - 1],
+            isKnown: true,
+          };
+        }
+
         const newCurrentRoom: IRoom = {
           ...currentRoom,
           isCleared: true,
@@ -1408,18 +1449,20 @@ export const RoomLogic: FC<{
       return;
     }
 
-    // console.log('nextRoom', nextRoom);
-    // console.log('currentRoom', currentRoom);
-    // console.log('newFloor', newFloor);
-    // return;
     // Remove transition property from player
     document
       .getElementById('sprite_player_1')
       ?.classList.remove('transition-all');
 
+    // Set next room to be known in the floor state
+    newFloor[nextRoom.position[0]][nextRoom.position[1]] = {
+      ...nextRoom,
+      isKnown: true,
+    };
+
     console.log('newFloor', newFloor);
     setFloor(newFloor);
-    setCurrentRoom(nextRoom);
+    setCurrentRoom({ ...nextRoom, isKnown: true });
     addLog({
       message: (
         <>

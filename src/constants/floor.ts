@@ -29,6 +29,7 @@ export const TARTARUS_CAMP_FLOOR: IFloor = [
       ...BASE_ROOM,
       id: 1,
       type: ROOM_TYPE.START,
+      isKnown: true,
       roomLength: 9,
       position: [0, 0],
       roomTileMatrix: [
@@ -245,6 +246,7 @@ const createTutorialFloor = () => {
     ...tutorialFloor[2][1],
     type: ROOM_TYPE.START,
     eastDoor: true,
+    isKnown: true,
     isCleared: true,
     roomTileMatrix: [
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -290,8 +292,8 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.CHESTPIECE,
         stats: {
-          strength: 3,
-          intelligence: 1,
+          strength: 6,
+          intelligence: 2,
           defense: 5,
           constitution: 5,
         },
@@ -303,8 +305,8 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.CHESTPIECE,
         stats: {
-          strength: 1,
-          intelligence: 3,
+          strength: 2,
+          intelligence: 6,
           defense: 5,
           constitution: 5,
         },
@@ -316,8 +318,8 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.CHESTPIECE,
         stats: {
-          strength: 2,
-          intelligence: 2,
+          strength: 4,
+          intelligence: 4,
           defense: 5,
           constitution: 5,
         },
@@ -388,7 +390,7 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.WEAPON,
         damageMultiplier: 0.6,
         stats: {
-          strength: 10,
+          strength: 9,
           intelligence: 1,
           defense: 8,
           constitution: 0,
@@ -444,7 +446,7 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
           defense: 2,
           constitution: 0,
         },
-        range: 4,
+        range: 6,
         cost: 2,
       } as IWeapon,
       {
@@ -465,10 +467,10 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.HELMET,
         stats: {
-          strength: 2,
-          intelligence: 1,
-          defense: 3,
-          constitution: 3,
+          strength: 6,
+          intelligence: 2,
+          defense: 5,
+          constitution: 5,
         },
       } as IArmor,
       {
@@ -478,10 +480,10 @@ export const TUTORIAL_FLOOR_CHEST_ITEMS: Map<string, Item[]> = new Map([
         itemType: ITEM_TYPE.ARMOR,
         armorPart: ARMOR_PART.HELMET,
         stats: {
-          strength: 1,
-          intelligence: 3,
-          defense: 3,
-          constitution: 3,
+          strength: 2,
+          intelligence: 6,
+          defense: 5,
+          constitution: 5,
         },
       } as IArmor,
       {
