@@ -1,5 +1,5 @@
 import { BASE_ROOM, ROOM_TYPE } from '../constants/room';
-import { IFloor, IRoom } from '../types';
+import { IRoom } from '../types';
 
 /**
  * Convert a floor to a string array representation.
@@ -531,7 +531,7 @@ export function generateFloorPlan(start: boolean): ROOM_TYPE[][] {
  * @param floor ROOM_TYPE type, 2d 5x5 matrix represemting the floor layout.
  * @returns A 2d 5x5 matrix of IRoom type.
  */
-export function connectAdjacentRooms(floor: ROOM_TYPE[][]): IFloor {
+export function connectAdjacentRooms(floor: ROOM_TYPE[][]): IRoom[][] {
   // Initialize directions
   const dir: [number, number][] = [
     [0, 1], // East
@@ -542,7 +542,7 @@ export function connectAdjacentRooms(floor: ROOM_TYPE[][]): IFloor {
 
   // Initialize IRoom variable (adjRooms.type is automatically assigned during initialization with the values of 'floor', which is a
   // 'ROOM_TYPE' type)
-  const adjRooms: IFloor = floor.map((row) =>
+  const adjRooms: IRoom[][] = floor.map((row) =>
     row.map((roomType) => {
       const adjRoom: IRoom = {
         ...BASE_ROOM,
