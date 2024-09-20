@@ -117,7 +117,7 @@ export const GameRoom: FC = () => {
 
   // When floor is initialized, set current room to the start room
   useEffect(() => {
-    if (floor) {
+    if (floor && currentRoom === null) {
       console.log('Floor initialized');
       // Set first room to START room
       let startRoom: IRoom | null = null;
@@ -152,9 +152,11 @@ export const GameRoom: FC = () => {
         ]),
       };
 
+      console.log('Setting current room to start room', newStartRoom);
+
       setCurrentRoom(newStartRoom);
     }
-  }, [floor.rooms.length]);
+  }, [floor]);
 
   useEffect(() => {
     // Check if the starter script is over
@@ -166,9 +168,8 @@ export const GameRoom: FC = () => {
 
   // When room changes, initialize game state according to the room
   useEffect(() => {
-    console.log('handleRoomInitialization', currentRoom);
-
     const handleRoomInitialization = () => {
+      console.log('handleRoomInitialization', currentRoom);
       if (currentRoom !== null) {
         const roomEnemies = currentRoom.enemies;
         const roomEntityPositions = currentRoom.roomEntityPositions;
@@ -650,16 +651,16 @@ export const GameRoom: FC = () => {
         </section>
 
         {/* Proceed to Next Floor Button */}
-        {isFloorCleared && isRoomOver && (
-          <section
-            className="z-50 fixed right-10"
-            style={{
-              bottom: `calc(${PLAYER_CONTROL_PANEL_HEIGHT}px + 2rem)`,
-            }}
-          >
-            <ProceedToNextFloor />
-          </section>
-        )}
+        {/* {isFloorCleared && isRoomOver && ( */}
+        <section
+          className="z-50 fixed right-10"
+          style={{
+            bottom: `calc(${PLAYER_CONTROL_PANEL_HEIGHT}px + 2rem)`,
+          }}
+        >
+          <ProceedToNextFloor />
+        </section>
+        {/* )} */}
       </div>
     </>
   );

@@ -186,6 +186,12 @@ export const RoomLogic: FC<{
     // If all enemies are defeated, log a message saying the player has completed the room
     const setRoomCompletion = () => {
       console.log('logRoomCompletion', enemies.length);
+
+      if (!floor) {
+        console.error('Floor not found!');
+        return;
+      }
+
       if (enemies.length === 0 && currentRoom) {
         setIsRoomOver(true);
 
@@ -1366,6 +1372,11 @@ export const RoomLogic: FC<{
     playerPosition: [number, number],
     tilePosition: [number, number]
   ) => {
+    if (!floor) {
+      console.error('Floor not found!');
+      return;
+    }
+
     if (tileType !== TILE_TYPE.DOOR) {
       console.error('Player did not click on a door!');
       return;

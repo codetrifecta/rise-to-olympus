@@ -1,11 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { FC } from 'react';
+import { useFloorStore } from '../stores/floor';
+import { useGameStateStore } from '../stores/game';
 
 export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
   onClose,
 }) => {
   const navigate = useNavigate();
+  const { resetFloorStore } = useFloorStore();
+  const { resetGameState } = useGameStateStore();
+
+  const reset = () => {
+    resetFloorStore();
+    resetGameState();
+  };
 
   return (
     <div className="fixed w-full h-full z-[100] flex justify-center items-center">
@@ -16,6 +25,7 @@ export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
       <div className="z-10 bg-neutral-900 p-10 flex flex-col">
         <Button
           onClick={() => {
+            reset();
             onClose();
           }}
         >
@@ -23,6 +33,7 @@ export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
         </Button>
         <Button
           onClick={() => {
+            reset();
             navigate('/');
           }}
         >

@@ -13,6 +13,11 @@ export const ProceedToNextFloor: FC = () => {
     useCampaignStore();
 
   const handleProceedButtonClick = () => {
+    if (!floor) {
+      console.error('Floor not found!');
+      return;
+    }
+
     if (!currentRoom) {
       console.error('ProceedToNextFloor: No current room');
       return;

@@ -70,7 +70,7 @@ export const RoomDoorArt: FC<{
     if (!isRoomOver) {
       return;
     } else {
-      console.log('currentRoom', currentRoom);
+      // console.log('currentRoom', currentRoom);
       if (currentRoom.isCleared) {
         if (currentRoom.northDoor) {
           northDoorImg.src = northDoor;

@@ -1,9 +1,8 @@
 import { create } from 'zustand';
 import { IFloor, IRoom, Item } from '../types';
-import { FLOOR_TUTORIAL, TUTORIAL_FLOOR_CHEST_ITEMS } from '../constants/floor';
 
 interface IFloorStore {
-  floor: IFloor;
+  floor: IFloor | null;
   setFloor: (floor: IFloor) => void;
 
   currentRoom: IRoom | null;
@@ -11,16 +10,25 @@ interface IFloorStore {
 
   floorChestItems: Map<string, Item[]>;
   setFloorChestItems: (floorChestItems: Map<string, Item[]>) => void;
+
+  resetFloorStore: () => void;
 }
 
 export const useFloorStore = create<IFloorStore>((set) => ({
-  floor: FLOOR_TUTORIAL,
+  floor: null,
   setFloor: (floor: IFloor) => set({ floor }),
 
   currentRoom: null,
   setCurrentRoom: (currentRoom: IRoom) => set({ currentRoom }),
 
-  floorChestItems: TUTORIAL_FLOOR_CHEST_ITEMS,
+  floorChestItems: new Map(),
   setFloorChestItems: (floorChestItems: Map<string, Item[]>) =>
     set({ floorChestItems }),
+
+  resetFloorStore: () =>
+    set({
+      floor: null,
+      currentRoom: null,
+      floorChestItems: new Map(),
+    }),
 }));
