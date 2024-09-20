@@ -1295,15 +1295,18 @@ export const RoomLogic: FC<{
       );
       setRoomEntityPositions(newRoomEntityPositions);
 
-      addLog({
-        message: (
-          <>
-            <span className="text-green-500">{player.name}</span> moved to tile
-            ({col}, {row})
-          </>
-        ),
-        type: 'info',
-      });
+      // Only log if in a combat situation (ie not in a cleared room)
+      if (!isRoomOver) {
+        addLog({
+          message: (
+            <>
+              <span className="text-green-500">{player.name}</span> moved to
+              tile ({col}, {row})
+            </>
+          ),
+          type: 'info',
+        });
+      }
 
       newPlayerPosition = [row, col];
 
@@ -2614,7 +2617,16 @@ export const RoomLogic: FC<{
                       } else {
                         setIsChestOpen(true);
                         setIsCharacterSheetOpen(true);
+                        displayGeneralMessage(
+                          `tile_${player.entityType}_${player.id}`,
+                          'Loot!'
+                        );
                       }
+                    } else {
+                      displayGeneralMessage(
+                        `tile_${player.entityType}_${player.id}`,
+                        'Too far away!'
+                      );
                     }
                   }
 

@@ -522,11 +522,11 @@ export const GameRoom: FC = () => {
 
         {/* Game Log */}
         <div
-          className={clsx('fixed left-10 xl:w-[20%] w-[23%] max-h-[200px]', {
+          className={clsx('fixed left-10 xl:w-[23%] w-[28%]', {
             'z-[50]': isGameLogOpen,
             'z-[-10] opacity-0': !isGameLogOpen,
           })}
-          style={{ bottom: PLAYER_CONTROL_PANEL_HEIGHT + 300 }}
+          style={{ bottom: `calc(${PLAYER_CONTROL_PANEL_HEIGHT}px + 2.1rem)` }}
         >
           <Logger />
         </div>
