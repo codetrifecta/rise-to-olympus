@@ -12,6 +12,7 @@ import { useLogStore } from '../../stores/log';
 import { LOG_TUTORIAL_START_ROOM } from '../../constants/log';
 import { useFloorStore } from '../../stores/floor';
 import { FLOOR_TARTARUS_CAMP, FLOOR_TUTORIAL } from '../../constants/floor';
+import { useGameStateStore } from '../../stores/game';
 
 export const Game = () => {
   const { selectedCampaign, campaigns, setSelectedCampaign, setCampaigns } =
@@ -20,6 +21,7 @@ export const Game = () => {
   const { player, setPlayer } = usePlayerStore();
   const { setLogs } = useLogStore();
   const { setFloor } = useFloorStore();
+  const { setIsMinimapOpen, setIsGameLogOpen } = useGameStateStore();
 
   const [escModalOpen, setEscModalOpen] = useState(false);
 
@@ -78,6 +80,8 @@ export const Game = () => {
     if (!skipTutorial && !campaign.scriptsCompleted.tutorial) {
       if (!campaign.scriptsCompleted.tutorialStartRoom) {
         setCurrentScript(SCRIPT_TUTORIAL_START_ROOM);
+        setIsGameLogOpen(false);
+        setIsMinimapOpen(false);
       }
       setLogs(LOG_TUTORIAL_START_ROOM);
       setFloor(FLOOR_TUTORIAL);

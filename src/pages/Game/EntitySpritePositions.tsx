@@ -332,6 +332,9 @@ const EntitySpritePositionContainer: FC<{
   // If it is, set the z-index to 35 to ensure the entity is rendered above the wall
   const isTileAboveEntityAnObstacle =
     roomTileMatrix &&
+    row - 1 >= 0 &&
+    col - 1 >= 0 &&
+    col + 1 < roomTileMatrix.length &&
     (roomTileMatrix[row - 1][col] === TILE_TYPE.OBSTACLE ||
       roomTileMatrix[row - 1][col] === TILE_TYPE.DOOR ||
       roomTileMatrix[row - 1][col + 1] === TILE_TYPE.OBSTACLE ||

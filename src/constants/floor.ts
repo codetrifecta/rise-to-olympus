@@ -41,6 +41,7 @@ export const FLOOR_TARTARUS_CAMP: IFloor = {
         id: 1,
         type: ROOM_TYPE.START,
         isKnown: true,
+        isCleared: true,
         roomLength: 9,
         position: [0, 0],
         roomTileMatrix: [
