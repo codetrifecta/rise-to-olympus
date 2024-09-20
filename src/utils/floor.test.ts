@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { IFloor, IRoom } from '../types';
+import { IRoom } from '../types';
 import {
   connectAdjacentRooms,
   floorToStringArray,
@@ -144,7 +144,7 @@ describe('Determine Adjacent Rooms', () => {
     adjRoomsAnswer1[4][2].westDoor = true;
     adjRoomsAnswer1[4][2].northDoor = true;
 
-    const adjRooms1: IFloor = connectAdjacentRooms(floor1);
+    const adjRooms1: IRoom[][] = connectAdjacentRooms(floor1);
 
     let isAdjRoomsCorrect1 = true;
 
