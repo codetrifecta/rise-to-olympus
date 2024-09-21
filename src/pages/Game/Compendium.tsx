@@ -1,6 +1,9 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import {
+  crowdControlDebuffSkillIDs,
   intelligenceBasedSkillIDs,
+  movementSkillIDs,
+  selfBuffSkillIDs,
   SKILL_TAG,
   SKILLS,
   strengthBasedSkillIDs,
@@ -12,6 +15,7 @@ import { Tooltip } from './Tooltip';
 import { useGameStateStore } from '../../stores/game';
 import { usePlayerStore } from '../../stores/player';
 import { Button } from './Button';
+import { useCampaignStore } from '../../stores/campaign';
 
 const ICON_SIZE = 50;
 
@@ -22,6 +26,89 @@ export const Compendium: FC = () => {
 
   const { isCompendiumOpen, setIsCompendiumOpen } = useGameStateStore();
 
+  const { campaigns, selectedCampaign, setSelectedCampaign, setCampaigns } =
+    useCampaignStore();
+
+  // Establish the different categories of skills
+
+  const strengthBasedSkills = useMemo(() => {
+    return SKILLS.filter(
+      (skill) =>
+        !movementSkillIDs.includes(skill.id) &&
+        strengthBasedSkillIDs.includes(skill.id)
+    );
+  }, []);
+
+  const intelligenceBasedSkills = useMemo(() => {
+    return SKILLS.filter(
+      (skill) =>
+        !movementSkillIDs.includes(skill.id) &&
+        intelligenceBasedSkillIDs.includes(skill.id)
+    );
+  }, []);
+
+  const selfBuffSkills = useMemo(() => {
+    return SKILLS.filter((skill) => selfBuffSkillIDs.includes(skill.id));
+  }, []);
+
+  const crowdControlDebuffSkills = useMemo(() => {
+    return SKILLS.filter((skill) =>
+      crowdControlDebuffSkillIDs.includes(skill.id)
+    );
+  }, []);
+
+  const movementSkills = useMemo(() => {
+    return SKILLS.filter((skill) => movementSkillIDs.includes(skill.id));
+  }, []);
+
+  // When compendium is first rendered, ensure different category of skills all add up to the total amount of available skills
+  useEffect(() => {
+    // Ensure skill categories are computeed
+    if (
+      strengthBasedSkills.length === 0 ||
+      intelligenceBasedSkills.length === 0 ||
+      selfBuffSkills.length === 0 ||
+      crowdControlDebuffSkills.length === 0 ||
+      movementSkills.length === 0
+    ) {
+      console.error('Compendium useEffect: Skill categories are not computed');
+      return;
+    }
+
+    // Ensure all skills are accounted for
+    const totalSkills = [
+      ...strengthBasedSkills,
+      ...intelligenceBasedSkills,
+      ...selfBuffSkills,
+      ...crowdControlDebuffSkills,
+      ...movementSkills,
+    ];
+
+    const skillsNotAccountedFor = SKILLS.filter(
+      (skill) => !totalSkills.includes(skill)
+    );
+
+    if (totalSkills.length !== SKILLS.length) {
+      console.error(
+        'Compendium useEffect: Total skills do not add up to the total amount of skills',
+        totalSkills.length,
+        SKILLS.length,
+        skillsNotAccountedFor
+      );
+    } else {
+      console.log(
+        'Compendium useEffect: Total skills add up to the total amount of skills'
+      );
+    }
+  }, [
+    strengthBasedSkills,
+    intelligenceBasedSkills,
+    selfBuffSkills,
+    crowdControlDebuffSkills,
+    movementSkills,
+  ]);
+
+  // When compendium is closed, reset player skills to equipped skills
   useEffect(() => {
     if (isCompendiumOpen === false) {
       // Reset player skills to equipped skills
@@ -105,27 +192,19 @@ export const Compendium: FC = () => {
     });
   };
 
-  return (
-    <div className="bg-zinc-900 p-5 border border-white h-full w-full">
-      <div className="relative">
+  const renderSkillsByCategory = (categoryName: string, skills: ISkill[]) => {
+    return (
+      <div className="mb-3">
+        <p className="mb-2">{categoryName}</p>
         <div
-          className="absolute top-0 right-0 cursor-pointer text-red-500"
-          onClick={() => setIsCompendiumOpen(false)}
+          className="flex gap-1 justify-center items-center"
+          // Grid layout
+          // className={`grid gap-1 grid-cols-12`}
+          // style={{
+          //   gridTemplateRows: `repeat(${Math.ceil(skills.length / 12)}, ${ICON_SIZE}px)`,
+          // }}
         >
-          X
-        </div>
-        <h2 className="mb-5 pb-3 w-full border-b">Compendium</h2>
-      </div>
-
-      <div className="mb-5">
-        <h3 className="mb-3">Available skills</h3>
-        <div
-          className={`grid gap-1 grid-cols-12`}
-          style={{
-            gridTemplateRows: `repeat(${Math.ceil(SKILLS.length / 12)}, ${ICON_SIZE}px)`,
-          }}
-        >
-          {SKILLS.map((skill, index) => (
+          {skills.map((skill, index) => (
             <div
               key={'available_skill_' + index}
               id={`compendium_skill_${index + 1}`}
@@ -157,6 +236,37 @@ export const Compendium: FC = () => {
             </div>
           ))}
         </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="bg-zinc-900 p-5 border border-white h-full w-full">
+      <div className="relative">
+        <div
+          className="absolute top-0 right-0 cursor-pointer text-red-500"
+          onClick={() => setIsCompendiumOpen(false)}
+        >
+          X
+        </div>
+        <h2 className="mb-5 pb-3 w-full border-b">Compendium</h2>
+      </div>
+
+      <div className="mb-5 flex flex-col">
+        {renderSkillsByCategory(
+          'Strength-Based Damaging Skills',
+          strengthBasedSkills
+        )}
+        {renderSkillsByCategory(
+          'Intelligence-Based Damaging Skills',
+          intelligenceBasedSkills
+        )}
+        {renderSkillsByCategory('Self Buff Skills', selfBuffSkills)}
+        {renderSkillsByCategory(
+          'Pure Crowd Control / Debuff Skills',
+          crowdControlDebuffSkills
+        )}
+        {renderSkillsByCategory('Movement Skills', movementSkills)}
       </div>
 
       <div className="mb-6">
@@ -196,8 +306,38 @@ export const Compendium: FC = () => {
 
       <Button
         onClick={() => {
+          // Update player skills
           setPlayerSkills(equippedSkills);
+
+          // Close compendium
           setIsCompendiumOpen(false);
+
+          // Update selected campaign
+          if (!selectedCampaign) {
+            console.error('Compendium button onClick: No selected campaign');
+            return;
+          }
+
+          const newSelectedCampaign = {
+            ...selectedCampaign,
+            playerEquippedSkillIDs: equippedSkills.map((skill) => skill.id),
+          };
+
+          setSelectedCampaign(newSelectedCampaign);
+
+          // Update campaigns
+          const newCampaigns = campaigns.map((campaign) => {
+            if (campaign.id === selectedCampaign.id) {
+              return {
+                ...campaign,
+                playerEquippedSkillIDs: equippedSkills.map((skill) => skill.id),
+              };
+            }
+
+            return campaign;
+          });
+
+          setCampaigns(newCampaigns);
         }}
       >
         Save Skills
