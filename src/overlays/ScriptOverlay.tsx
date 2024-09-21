@@ -79,31 +79,41 @@ export const ScriptOverlay: FC = () => {
     if (!scriptItem) return null;
     if (selectedCampaign === null) return null;
 
+    let newScriptItem = { ...scriptItem };
+
+    // console.log('selectedCampaign', selectedCampaign.playerName);
+
     // Fill text and speaker name placeholders with appropriate text
-    if (scriptItem.text.includes('$PLAYER_NAME')) {
-      scriptItem.text = scriptItem.text.replace(
-        '$PLAYER_NAME',
-        selectedCampaign.playerName
-      );
+    if (newScriptItem.text.includes('$PLAYER_NAME')) {
+      newScriptItem = {
+        ...newScriptItem,
+        text: newScriptItem.text.replace(
+          '$PLAYER_NAME',
+          selectedCampaign.playerName
+        ),
+      };
     }
-    if (scriptItem.speakerNames) {
-      scriptItem.speakerNames = scriptItem.speakerNames.map((name) => {
-        if (name === '$PLAYER_NAME') {
-          return selectedCampaign.playerName;
-        }
-        return name;
-      });
+    if (newScriptItem.speakerNames) {
+      newScriptItem = {
+        ...newScriptItem,
+        speakerNames: newScriptItem.speakerNames.map((name) => {
+          if (name === '$PLAYER_NAME') {
+            return selectedCampaign.playerName;
+          }
+          return name;
+        }),
+      };
     }
 
-    switch (scriptItem.type) {
+    switch (newScriptItem.type) {
       case SCRIPT_TYPE.DIALOG:
-        return renderDialogScriptItem(scriptItem);
+        return renderDialogScriptItem(newScriptItem);
       case SCRIPT_TYPE.NARRATOR:
-        return renderNarratorScriptItem(scriptItem);
+        return renderNarratorScriptItem(newScriptItem);
       case SCRIPT_TYPE.CHOICE:
-        return renderChoiceScriptItem(scriptItem);
+        return renderChoiceScriptItem(newScriptItem);
       default:
-        return renderPlaceHolderScriptItem(scriptItem);
+        return renderPlaceHolderScriptItem(newScriptItem);
     }
   };
 
@@ -115,6 +125,8 @@ export const ScriptOverlay: FC = () => {
     if (!scriptItem) return null;
     if (scriptItem.type !== SCRIPT_TYPE.DIALOG) return null;
     if (!scriptItem.speakerNames) return null;
+
+    // console.log('Dialog script item:', scriptItem);
 
     return (
       <div className="container mx-auto px-40 text-xl">

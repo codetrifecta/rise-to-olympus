@@ -84,6 +84,9 @@ export const Game = () => {
 
     console.log('Campaign:', campaign);
 
+    // Set player
+    setPlayer({ ...player, name: campaign.playerName });
+
     if (
       skipTutorial === false &&
       campaign.scriptsCompleted.tutorial === false
@@ -126,9 +129,6 @@ export const Game = () => {
       setFloor(FLOOR_TARTARUS_CAMP);
       console.log('Skipping tutorial and going to camp');
     }
-
-    // Set player
-    setPlayer({ ...player, name: campaign.playerName });
   }, [searchParams]);
 
   if (!selectedCampaign) return null;

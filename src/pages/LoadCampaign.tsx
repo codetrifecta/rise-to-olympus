@@ -52,7 +52,7 @@ export const LoadCampaign = () => {
         </h1>
       </header>
       <div className="flex max-h-[50vh] mb-5">
-        <div className="flex flex-col items-center gap-4 px-10 overflow-y-scroll max-h-[50vh] mr-10">
+        <div className="flex flex-col items-center gap-4 px-10 overflow-y-scroll max-h-[35vh] mr-10">
           {campaigns.map((campaign) => (
             <div
               key={campaign.id}
