@@ -347,6 +347,8 @@ export const PlayerControlPanel: FC = () => {
                       {/* <p>Base DMG: {weaponDamage}</p>
                       <p>Bonus DMG: {bonusDamage}</p> */}
                       <p>Damage: {weaponDamage + bonusDamage}</p>
+                      <p>Range: {player.equipment.weapon.range}</p>
+                      <p>Cost: {player.equipment.weapon.cost} AP</p>
                     </>
                   ) : (
                     <h2>No weapon equipped</h2>

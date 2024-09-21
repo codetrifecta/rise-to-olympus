@@ -91,15 +91,25 @@ export const Game = () => {
     }
 
     // Get skills from campaign and set player
-    const playerEquippedSkills = SKILLS.filter((skill) => {
-      return campaign.playerEquippedSkillIDs.includes(skill.id);
+    const playerEquippedSkills = campaign.playerEquippedSkillIDs.map((id) => {
+      const skill = SKILLS.find((s) => s.id === id);
+
+      if (!skill) {
+        console.error('Game: Skill not found');
+        return null;
+      }
+
+      return skill;
     });
+    const filteredPlayerEquippedSkills = playerEquippedSkills.filter(
+      (s) => s !== null
+    );
 
     // Set player
     setPlayer({
       ...player,
       name: campaign.playerName,
-      skills: playerEquippedSkills,
+      skills: filteredPlayerEquippedSkills,
     });
 
     // let currentScript = null;

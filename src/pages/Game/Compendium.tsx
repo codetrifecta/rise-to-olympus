@@ -30,6 +30,9 @@ export const Compendium: FC = () => {
   const { campaigns, selectedCampaign, setSelectedCampaign, setCampaigns } =
     useCampaignStore();
 
+  const [isAboutToUnlockSkill, setIsAboutToUnlockSkill] =
+    useState<ISkill | null>(null);
+
   // Establish the different categories of skills
   const strengthBasedSkills = useMemo(() => {
     return SKILLS.filter(
@@ -116,6 +119,39 @@ export const Compendium: FC = () => {
     }
   }, [player.skills, isCompendiumOpen]);
 
+  const renderSkillLockText = (skill: ISkill) => {
+    if (selectedCampaign === null) {
+      console.error('Compendium renderSkillLockText: No selected campaign');
+      return null;
+    }
+
+    if (isSkillLocked(skill)) {
+      if (isAboutToUnlockSkill?.id === skill.id) {
+        if (selectedCampaign.divinity >= 100) {
+          return (
+            <h2 className="text-yellow-600">
+              <strong>CLICK TO AGAIN TO UNLOCK</strong>
+            </h2>
+          );
+        } else {
+          return (
+            <h2 className="text-yellow-800">
+              <strong>INSUFFICIENT DIVINITY</strong>
+            </h2>
+          );
+        }
+      } else {
+        return (
+          <h2 className="text-red-800">
+            <strong>LOCKED</strong>
+          </h2>
+        );
+      }
+    }
+
+    return null;
+  };
+
   const renderSkillButtonTooltip = (skill: ISkill) => {
     const tagString = skill.tags
       .map((tag) => {
@@ -132,59 +168,55 @@ export const Compendium: FC = () => {
       })
       .join(', ');
 
+    const tooltipWidth = skill.description.length > 100 ? 550 : 400;
+
     // Strength-based skills vs Intelligence-based skills
     if (strengthBasedSkillIDs.includes(skill.id)) {
       return (
-        <Tooltip width={450}>
-          {isSkillLocked(skill) ? (
-            <h2>
-              <strong>LOCKED</strong>
-            </h2>
-          ) : null}
-          <h2>{skill.name}</h2>
-          <p>{tagString}</p>
-          <p>{skill.description}</p>
-          {skill.damageMultiplier > 0 ? (
-            <p>Damage Multiplier: STR * {skill.damageMultiplier}</p>
-          ) : null}
-          <p>Range: {skill.range > 0 ? skill.range : 'Self'}</p>
-          <p>Cost: {skill.cost} AP</p>
-          <p>Cooldown: {skill.cooldown} turns</p>
+        <Tooltip width={tooltipWidth}>
+          <div className="flex flex-col px-5 py-3">
+            {renderSkillLockText(skill)}
+            <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
+            <p>{tagString}</p>
+            <p>{skill.description}</p>
+            {skill.damageMultiplier > 0 ? (
+              <p>Damage Multiplier: STR * {skill.damageMultiplier}</p>
+            ) : null}
+            <p>Range: {skill.range > 0 ? skill.range : 'Self'}</p>
+            <p>Cost: {skill.cost} AP</p>
+            <p>Cooldown: {skill.cooldown} turns</p>
+          </div>
         </Tooltip>
       );
     } else if (intelligenceBasedSkillIDs.includes(skill.id)) {
       return (
-        <Tooltip width={450}>
-          {isSkillLocked(skill) ? (
-            <h2>
-              <strong>LOCKED</strong>
-            </h2>
-          ) : null}
-          <h2>{skill.name}</h2>
-          <p>{tagString}</p>
-          <p>{skill.description}</p>
-          {skill.damageMultiplier > 0 ? (
-            <p>Damage Multiplier: INT * {skill.damageMultiplier}</p>
-          ) : null}
-          <p>Range: {skill.range > 0 ? skill.range : 'Self'}</p>
-          <p>Cost: {skill.cost} AP</p>
-          <p>Cooldown: {skill.cooldown} turns</p>
+        <Tooltip width={tooltipWidth}>
+          <div className="flex flex-col px-5 py-3">
+            {renderSkillLockText(skill)}
+            <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
+            <p>{tagString}</p>
+            <p>{skill.description}</p>
+            {skill.damageMultiplier > 0 ? (
+              <p>Damage Multiplier: INT * {skill.damageMultiplier}</p>
+            ) : null}
+            <p>Range: {skill.range > 0 ? skill.range : 'Self'}</p>
+            <p>Cost: {skill.cost} AP</p>
+            <p>Cooldown: {skill.cooldown} turns</p>
+          </div>
         </Tooltip>
       );
     } else {
       return (
-        <Tooltip width={450}>
-          {isSkillLocked(skill) ? (
-            <h2>
-              <strong>LOCKED</strong>
-            </h2>
-          ) : null}
-          <h2>{skill.name}</h2>
-          <p>{tagString}</p>
-          <p>{skill.description}</p>
-          <p>Range: {skill.range > 0 ? skill.range : 'Self'}</p>
-          <p>Cost: {skill.cost} AP</p>
-          <p>Cooldown: {skill.cooldown} turns</p>
+        <Tooltip width={tooltipWidth}>
+          <div className="flex flex-col px-5 py-3">
+            {renderSkillLockText(skill)}
+            <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
+            <p>{tagString}</p>
+            <p>{skill.description}</p>
+            <p>Range: {skill.range > 0 ? skill.range : 'Self'}</p>
+            <p>Cost: {skill.cost} AP</p>
+            <p>Cooldown: {skill.cooldown} turns</p>
+          </div>
         </Tooltip>
       );
     }
@@ -218,14 +250,45 @@ export const Compendium: FC = () => {
     );
   };
 
+  const handleUnlockSkill = (skill: ISkill) => {
+    if (selectedCampaign === null) {
+      console.error('Compendium handleUnlockSkill: No selected campaign');
+      return;
+    }
+
+    if (selectedCampaign.divinity < 100) {
+      console.error('Compendium handleUnlockSkill: Insufficient divinity');
+      return;
+    }
+
+    // Deduct divinity and add skill to unlocked skills list to both selected campaign and campaigns
+    const newSelectedCampaign = {
+      ...selectedCampaign,
+      divinity: selectedCampaign.divinity - 100,
+      unlockedSkillIDs: [...selectedCampaign.unlockedSkillIDs, skill.id],
+    };
+
+    setSelectedCampaign(newSelectedCampaign);
+
+    const newCampaigns = campaigns.map((campaign) => {
+      if (campaign.id === selectedCampaign.id) {
+        return newSelectedCampaign;
+      }
+
+      return campaign;
+    });
+
+    setCampaigns(newCampaigns);
+
+    // Unset isAboutToUnlockSkill
+    setIsAboutToUnlockSkill(null);
+  };
+
   const renderSkillsByCategory = (categoryName: string, skills: ISkill[]) => {
     if (selectedCampaign === null) {
       console.error('Compendium renderSkillsByCategory: No selected campaign');
       return null;
     }
-
-    const unlockedSkillIDs = selectedCampaign.unlockedSkillIDs;
-    console.log(unlockedSkillIDs);
 
     return (
       <div className="mb-3">
@@ -251,16 +314,36 @@ export const Compendium: FC = () => {
                 {skill !== null && (
                   <div className="flex justify-center items-center">
                     <IconButton
-                      onClick={() => addToEquippedSkills(skill)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (
+                          isSkillLocked(skill) &&
+                          isAboutToUnlockSkill?.id !== skill.id
+                        ) {
+                          setIsAboutToUnlockSkill(skill);
+                          return;
+                        } else if (
+                          isSkillLocked(skill) &&
+                          isAboutToUnlockSkill?.id === skill.id
+                        ) {
+                          console.log('Unlocking skill', skill);
+                          handleUnlockSkill(skill);
+                          return;
+                        } else {
+                          addToEquippedSkills(skill);
+                        }
+                      }}
                       disabled={
                         equippedSkills.find((equippedSkill) => {
                           if (equippedSkill === null) return;
                           return equippedSkill.name === skill.name;
                         })
                           ? true
-                          : skillIsLocked
+                          : false
                       }
                       grayscale={skillIsLocked}
+                      borderPulse={isAboutToUnlockSkill?.id === skill.id}
                     >
                       <Icon
                         icon={skill.icon}
@@ -281,7 +364,14 @@ export const Compendium: FC = () => {
   };
 
   return (
-    <div className="bg-zinc-900 p-5 border border-white h-full w-full">
+    <div
+      className="bg-zinc-900 p-5 border border-white h-full w-full"
+      onClick={() => {
+        if (isAboutToUnlockSkill) {
+          setIsAboutToUnlockSkill(null);
+        }
+      }}
+    >
       <div className="relative">
         <div
           className="absolute top-0 right-0 cursor-pointer text-red-500"
@@ -290,6 +380,13 @@ export const Compendium: FC = () => {
           X
         </div>
         <h2 className="mb-5 pb-3 w-full border-b">Compendium</h2>
+      </div>
+
+      <div className="absolute ml-1">
+        <h3>
+          Divinity: {selectedCampaign ? selectedCampaign.divinity : 0}{' '}
+          {isAboutToUnlockSkill ? '- 100' : null}
+        </h3>
       </div>
 
       <div className="mb-5 flex flex-col">
@@ -345,9 +442,6 @@ export const Compendium: FC = () => {
               )
             )}
           </div>
-        </div>
-        <div className="ml-5">
-          <h3>Divinity: {selectedCampaign ? selectedCampaign.divinity : 0}</h3>
         </div>
       </div>
 
