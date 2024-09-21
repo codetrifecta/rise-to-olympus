@@ -33,9 +33,9 @@ export const Tooltip: FC<{
         if (isTop) {
           if (ref.current.parentElement.id.startsWith('compendium')) {
             // For some reason, the tooltip is not showing up correctly for skills in the compendium,
-            // so the tooltip is forced to be at the top of the parent element for now.
-            ref.current.style.top = `-${tooltipRect.height + 10}px`;
-            ref.current.style.bottom = '';
+            // so the tooltip for skills in the compendiium is forced to be at the bottom of the parent element for now.
+            ref.current.style.bottom = `-${tooltipRect.height + 10}px`;
+            ref.current.style.top = '';
           } else {
             ref.current.style.bottom = `-${tooltipRect.height + 10}px`;
             ref.current.style.top = '';

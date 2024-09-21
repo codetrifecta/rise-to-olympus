@@ -28,6 +28,7 @@ interface IGameStateStore {
   wallArtFile: string;
   isCameraMoving: boolean;
   isEntityMoving: boolean;
+  maxSkillSlots: number;
   setDoorPositions: (doorPositions: [number, number][]) => void;
   setHoveredTile: (hoveredTile: [number, number] | null) => void;
   setRoomLength: (roomLength: number) => void;
@@ -55,6 +56,7 @@ interface IGameStateStore {
   setWallArtFile: (wallArtFile: string) => void;
   setIsCameraMoving: (isCameraMoving: boolean) => void;
   setIsEntityMoving: (isEntityMoving: boolean) => void;
+  setMaxSkillSlots: (maxSkillSlots: number) => void;
 
   resetGameState: () => void;
 }
@@ -85,6 +87,7 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   wallArtFile: '',
   isCameraMoving: false,
   isEntityMoving: false,
+  maxSkillSlots: 3,
 
   setDoorPositions: (doorPositions: [number, number][]) =>
     set({ doorPositions }),
@@ -165,6 +168,8 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   setIsCameraMoving: (isCameraMoving: boolean) => set({ isCameraMoving }),
 
   setIsEntityMoving: (isEntityMoving: boolean) => set({ isEntityMoving }),
+
+  setMaxSkillSlots: (maxSkillSlots: number) => set({ maxSkillSlots }),
 
   resetGameState: () => {
     set({

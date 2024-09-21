@@ -24,7 +24,8 @@ export const Compendium: FC = () => {
 
   const [equippedSkills, setEquippedSkills] = useState<ISkill[]>(player.skills);
 
-  const { isCompendiumOpen, setIsCompendiumOpen } = useGameStateStore();
+  const { maxSkillSlots, isCompendiumOpen, setIsCompendiumOpen } =
+    useGameStateStore();
 
   const { campaigns, selectedCampaign, setSelectedCampaign, setCampaigns } =
     useCampaignStore();
@@ -176,7 +177,7 @@ export const Compendium: FC = () => {
   };
 
   const addToEquippedSkills = (skill: ISkill) => {
-    if (equippedSkills.length >= 6) return;
+    if (equippedSkills.length >= maxSkillSlots) return;
 
     setEquippedSkills((prevEquippedSkills) => [...prevEquippedSkills, skill]);
   };
@@ -293,14 +294,16 @@ export const Compendium: FC = () => {
               )}
             </div>
           ))}
-          {Array.from({ length: 6 - equippedSkills.length }).map((_, index) => (
-            <div
-              key={index}
-              id={`compendium_skill_slot_${equippedSkills.length + index + 1}`}
-              className="bg-gray-500"
-              style={{ width: ICON_SIZE, height: ICON_SIZE }}
-            />
-          ))}
+          {Array.from({ length: maxSkillSlots - equippedSkills.length }).map(
+            (_, index) => (
+              <div
+                key={index}
+                id={`compendium_skill_slot_${equippedSkills.length + index + 1}`}
+                className="bg-gray-500"
+                style={{ width: ICON_SIZE, height: ICON_SIZE }}
+              />
+            )
+          )}
         </div>
       </div>
 
