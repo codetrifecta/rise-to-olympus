@@ -31,7 +31,6 @@ export const Compendium: FC = () => {
     useCampaignStore();
 
   // Establish the different categories of skills
-
   const strengthBasedSkills = useMemo(() => {
     return SKILLS.filter(
       (skill) =>
@@ -137,6 +136,11 @@ export const Compendium: FC = () => {
     if (strengthBasedSkillIDs.includes(skill.id)) {
       return (
         <Tooltip width={450}>
+          {isSkillLocked(skill) ? (
+            <h2>
+              <strong>LOCKED</strong>
+            </h2>
+          ) : null}
           <h2>{skill.name}</h2>
           <p>{tagString}</p>
           <p>{skill.description}</p>
@@ -151,6 +155,11 @@ export const Compendium: FC = () => {
     } else if (intelligenceBasedSkillIDs.includes(skill.id)) {
       return (
         <Tooltip width={450}>
+          {isSkillLocked(skill) ? (
+            <h2>
+              <strong>LOCKED</strong>
+            </h2>
+          ) : null}
           <h2>{skill.name}</h2>
           <p>{tagString}</p>
           <p>{skill.description}</p>
@@ -165,6 +174,11 @@ export const Compendium: FC = () => {
     } else {
       return (
         <Tooltip width={450}>
+          {isSkillLocked(skill) ? (
+            <h2>
+              <strong>LOCKED</strong>
+            </h2>
+          ) : null}
           <h2>{skill.name}</h2>
           <p>{tagString}</p>
           <p>{skill.description}</p>
@@ -193,7 +207,26 @@ export const Compendium: FC = () => {
     });
   };
 
+  const isSkillLocked = (skill: ISkill) => {
+    if (selectedCampaign === null) {
+      console.error('Compendium skillIsNotUnlocked: No selected campaign');
+      return true;
+    }
+
+    return !selectedCampaign.unlockedSkillIDs.find(
+      (unlockedSkillID) => unlockedSkillID === skill.id
+    );
+  };
+
   const renderSkillsByCategory = (categoryName: string, skills: ISkill[]) => {
+    if (selectedCampaign === null) {
+      console.error('Compendium renderSkillsByCategory: No selected campaign');
+      return null;
+    }
+
+    const unlockedSkillIDs = selectedCampaign.unlockedSkillIDs;
+    console.log(unlockedSkillIDs);
+
     return (
       <div className="mb-3">
         <p className="mb-2">{categoryName}</p>
@@ -205,37 +238,43 @@ export const Compendium: FC = () => {
           //   gridTemplateRows: `repeat(${Math.ceil(skills.length / 12)}, ${ICON_SIZE}px)`,
           // }}
         >
-          {skills.map((skill, index) => (
-            <div
-              key={'available_skill_' + index}
-              id={`compendium_skill_${index + 1}`}
-              className="bg-gray-500 relative"
-              style={{ width: ICON_SIZE, height: ICON_SIZE }}
-            >
-              {skill !== null && (
-                <>
-                  <IconButton
-                    onClick={() => addToEquippedSkills(skill)}
-                    disabled={
-                      equippedSkills.find((equippedSkill) => {
-                        if (equippedSkill === null) return;
-                        return equippedSkill.name === skill.name;
-                      })
-                        ? true
-                        : false
-                    }
-                  >
-                    <Icon
-                      icon={skill.icon}
-                      width={ICON_SIZE - 4}
-                      height={ICON_SIZE - 4}
-                    />
-                  </IconButton>
-                  {renderSkillButtonTooltip(skill)}
-                </>
-              )}
-            </div>
-          ))}
+          {skills.map((skill, index) => {
+            const skillIsLocked = isSkillLocked(skill);
+
+            return (
+              <div
+                key={'available_skill_' + index}
+                id={`compendium_skill_${index + 1}`}
+                className="bg-gray-500 relative"
+                style={{ width: ICON_SIZE, height: ICON_SIZE }}
+              >
+                {skill !== null && (
+                  <div className="flex justify-center items-center">
+                    <IconButton
+                      onClick={() => addToEquippedSkills(skill)}
+                      disabled={
+                        equippedSkills.find((equippedSkill) => {
+                          if (equippedSkill === null) return;
+                          return equippedSkill.name === skill.name;
+                        })
+                          ? true
+                          : skillIsLocked
+                      }
+                      grayscale={skillIsLocked}
+                    >
+                      <Icon
+                        icon={skill.icon}
+                        width={ICON_SIZE - 4}
+                        height={ICON_SIZE - 4}
+                      />
+                    </IconButton>
+
+                    {renderSkillButtonTooltip(skill)}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -270,40 +309,45 @@ export const Compendium: FC = () => {
         {renderSkillsByCategory('Movement Skills', movementSkills)}
       </div>
 
-      <div className="mb-6">
-        <h3 className="mb-3">Equipped skills</h3>
-        <div className="flex gap-1 justify-center">
-          {equippedSkills.map((skill, index) => (
-            <div
-              key={'equipped_skill_' + index}
-              id={`compendium_skill_slot_${index + 1}`}
-              className="bg-gray-500 relative"
-              style={{ width: ICON_SIZE, height: ICON_SIZE }}
-            >
-              {skill !== null && (
-                <>
-                  <IconButton onClick={() => removeFromEquippedSkills(skill)}>
-                    <Icon
-                      icon={skill.icon}
-                      width={ICON_SIZE - 4}
-                      height={ICON_SIZE - 4}
-                    />
-                  </IconButton>
-                  {renderSkillButtonTooltip(skill)}
-                </>
-              )}
-            </div>
-          ))}
-          {Array.from({ length: maxSkillSlots - equippedSkills.length }).map(
-            (_, index) => (
+      <div className="mb-6 flex justify-center ">
+        <div>
+          <h3 className="mb-3">Equipped skills</h3>
+          <div className="flex gap-1 justify-center">
+            {equippedSkills.map((skill, index) => (
               <div
-                key={index}
-                id={`compendium_skill_slot_${equippedSkills.length + index + 1}`}
-                className="bg-gray-500"
+                key={'equipped_skill_' + index}
+                id={`compendium_skill_slot_${index + 1}`}
+                className="bg-gray-500 relative"
                 style={{ width: ICON_SIZE, height: ICON_SIZE }}
-              />
-            )
-          )}
+              >
+                {skill !== null && (
+                  <>
+                    <IconButton onClick={() => removeFromEquippedSkills(skill)}>
+                      <Icon
+                        icon={skill.icon}
+                        width={ICON_SIZE - 4}
+                        height={ICON_SIZE - 4}
+                      />
+                    </IconButton>
+                    {renderSkillButtonTooltip(skill)}
+                  </>
+                )}
+              </div>
+            ))}
+            {Array.from({ length: maxSkillSlots - equippedSkills.length }).map(
+              (_, index) => (
+                <div
+                  key={index}
+                  id={`compendium_skill_slot_${equippedSkills.length + index + 1}`}
+                  className="bg-gray-500"
+                  style={{ width: ICON_SIZE, height: ICON_SIZE }}
+                />
+              )
+            )}
+          </div>
+        </div>
+        <div className="ml-5">
+          <h3>Divinity: {selectedCampaign ? selectedCampaign.divinity : 0}</h3>
         </div>
       </div>
 
