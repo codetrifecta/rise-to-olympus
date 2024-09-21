@@ -5,6 +5,7 @@ import { ICampaign } from '../types';
 import { useCampaignStore } from '../stores/campaign';
 import { Button } from '../components/Button';
 import { BASE_CAMPAIGN } from '../constants/campaign';
+import { isCampaign } from '../utils/campaign';
 
 export const NewCampaign = () => {
   const [campaignName, setCampaignName] = useState('New Campaign');
@@ -35,6 +36,12 @@ export const NewCampaign = () => {
     let campaigns: ICampaign[] = [];
     if (existingCampaigns) {
       campaigns = JSON.parse(existingCampaigns);
+    }
+
+    if (isCampaign(newCampaign) === false) {
+      console.log('NewCampaign: Campaign is not valid');
+      navigate('/new');
+      return;
     }
 
     // Add new campaign to existing campaigns

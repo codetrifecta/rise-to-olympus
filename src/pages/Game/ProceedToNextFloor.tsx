@@ -8,6 +8,7 @@ import { useCampaignStore } from '../../stores/campaign';
 import { useLogStore } from '../../stores/log';
 import { LOGS_TUTORIAL_TARTARUS_CAMP } from '../../constants/log';
 import { usePlayerStore } from '../../stores/player';
+import { useScriptStore } from '../../stores/script';
 
 export const ProceedToNextFloor: FC = () => {
   const { currentRoom, floor, setCurrentRoom, setFloor } = useFloorStore();
@@ -16,6 +17,7 @@ export const ProceedToNextFloor: FC = () => {
     useCampaignStore();
   const { setLogs } = useLogStore();
   const { resetPlayerStore } = usePlayerStore();
+  const { resetScriptStore } = useScriptStore();
 
   const handleProceedButtonClick = () => {
     console.log('Proceed to next floor');
@@ -103,6 +105,7 @@ export const ProceedToNextFloor: FC = () => {
       setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
     }
 
+    resetScriptStore();
     resetGameState();
     resetPlayerStore();
     setCurrentRoom(null);

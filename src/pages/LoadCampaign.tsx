@@ -4,6 +4,7 @@ import { ICampaign } from '../types';
 import clsx from 'clsx';
 import { useCampaignStore } from '../stores/campaign';
 import { Button } from '../components/Button';
+import { isCampaign } from '../utils/campaign';
 
 export const LoadCampaign = () => {
   const { campaigns, selectedCampaign, setSelectedCampaign, deleteCampaign } =
@@ -29,6 +30,13 @@ export const LoadCampaign = () => {
 
   const handleLoadCampaign = (campaign: ICampaign | null) => {
     if (campaign) {
+      // Check if the campaign is valid
+      if (isCampaign(campaign) === false) {
+        console.log('Campaign is not valid');
+        navigate('/load');
+        return;
+      }
+
       navigate(`/game?campaignId=${campaign.id}`);
     }
   };
