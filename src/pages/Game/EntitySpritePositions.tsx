@@ -166,6 +166,8 @@ export const EntitySpritePositions: FC<{
           id={`${player.entityType}_${player.id}`}
           className="absolute flex justify-center items-center overflow-hidden"
           style={{
+            // width: player.spriteSize,
+            // height: player.spriteSize,
             width:
               player.spriteSize < TILE_SIZE
                 ? player.spriteSize
@@ -180,7 +182,7 @@ export const EntitySpritePositions: FC<{
             className="absolute bottom-[10px] overflow-hidden"
             style={{
               width: player.spriteSize,
-              height: player.spriteSize,
+              height: player.spriteSize + 2,
             }}
           >
             <div
@@ -230,7 +232,7 @@ export const EntitySpritePositions: FC<{
             className="absolute bottom-[10px] overflow-hidden"
             style={{
               width: enemy.spriteSize,
-              height: enemy.spriteSize,
+              height: enemy.spriteSize + 2,
             }}
           >
             <div
@@ -337,6 +339,8 @@ const EntitySpritePositionContainer: FC<{
     col + 1 < roomTileMatrix.length &&
     (roomTileMatrix[row - 1][col] === TILE_TYPE.OBSTACLE ||
       roomTileMatrix[row - 1][col] === TILE_TYPE.DOOR ||
+      roomTileMatrix[row - 1][col] === TILE_TYPE.NULL ||
+      roomTileMatrix[row - 1][col] === TILE_TYPE.CHEST ||
       roomTileMatrix[row - 1][col + 1] === TILE_TYPE.OBSTACLE ||
       roomTileMatrix[row - 1][col - 1] === TILE_TYPE.OBSTACLE);
 
