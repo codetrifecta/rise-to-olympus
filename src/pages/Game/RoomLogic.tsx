@@ -1922,8 +1922,6 @@ export const RoomLogic: FC<{
     return [newEnemy, newPlayer];
   };
 
-  // console.log('targetZones', targetZones.current);
-
   return (
     <div
       id="room"
@@ -2252,21 +2250,6 @@ export const RoomLogic: FC<{
                   case SKILL_ID.CLEAVE: {
                     if (isEffectZone && isEffectZoneHovered) {
                       // Add tiles to target zone to use to compute the effect of the skill
-
-                      const currentTargetZones = targetZones.current;
-
-                      // Check if tile is in target zone
-                      let isTileInTargetZone = false;
-                      currentTargetZones.forEach(([row, col]) => {
-                        if (row === rowIndex && col === columnIndex) {
-                          isTileInTargetZone = true;
-                        }
-                      });
-
-                      if (!isTileInTargetZone) {
-                        currentTargetZones.push([rowIndex, columnIndex]);
-                        targetZones.current = currentTargetZones;
-                      }
 
                       // For cleave, the target zone is in the area in front of the player, depending on the direction of the effect zone hovered
                       if (!effectZoneHovered) {
