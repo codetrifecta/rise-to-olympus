@@ -4,6 +4,7 @@ import { ICampaign } from '../types';
 import clsx from 'clsx';
 import { useCampaignStore } from '../stores/campaign';
 import { Button } from '../components/Button';
+import { isCampaign } from '../utils/campaign';
 
 export const LoadCampaign = () => {
   const { campaigns, selectedCampaign, setSelectedCampaign, deleteCampaign } =
@@ -29,6 +30,13 @@ export const LoadCampaign = () => {
 
   const handleLoadCampaign = (campaign: ICampaign | null) => {
     if (campaign) {
+      // Check if the campaign is valid
+      if (isCampaign(campaign) === false) {
+        console.log('Campaign is not valid');
+        navigate('/load');
+        return;
+      }
+
       navigate(`/game?campaignId=${campaign.id}`);
     }
   };
@@ -52,7 +60,7 @@ export const LoadCampaign = () => {
         </h1>
       </header>
       <div className="flex max-h-[50vh] mb-5">
-        <div className="flex flex-col items-center gap-4 px-10 overflow-y-scroll max-h-[50vh] mr-10">
+        <div className="flex flex-col items-center gap-4 px-10 overflow-y-scroll max-h-[35vh] mr-10">
           {campaigns.map((campaign) => (
             <div
               key={campaign.id}

@@ -39,6 +39,20 @@ export default {
           '50%': { transform: 'translateY(-3px)' },
           '100%': { transform: 'translateY(0)' },
         },
+        borderPulse: {
+          '0%': {
+            borderColor: 'rgba(255, 255, 255, 0.5)',
+            boxShadow: '0 0 5px 2px rgba(255, 255, 255, 0.5)',
+          },
+          '50%': {
+            borderColor: 'rgba(255, 255, 255, 1)',
+            boxShadow: '0 0 5px 2px rgba(255, 255, 255, 1)',
+          },
+          '100%': {
+            borderColor: 'rgba(255, 255, 255, 0.5)',
+            boxShadow: '0 0 5px 2px rgba(255, 255, 255, 0.5)',
+          },
+        },
       },
       animation: {
         floatUpAndFadeOut15: 'floatUpAndFadeOut 1.5s linear',
@@ -60,6 +74,8 @@ export default {
         entityAnimateLeft20: 'entityAnimateLeft 2s steps(6) infinite',
 
         floatUpAndDown: 'floatUpAndDown 1s linear infinite',
+
+        borderPulse: 'borderPulse 1s linear infinite',
       },
     },
   },

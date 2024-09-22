@@ -561,7 +561,15 @@ export const GameRoom: FC = () => {
         </div>
 
         {/* Combat Room */}
-        <section className="relative max-w-screen max-h-screen">
+        <section
+          className={clsx('relative max-w-screen max-h-screen', {
+            'pointer-events-none':
+              isInventoryOpen ||
+              isCharacterSheetOpen ||
+              isCompendiumOpen ||
+              !selectedCampaign?.scriptsCompleted.tutorialStartRoom,
+          })}
+        >
           <div
             className="relative max-w-screen max-h-screen pr-10 hidden-scrollbar overflow-scroll outline-none"
             ref={roomScrollRef}

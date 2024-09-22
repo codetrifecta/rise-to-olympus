@@ -9,6 +9,7 @@ import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './constants/weapon';
 import { ITEM_TYPE } from './constants/item';
 import { ARMOR_PART } from './constants/armor';
 import { FLOOR_ID } from './constants/floor';
+import { CHECKPOINT } from './constants/campaign';
 
 export interface IScriptsCompleted {
   tutorial: boolean;
@@ -29,8 +30,12 @@ export interface ICampaign {
   id: string;
   campaignName: string;
   playerName: string;
+  playerEquippedSkillIDs: SKILL_ID[];
   numberOfDeaths: number;
   scriptsCompleted: IScriptsCompleted;
+  checkpoint: CHECKPOINT;
+  unlockedSkillIDs: SKILL_ID[];
+  divinity: number;
   createdAt: string;
   updatedAt: string;
 }

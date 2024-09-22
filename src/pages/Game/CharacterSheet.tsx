@@ -7,6 +7,7 @@ import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 import { WEAPONS } from '../../constants/weapon';
 import { CHESTPIECES, HELMETS, LEGGINGS } from '../../constants/armor';
+import { getPlayerMaxHealth } from '../../utils/entity';
 
 // const equipmentCardClasses =
 //   'w-28 h-28 bg-zinc-700 mb-5 flex justify-center items-center border border-white';
@@ -189,7 +190,7 @@ export const CharacterSheet: FC = () => {
         </div>
 
         <p>Health: {player.health}</p>
-        <p>Maximum Health: {player.maxHealth}</p>
+        <p>Maximum Health: {getPlayerMaxHealth(player)}</p>
         <p>Strength: {playerStats.strength}</p>
         <p>Intelligence: {playerStats.intelligence}</p>
         <p>Defense: {playerStats.defense}</p>

@@ -812,22 +812,25 @@ export const RoomLogic: FC<{
     Map<string, [number, number][]>,
     Map<string, number>,
   ] = useMemo(() => {
-    // console.log('playerMovementPossibilities');
+    if (!currentRoom) {
+      console.error('playerMovementPossibilities: Current room not found!');
+      return [new Map(), new Map()];
+    }
+
+    const roomIsCleared = currentRoom.isCleared;
 
     // Check for player's statuses that affect movement range like swiftness
     const movementRangeBonus = player.statuses.reduce((acc, status) => {
       return acc + status.effect.movementRangeBonus;
     }, 0);
 
-    // console.log('movementRangeBonus', movementRangeBonus, player.statuses);
-
     const movementPossibilities = findPathsFromCurrentLocation(
       playerPosition,
       roomTileMatrix,
-      isRoomOver ? 10 : player.actionPoints,
-      roomEntityPositions,
+      roomIsCleared ? 10 : player.actionPoints,
+      roomIsCleared ? new Map() : roomEntityPositions,
       DEFAULT_MOVEMENT_RANGE + movementRangeBonus,
-      isRoomOver
+      roomIsCleared
     );
 
     const apCostForMovementPossibilities = getApCostForPath(
@@ -841,7 +844,7 @@ export const RoomLogic: FC<{
     playerPosition,
     roomTileMatrix.length,
     player.statuses,
-    // isRoomOver,
+    currentRoom,
   ]);
 
   // Debounce hovered tile
@@ -1922,8 +1925,6 @@ export const RoomLogic: FC<{
     return [newEnemy, newPlayer];
   };
 
-  // console.log('targetZones', targetZones.current);
-
   return (
     <div
       id="room"
@@ -2252,21 +2253,6 @@ export const RoomLogic: FC<{
                   case SKILL_ID.CLEAVE: {
                     if (isEffectZone && isEffectZoneHovered) {
                       // Add tiles to target zone to use to compute the effect of the skill
-
-                      const currentTargetZones = targetZones.current;
-
-                      // Check if tile is in target zone
-                      let isTileInTargetZone = false;
-                      currentTargetZones.forEach(([row, col]) => {
-                        if (row === rowIndex && col === columnIndex) {
-                          isTileInTargetZone = true;
-                        }
-                      });
-
-                      if (!isTileInTargetZone) {
-                        currentTargetZones.push([rowIndex, columnIndex]);
-                        targetZones.current = currentTargetZones;
-                      }
 
                       // For cleave, the target zone is in the area in front of the player, depending on the direction of the effect zone hovered
                       if (!effectZoneHovered) {

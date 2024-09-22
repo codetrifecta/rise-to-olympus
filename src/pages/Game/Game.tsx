@@ -20,6 +20,9 @@ import {
   FLOOR_TUTORIAL_CHEST_ITEMS,
 } from '../../constants/floor';
 import { useGameStateStore } from '../../stores/game';
+import { CHECKPOINT } from '../../constants/campaign';
+import { SKILLS } from '../../constants/skill';
+import { isCampaign } from '../../utils/campaign';
 
 export const Game = () => {
   const { selectedCampaign, campaigns, setSelectedCampaign, setCampaigns } =
@@ -77,12 +80,43 @@ export const Game = () => {
       console.log('No campaign found');
       navigate('/');
       return;
-    } else {
-      setSelectedCampaign(campaign);
-      console.log('Selected campaign:', campaign);
     }
 
     console.log('Campaign:', campaign);
+
+    if (isCampaign(campaign) === false) {
+      console.log('Campaign is not valid');
+      navigate('/');
+      return;
+    }
+
+    // Get skills from campaign and set player
+    const playerEquippedSkills = campaign.playerEquippedSkillIDs.map((id) => {
+      const skill = SKILLS.find((s) => s.id === id);
+
+      if (!skill) {
+        console.error('Game: Skill not found');
+        return null;
+      }
+
+      return skill;
+    });
+    const filteredPlayerEquippedSkills = playerEquippedSkills.filter(
+      (s) => s !== null
+    );
+
+    // Set player
+    setPlayer({
+      ...player,
+      name: campaign.playerName,
+      skills: filteredPlayerEquippedSkills,
+    });
+
+    // let currentScript = null;
+    // let logs = [];
+    // let floor = null;
+    // let floorChestItems = new Map();
+    let newCampaigns = [...campaigns];
 
     if (
       skipTutorial === false &&
@@ -96,6 +130,8 @@ export const Game = () => {
         setIsMinimapOpen(false);
       }
       setLogs(LOGS_TUTORIAL_START_ROOM);
+      setSelectedCampaign(campaign);
+      console.log('Selected campaign:', campaign);
       setFloor(FLOOR_TUTORIAL);
       setFloorChestItems(FLOOR_TUTORIAL_CHEST_ITEMS);
       console.log('Showing tutorial');
@@ -105,30 +141,51 @@ export const Game = () => {
     ) {
       // If skipping tutorial and tutorial is not completed,
       // skip tutorial and go to camp
+      setCurrentScript(null);
 
       // Set campaign's tutorial to completed
-      const newCampaigns = campaigns.map((c) =>
+      newCampaigns = campaigns.map((c) =>
         c.id === campaign.id
           ? {
               ...c,
-              scriptsCompleted: { ...c.scriptsCompleted, tutorial: true },
+              scriptsCompleted: {
+                ...c.scriptsCompleted,
+                tutorial: true,
+                tutorialStartRoom: true,
+              },
+              checkpoint: CHECKPOINT.TARTARUS_CAMP,
             }
           : c
       );
       setCampaigns(newCampaigns);
 
+      // Set selected campaign to the updated campaign
+      const newSelectedCampaign = newCampaigns.find(
+        (c) => c.id === campaign.id
+      );
+
+      if (!newSelectedCampaign) {
+        console.error('Game: New selected campaign not found');
+        return;
+      }
+
+      setSelectedCampaign(newSelectedCampaign);
+      console.log(
+        'Selected campaign after tutorial is skipped:',
+        newSelectedCampaign
+      );
       setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
       setFloor(FLOOR_TARTARUS_CAMP);
       console.log('Skipping tutorial and going to camp');
     } else {
       // The case where the tutorial script is completed
+      setSelectedCampaign(campaign);
+      console.log('Selected campaign:', campaign);
       setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
       setFloor(FLOOR_TARTARUS_CAMP);
+
       console.log('Skipping tutorial and going to camp');
     }
-
-    // Set player
-    setPlayer({ ...player, name: campaign.playerName });
   }, [searchParams]);
 
   if (!selectedCampaign) return null;

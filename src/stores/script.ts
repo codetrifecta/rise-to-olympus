@@ -8,6 +8,7 @@ interface IScriptStore {
   setCurrentScript: (script: IScriptItem[] | null) => void;
   setCurrentScriptItem: (scriptItem: IScriptItem | null) => void;
   setCurrentScriptItemIndex: (index: number) => void;
+  resetScriptStore: () => void;
 }
 
 export const useScriptStore = create<IScriptStore>((set) => ({
@@ -22,5 +23,13 @@ export const useScriptStore = create<IScriptStore>((set) => ({
   },
   setCurrentScriptItemIndex: (index) => {
     set({ currentScriptItemIndex: index });
+  },
+
+  resetScriptStore: () => {
+    set({
+      currentScript: null,
+      currentScriptItem: null,
+      currentScriptItemIndex: 0,
+    });
   },
 }));

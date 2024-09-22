@@ -11,12 +11,12 @@ export const Tooltip: FC<{
   // active = false,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const tooltipRect = ref.current?.getBoundingClientRect();
 
   useEffect(() => {
     const initializeTooltipPosition = () => {
       // When parent element is initialized, set the tooltip position
       if (ref.current?.parentElement) {
+        // console.log('initializeTooltipPosition');
         const tooltipRect = ref.current.getBoundingClientRect();
 
         // Check if parent component is at the top half of the screen
@@ -31,18 +31,11 @@ export const Tooltip: FC<{
 
         // Set tooltip position to top or bottom of parent element
         if (isTop) {
-          if (ref.current.parentElement.id.startsWith('compendium')) {
-            // For some reason, the tooltip is not showing up correctly for skills in the compendium,
-            // so the tooltip is forced to be at the top of the parent element for now.
-            ref.current.style.top = `-${tooltipRect.height + 10}px`;
-            ref.current.style.bottom = '';
-          } else {
-            ref.current.style.bottom = `-${tooltipRect.height + 10}px`;
-            ref.current.style.top = '';
-          }
+          ref.current.style.top = '';
+          ref.current.style.bottom = `-${tooltipRect.height + 10}px`;
         } else {
-          ref.current.style.top = `-${tooltipRect.height + 10}px`;
           ref.current.style.bottom = '';
+          ref.current.style.top = `-${tooltipRect.height + 10}px`;
         }
 
         // Set tooltip position to middle of parent element
@@ -53,7 +46,7 @@ export const Tooltip: FC<{
     };
 
     initializeTooltipPosition();
-  }, [ref.current, ref.current?.parentElement, tooltipRect, children]);
+  }, [ref.current, ref.current?.parentElement]);
 
   return (
     <div

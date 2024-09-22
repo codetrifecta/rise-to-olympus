@@ -25,7 +25,6 @@ export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
       <div className="z-10 bg-neutral-900 p-10 flex flex-col">
         <Button
           onClick={() => {
-            reset();
             onClose();
           }}
         >

@@ -21,6 +21,7 @@ import {
   PLAYER_CONTROL_PANEL_HEIGHT,
   PLAYER_CONTROL_PANEL_ICON_SIZE,
 } from '../../constants/game';
+import { useFloorStore } from '../../stores/floor';
 export const PlayerControlPanel: FC = () => {
   const {
     turnCycle,
@@ -49,6 +50,8 @@ export const PlayerControlPanel: FC = () => {
     setPlayer,
     setPlayerState,
   } = usePlayerStore();
+
+  const { currentRoom } = useFloorStore();
 
   const weaponDamage = getPlayerWeaponDamage(player);
   const totalStrength = getPlayerTotalStrength();
@@ -347,6 +350,8 @@ export const PlayerControlPanel: FC = () => {
                       {/* <p>Base DMG: {weaponDamage}</p>
                       <p>Bonus DMG: {bonusDamage}</p> */}
                       <p>Damage: {weaponDamage + bonusDamage}</p>
+                      <p>Range: {player.equipment.weapon.range}</p>
+                      <p>Cost: {player.equipment.weapon.cost} AP</p>
                     </>
                   ) : (
                     <h2>No weapon equipped</h2>
@@ -383,11 +388,11 @@ export const PlayerControlPanel: FC = () => {
                 <IconButton
                   onClick={() => {
                     setOpenSkills(true);
-                    setPlayerState({
-                      isAttacking: false,
-                      isMoving: false,
-                      isUsingSkill: false,
-                    });
+                    // setPlayerState({
+                    //   isAttacking: false,
+                    //   isMoving: false,
+                    //   isUsingSkill: false,
+                    // });
                   }}
                 >
                   <Icon
@@ -420,7 +425,9 @@ export const PlayerControlPanel: FC = () => {
                       ...newPlayer,
                       health: newPlayer.health + healAmount,
                       healthPotions: player.healthPotions - 1,
-                      actionPoints: isRoomOver ? 0 : player.actionPoints - 1,
+                      actionPoints: currentRoom?.isCleared
+                        ? player.actionPoints
+                        : player.actionPoints - 1,
                     });
 
                     healEntity(
@@ -439,10 +446,7 @@ export const PlayerControlPanel: FC = () => {
                 </IconButton>
                 <Tooltip>
                   <h2>Health Potion</h2>
-                  <p>
-                    Consume a health potion to gain{' '}
-                    {getPotionHealAmount(player)} HP.
-                  </p>
+                  <p>Consume to gain {getPotionHealAmount(player)} HP.</p>
                   <p>Uses left: {player.healthPotions}</p>
                   <p>Cost: 1 AP</p>
                   <p></p>

@@ -3,12 +3,13 @@ import { FC } from 'react';
 
 export const IconButton: FC<{
   children: string | JSX.Element | JSX.Element[];
-  onClick?: () => void | undefined | null;
+  onClick?: (e: React.MouseEvent) => void | undefined | null;
   disabled?: boolean | undefined | null;
   active?: boolean | undefined | null;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   grayscale?: boolean;
+  borderPulse?: boolean;
 }> = ({
   children,
   onClick,
@@ -17,6 +18,7 @@ export const IconButton: FC<{
   onMouseEnter,
   onMouseLeave,
   grayscale,
+  borderPulse,
 }) => {
   return (
     <button
@@ -31,10 +33,11 @@ export const IconButton: FC<{
           'border-yellow-500 ': active,
           'cursor-auto': !onClick,
           grayscale: grayscale,
+          'animate-borderPulse': borderPulse,
         }
       )}
-      onClick={() => {
-        if (!disabled && onClick) onClick();
+      onClick={(e) => {
+        if (!disabled && onClick) onClick(e);
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
