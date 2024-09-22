@@ -204,11 +204,14 @@ export const PlayerControlPanel: FC = () => {
             ))}
             <Button
               onClick={() => {
-                setPlayerState({
-                  isAttacking: false,
-                  isMoving: false,
-                  isUsingSkill: false,
-                });
+                if (player.state.isUsingSkill) {
+                  setPlayerState({
+                    isAttacking: false,
+                    isMoving: false,
+                    isUsingSkill: false,
+                    skillId: null,
+                  });
+                }
                 setOpenSkills(false);
               }}
               neutral
