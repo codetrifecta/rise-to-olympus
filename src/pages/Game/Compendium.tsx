@@ -16,6 +16,8 @@ import { useGameStateStore } from '../../stores/game';
 import { usePlayerStore } from '../../stores/player';
 import { Button } from './Button';
 import { useCampaignStore } from '../../stores/campaign';
+import { useFloorStore } from '../../stores/floor';
+import { FLOOR_ID } from '../../constants/floor';
 
 const ICON_SIZE = 50;
 
@@ -29,6 +31,8 @@ export const Compendium: FC = () => {
 
   const { campaigns, selectedCampaign, setSelectedCampaign, setCampaigns } =
     useCampaignStore();
+
+  const { floor } = useFloorStore();
 
   const [isAboutToUnlockSkill, setIsAboutToUnlockSkill] =
     useState<ISkill | null>(null);
@@ -419,7 +423,39 @@ export const Compendium: FC = () => {
               >
                 {skill !== null && (
                   <>
-                    <IconButton onClick={() => removeFromEquippedSkills(skill)}>
+                    <IconButton
+                      onClick={() => {
+                        // Only be able to remove equipped skills in the camp
+                        if (selectedCampaign === null) {
+                          console.error(
+                            'Compendium equipped skill onClick: No selected campaign'
+                          );
+                          return;
+                        }
+
+                        if (!floor) {
+                          console.error(
+                            'Compendium equipped skill onClick: No floor'
+                          );
+                          return;
+                        }
+
+                        const doesPlayerHaveSkill =
+                          player.skills.find(
+                            (playerSkill) => playerSkill.id === skill.id
+                          ) ?? false;
+
+                        // Only be able to remove equipped skills in the camp
+                        if (
+                          floor.id !== FLOOR_ID.TARTARUS_CAMP &&
+                          !doesPlayerHaveSkill
+                        ) {
+                          removeFromEquippedSkills(skill);
+                        } else if (floor.id === FLOOR_ID.TARTARUS_CAMP) {
+                          removeFromEquippedSkills(skill);
+                        }
+                      }}
+                    >
                       <Icon
                         icon={skill.icon}
                         width={ICON_SIZE - 4}
