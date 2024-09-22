@@ -3,6 +3,7 @@ import { ENTITY_TYPE } from '../../constants/entity';
 import { TILE_SIZE, TILE_TYPE } from '../../constants/tile';
 import clsx from 'clsx';
 import { IPlayerState } from '../../types';
+import { useFloorStore } from '../../stores/floor';
 
 const TILE_HIGHLIGHT_PADDING = 12;
 
@@ -35,6 +36,8 @@ export const Tile: FC<{
   onMouseLeave,
   classNames = '',
 }) => {
+  const { currentRoom } = useFloorStore();
+
   const hasPlayer = useMemo(() => {
     if (entityIfExist) {
       return entityIfExist[0] === ENTITY_TYPE.PLAYER;
@@ -138,18 +141,25 @@ export const Tile: FC<{
           'group-hover:shadow-mild-black group-hover:z-30':
             (tileType == TILE_TYPE.FLOOR && !(hasPlayer || hasEnemy)) ||
             (tileType == TILE_TYPE.DOOR && isRoomOver) ||
-            (tileType == TILE_TYPE.CHEST && isRoomOver),
+            (tileType == TILE_TYPE.CHEST && isRoomOver) ||
+            (hasPlayer && currentRoom && currentRoom.isCleared),
 
           // Tile type color
           // 'bg-white': tileType === TILE_TYPE.FLOOR,
           // 'bg-yellow-500': tileType === TILE_TYPE.DOOR,
 
           // Player and enemy tile
-          'shadow-intense-green z-[31]': hasPlayer && hovered,
+          'shadow-intense-green z-[31]':
+            hasPlayer && hovered && currentRoom && !currentRoom.isCleared,
           'shadow-intense-red z-[31]': hasEnemy && hovered,
 
           // Active tile
-          'shadow-mild-green z-20': hasPlayer && active && !hovered,
+          'shadow-mild-green z-20':
+            hasPlayer &&
+            active &&
+            !hovered &&
+            currentRoom &&
+            !currentRoom.isCleared,
           'shadow-mild-red z-20': hasEnemy && active && !hovered,
 
           // Non-active tile
