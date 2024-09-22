@@ -388,11 +388,11 @@ export const PlayerControlPanel: FC = () => {
                 <IconButton
                   onClick={() => {
                     setOpenSkills(true);
-                    setPlayerState({
-                      isAttacking: false,
-                      isMoving: false,
-                      isUsingSkill: false,
-                    });
+                    // setPlayerState({
+                    //   isAttacking: false,
+                    //   isMoving: false,
+                    //   isUsingSkill: false,
+                    // });
                   }}
                 >
                   <Icon
