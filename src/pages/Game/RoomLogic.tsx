@@ -812,22 +812,25 @@ export const RoomLogic: FC<{
     Map<string, [number, number][]>,
     Map<string, number>,
   ] = useMemo(() => {
-    // console.log('playerMovementPossibilities');
+    if (!currentRoom) {
+      console.error('playerMovementPossibilities: Current room not found!');
+      return [new Map(), new Map()];
+    }
+
+    const roomIsCleared = currentRoom.isCleared;
 
     // Check for player's statuses that affect movement range like swiftness
     const movementRangeBonus = player.statuses.reduce((acc, status) => {
       return acc + status.effect.movementRangeBonus;
     }, 0);
 
-    // console.log('movementRangeBonus', movementRangeBonus, player.statuses);
-
     const movementPossibilities = findPathsFromCurrentLocation(
       playerPosition,
       roomTileMatrix,
-      isRoomOver ? 10 : player.actionPoints,
-      roomEntityPositions,
+      roomIsCleared ? 10 : player.actionPoints,
+      roomIsCleared ? new Map() : roomEntityPositions,
       DEFAULT_MOVEMENT_RANGE + movementRangeBonus,
-      isRoomOver
+      roomIsCleared
     );
 
     const apCostForMovementPossibilities = getApCostForPath(
@@ -841,7 +844,7 @@ export const RoomLogic: FC<{
     playerPosition,
     roomTileMatrix.length,
     player.statuses,
-    // isRoomOver,
+    currentRoom,
   ]);
 
   // Debounce hovered tile
