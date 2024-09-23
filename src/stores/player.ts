@@ -209,7 +209,8 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
     return lifestealMultiplier;
   },
 
-  setPlayer: (player: IPlayer) => set({ player }),
+  setPlayer: (player: IPlayer) =>
+    set({ player: { ...player, maxHealth: getPlayerMaxHealth(player) } }),
 
   setPlayerActionPoints: (actionPoints: number) =>
     set({ player: { ...get().player, actionPoints } }),

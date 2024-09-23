@@ -68,7 +68,12 @@ export const LOGS_TUTORIAL_TARTARUS_CAMP: ILog[] = [
   {
     type: 'info',
     message:
-      'You will notice that you only have 3 total slots for skills. You will unlock more slots after clearing floors.',
+      'You will notice that you only have 3 total slots for skills. You will unlock more slots after clearing floors (WIP).',
+  },
+  {
+    type: 'info',
+    message:
+      'You use divinity to unlock more skills in teh compendium. You gain divinity by defeating enemies and clearing floors.',
   },
   {
     type: 'info',

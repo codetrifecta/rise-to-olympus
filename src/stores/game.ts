@@ -76,7 +76,7 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   isFloorCleared: false,
   isLoading: true,
   isInventoryOpen: false,
-  isGameLogOpen: false,
+  isGameLogOpen: true,
   isCharacterSheetOpen: false,
   isGenerateRoomOpen: false,
   isCompendiumOpen: false,

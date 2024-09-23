@@ -79,7 +79,7 @@ export const RoomObstacleArt: FC<{
       const data = imageData.data;
 
       // Change alpha channel for tiles that have entities covered by the wall
-      Array.from(roomEntityPositions).forEach(([positionString]) => {
+      Array.from(roomEntityPositions).forEach(([positionString, entity]) => {
         const [entityRow, entityCol] = positionString.split(',').map(Number);
 
         // // Skip if no tile nearby is a wall (in this case, check for the 2 tiles below the entity)
@@ -91,7 +91,7 @@ export const RoomObstacleArt: FC<{
         // }
 
         // Skip if no wall art is overlapping the entity
-        let isWallArtOverlapping = false;
+        let isObstacleArtOverlapping = false;
         for (
           let y = entityRow * TILE_SIZE;
           y < entityRow * TILE_SIZE + TILE_SIZE;
@@ -110,24 +110,62 @@ export const RoomObstacleArt: FC<{
               data[index + 1] !== 0 &&
               data[index + 2] !== 0
             ) {
-              isWallArtOverlapping = true;
+              isObstacleArtOverlapping = true;
               break;
             }
           }
-          if (isWallArtOverlapping) {
+          if (isObstacleArtOverlapping) {
             break;
           }
         }
 
-        if (isWallArtOverlapping === false) {
+        if (isObstacleArtOverlapping === false) {
           return;
         }
 
-        const startRow = entityRow * TILE_SIZE - TILE_SIZE;
-        const startCol = entityCol * TILE_SIZE - TILE_SIZE;
+        const [entityType, entityId] = entity;
+        const entityRender = document.getElementById(
+          entityType + '_' + entityId
+        );
 
-        const endRow = startRow + TILE_SIZE + TILE_SIZE;
-        const endCol = startCol + TILE_SIZE + TILE_SIZE + TILE_SIZE;
+        if (entityRender === null) {
+          console.error('Entity not found in DOM:', entityType, entityId);
+          return;
+        }
+
+        const entityWidth = Number(entityRender.style.width.replace('px', ''));
+        const entityHeight = Number(
+          entityRender.style.height.replace('px', '')
+        );
+
+        const cutOffHeight = TILE_SIZE * 2.1;
+        const cutOffWidth = TILE_SIZE * 2.3;
+
+        // Initially start right at the entity's position
+        let startRow = entityRow * TILE_SIZE;
+        let endRow = startRow + TILE_SIZE;
+
+        console.log('entityRender.style.width', entityRender.style.width);
+        console.log('entityRender.style.height', entityRender.style.height);
+        console.log('cutOffSize', cutOffHeight, cutOffWidth);
+
+        // If the entity is bigger than 1 tile (whats seen on screen, the entity render size is usually bigger due to padding),
+        // adjust the starting position to start at the top left corner of the entity
+        if (entityHeight >= cutOffHeight) {
+          startRow -= TILE_SIZE;
+          endRow += TILE_SIZE;
+        }
+
+        // Get the end row and column of the entity
+        let startCol = entityCol * TILE_SIZE;
+        let endCol = startCol + TILE_SIZE;
+
+        // If the entity is bigger than 1 tile (whats seen on screen, the entity render size is usually bigger due to padding),
+        // adjust the end position to end at the bottom right corner of the entity
+        if (entityWidth >= cutOffWidth) {
+          endCol += TILE_SIZE;
+          startCol -= TILE_SIZE;
+        }
 
         // Modify the alpha channel for a specific area
         for (let y = startRow; y < endRow; y++) {
@@ -135,6 +173,7 @@ export const RoomObstacleArt: FC<{
             const index = (y * imageData.width + x) * 4;
 
             // Only change the alpha channel if the tile is an overlapping wall (aka data[index], data[index + 1], data[index + 2] are all NOT 0)
+            // data[index], data[index + 1], data[index + 2] are the RGB values of the pixel
             if (
               data[index] !== 0 &&
               data[index + 1] !== 0 &&

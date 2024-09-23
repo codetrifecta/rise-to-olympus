@@ -1,4 +1,10 @@
-import { BASE_ROOM, ROOM_TYPE } from '../constants/room';
+import {
+  BASE_ROOM,
+  ROOM_TARTARUS_BOSS,
+  ROOM_TARTARUS_START,
+  ROOM_TYPE,
+  ROOMS_TARTARUS_COMMON,
+} from '../constants/room';
 import { IRoom } from '../types';
 
 /**
@@ -19,17 +25,17 @@ export const floorToStringArray = (floor: ROOM_TYPE[][]): string[] => {
   for (let row = 0; row < floor.length; row++) {
     let rowString = ' ';
     for (let col = 0; col < floor[row].length; col++) {
-      if (floor[row][col] == ROOM_TYPE.NULL) {
+      if (floor[row][col] === ROOM_TYPE.NULL) {
         rowString += '# ';
-      } else if (floor[row][col] == ROOM_TYPE.COMMON) {
+      } else if (floor[row][col] === ROOM_TYPE.COMMON) {
         rowString += '. ';
-      } else if (floor[row][col] == ROOM_TYPE.START) {
+      } else if (floor[row][col] === ROOM_TYPE.START) {
         rowString += 'S ';
-      } else if (floor[row][col] == ROOM_TYPE.BOSS) {
+      } else if (floor[row][col] === ROOM_TYPE.BOSS) {
         rowString += 'B ';
-      } else if (floor[row][col] == ROOM_TYPE.MINIBOSS) {
+      } else if (floor[row][col] === ROOM_TYPE.MINIBOSS) {
         rowString += 'M ';
-      } else if (floor[row][col] == ROOM_TYPE.SHOP) {
+      } else if (floor[row][col] === ROOM_TYPE.SHOP) {
         rowString += '$ ';
         // } else if (floor[row][col] == ROOM_TYPE.INTERMEDIATE) {
         //   rowString += '. ';
@@ -40,6 +46,47 @@ export const floorToStringArray = (floor: ROOM_TYPE[][]): string[] => {
     floorString.push(rowString);
   }
   return floorString;
+};
+
+/**
+ * Convert a floor to a string array representation.
+ * @param floor 2D array of ROOM_TYPE representing the room
+ * @returns String array of the floor where
+ *          null rooms are represented by '#',
+ *          common rooms are represented by '.',
+ *          start room is represented by 'S',
+ *          boss room is represented by 'B',
+ *          miniboss room is represented by 'M',
+ *          shop room is represented by '$',
+ *          and all other rooms are represented by 'X',
+ *          each separated by a space.
+ */
+export const floorRoomsToStringArray = (floorRooms: IRoom[][]): string[] => {
+  const floorRoomsString: string[] = [];
+  for (let row = 0; row < floorRooms.length; row++) {
+    let rowString = ' ';
+    for (let col = 0; col < floorRooms[row].length; col++) {
+      if (floorRooms[row][col].type === ROOM_TYPE.NULL) {
+        rowString += '# ';
+      } else if (floorRooms[row][col].type === ROOM_TYPE.COMMON) {
+        rowString += '. ';
+      } else if (floorRooms[row][col].type === ROOM_TYPE.START) {
+        rowString += 'S ';
+      } else if (floorRooms[row][col].type === ROOM_TYPE.BOSS) {
+        rowString += 'B ';
+      } else if (floorRooms[row][col].type === ROOM_TYPE.MINIBOSS) {
+        rowString += 'M ';
+      } else if (floorRooms[row][col].type === ROOM_TYPE.SHOP) {
+        rowString += '$ ';
+        // } else if (floor[row][col] == ROOM_TYPE.INTERMEDIATE) {
+        //   rowString += '. ';
+      } else {
+        rowString += 'X ';
+      }
+    }
+    floorRoomsString.push(rowString);
+  }
+  return floorRoomsString;
 };
 
 /**
@@ -358,8 +405,10 @@ export function generateFloorPlan(start: boolean): ROOM_TYPE[][] {
     }
   }
 
+  // console.log(floor, commons);
+
   // Get an Intermediate Room from one of the Common Rooms
-  let intermediate = Math.floor(Math.random() * commons.length);
+  const intermediate = Math.floor(Math.random() * commons.length);
   floor[commons[intermediate][0]][commons[intermediate][1]] =
     ROOM_TYPE.INTERMEDIATE; // Temporarily assign this room as Intermediate Room.
   intermediateCoord = [commons[intermediate][0], commons[intermediate][1]];
@@ -421,107 +470,111 @@ export function generateFloorPlan(start: boolean): ROOM_TYPE[][] {
   }
   // console.log(mbNulls);
 
-  // Get a MiniBoss Room from one of the NULL Rooms and assign it on the Floor
-  const mbNull = Math.floor(Math.random() * mbNulls.length);
-  const miniBossRow = mbNulls[mbNull][0];
-  const miniBossCol = mbNulls[mbNull][1];
-  // console.log(miniBossRow);
-  // console.log(miniBossCol);
+  floor[commons[intermediate][0]][commons[intermediate][1]] = ROOM_TYPE.COMMON; // Unassign this room from Intermediate to Common.
 
-  floor[miniBossRow][miniBossCol] = ROOM_TYPE.MINIBOSS;
-  const minibossCoord: [number, number] = [miniBossRow, miniBossCol];
+  // COMMENTING OUT INSERTION OF MINIBOSS, SHOP, AND PATH TO MINIBOSS AND SHOP ROOMS ========================
 
-  generatePath(floor, intermediateCoord, minibossCoord, 4);
-  floor[commons[intermediate][0]][commons[intermediate][1]] = ROOM_TYPE.COMMON; // Unassign this room as Intermediate Room.
-  // console.log(floorToStringArray(floor));
+  // // Get a MiniBoss Room from one of the NULL Rooms and assign it on the Floor
+  // const mbNull = Math.floor(Math.random() * mbNulls.length);
+  // const miniBossRow = mbNulls[mbNull][0];
+  // const miniBossCol = mbNulls[mbNull][1];
+  // // console.log(miniBossRow);
+  // // console.log(miniBossCol);
 
-  // Get path from Intermediate to Shop Room
-  // Determine again which rooms are Common Rooms
-  for (let i = 0; i < floor.length; i++) {
-    for (let j = 0; j < floor.length; j++) {
-      if (floor[i][j] === ROOM_TYPE.COMMON) {
-        commons.push([i, j]);
-      }
-    }
-  }
+  // floor[miniBossRow][miniBossCol] = ROOM_TYPE.MINIBOSS;
+  // const minibossCoord: [number, number] = [miniBossRow, miniBossCol];
 
-  // Get an Intermediate Room from one of the Common Rooms
-  intermediate = Math.floor(Math.random() * commons.length);
-  floor[commons[intermediate][0]][commons[intermediate][1]] =
-    ROOM_TYPE.INTERMEDIATE; // Temporarily assign this room as Intesrmediate Room.
-  intermediateCoord = [commons[intermediate][0], commons[intermediate][1]];
+  // generatePath(floor, intermediateCoord, minibossCoord, 4);
+  // floor[commons[intermediate][0]][commons[intermediate][1]] = ROOM_TYPE.COMMON; // Unassign this room as Intermediate Room.
+  // // console.log(floorToStringArray(floor));
 
-  // Initialize Shop Room
-  // Determine again which rooms are NULL Rooms in the current state of the Floor
-  const shNulls: [number, number][] = [];
-  for (let i = 0; i < floor.length; i++) {
-    for (let j = 0; j < floor.length; j++) {
-      // If assigned tile is a NULL ROOM_TYPE
-      if (floor[i][j] === ROOM_TYPE.NULL) {
-        // If Right adjacent tile is within bounds
-        if (j + 1 < 5) {
-          // If Right adjacent tile is NOT a COMMON and NOT NULL ROOM_TYPE
-          if (
-            floor[i][j + 1] !== ROOM_TYPE.COMMON &&
-            floor[i][j + 1] !== ROOM_TYPE.NULL
-          ) {
-            continue;
-          }
-        }
+  // // Get path from Intermediate to Shop Room
+  // // Determine again which rooms are Common Rooms
+  // for (let i = 0; i < floor.length; i++) {
+  //   for (let j = 0; j < floor.length; j++) {
+  //     if (floor[i][j] === ROOM_TYPE.COMMON) {
+  //       commons.push([i, j]);
+  //     }
+  //   }
+  // }
 
-        // If Left adjacent tile is within bounds
-        if (j - 1 >= 0) {
-          // If Left adjacent tile is NOT a COMMON and NOT NULL ROOM_TYPE
-          if (
-            floor[i][j - 1] !== ROOM_TYPE.COMMON &&
-            floor[i][j - 1] !== ROOM_TYPE.NULL
-          ) {
-            continue;
-          }
-        }
+  // // Get an Intermediate Room from one of the Common Rooms
+  // intermediate = Math.floor(Math.random() * commons.length);
+  // floor[commons[intermediate][0]][commons[intermediate][1]] =
+  //   ROOM_TYPE.INTERMEDIATE; // Temporarily assign this room as Intesrmediate Room.
+  // intermediateCoord = [commons[intermediate][0], commons[intermediate][1]];
 
-        // If Down adjacent tile is within bounds
-        if (i + 1 < 5) {
-          // If Down adjacent tile is NOT a COMMON and NOT NULL ROOM_TYPE
-          if (
-            floor[i + 1][j] !== ROOM_TYPE.COMMON &&
-            floor[i + 1][j] !== ROOM_TYPE.NULL
-          ) {
-            continue;
-          }
-        }
+  // // Initialize Shop Room
+  // // Determine again which rooms are NULL Rooms in the current state of the Floor
+  // const shNulls: [number, number][] = [];
+  // for (let i = 0; i < floor.length; i++) {
+  //   for (let j = 0; j < floor.length; j++) {
+  //     // If assigned tile is a NULL ROOM_TYPE
+  //     if (floor[i][j] === ROOM_TYPE.NULL) {
+  //       // If Right adjacent tile is within bounds
+  //       if (j + 1 < 5) {
+  //         // If Right adjacent tile is NOT a COMMON and NOT NULL ROOM_TYPE
+  //         if (
+  //           floor[i][j + 1] !== ROOM_TYPE.COMMON &&
+  //           floor[i][j + 1] !== ROOM_TYPE.NULL
+  //         ) {
+  //           continue;
+  //         }
+  //       }
 
-        // If Up adjacent tile is within bounds
-        if (i - 1 >= 0) {
-          // If Up adjacent tile is NOT a COMMON and NOT NULL ROOM_TYPE
-          if (
-            floor[i - 1][j] !== ROOM_TYPE.COMMON &&
-            floor[i - 1][j] !== ROOM_TYPE.NULL
-          ) {
-            continue;
-          }
-        }
+  //       // If Left adjacent tile is within bounds
+  //       if (j - 1 >= 0) {
+  //         // If Left adjacent tile is NOT a COMMON and NOT NULL ROOM_TYPE
+  //         if (
+  //           floor[i][j - 1] !== ROOM_TYPE.COMMON &&
+  //           floor[i][j - 1] !== ROOM_TYPE.NULL
+  //         ) {
+  //           continue;
+  //         }
+  //       }
 
-        shNulls.push([i, j]);
-      }
-    }
-  }
-  // console.log(shNulls);
+  //       // If Down adjacent tile is within bounds
+  //       if (i + 1 < 5) {
+  //         // If Down adjacent tile is NOT a COMMON and NOT NULL ROOM_TYPE
+  //         if (
+  //           floor[i + 1][j] !== ROOM_TYPE.COMMON &&
+  //           floor[i + 1][j] !== ROOM_TYPE.NULL
+  //         ) {
+  //           continue;
+  //         }
+  //       }
 
-  // Get a Shop Room from one of the NULL Rooms and assign it on the Floor
-  const shNull = Math.floor(Math.random() * shNulls.length);
-  const shopRow = shNulls[shNull][0];
-  const shopCol = shNulls[shNull][1];
-  // console.log(shopRow);
-  // console.log(shopCol);
+  //       // If Up adjacent tile is within bounds
+  //       if (i - 1 >= 0) {
+  //         // If Up adjacent tile is NOT a COMMON and NOT NULL ROOM_TYPE
+  //         if (
+  //           floor[i - 1][j] !== ROOM_TYPE.COMMON &&
+  //           floor[i - 1][j] !== ROOM_TYPE.NULL
+  //         ) {
+  //           continue;
+  //         }
+  //       }
 
-  floor[shopRow][shopCol] = ROOM_TYPE.SHOP;
-  const shopCoord: [number, number] = [shopRow, shopCol];
+  //       shNulls.push([i, j]);
+  //     }
+  //   }
+  // }
+  // // console.log(shNulls);
 
-  generatePath(floor, intermediateCoord, shopCoord, 5);
-  floor[commons[intermediate][0]][commons[intermediate][1]] = ROOM_TYPE.COMMON; // Unassign this room as Intermediate Room.
-  // console.log(floorToStringArray(floor));
-  // console.log(floor);
+  // // Get a Shop Room from one of the NULL Rooms and assign it on the Floor
+  // const shNull = Math.floor(Math.random() * shNulls.length);
+  // const shopRow = shNulls[shNull][0];
+  // const shopCol = shNulls[shNull][1];
+  // // console.log(shopRow);
+  // // console.log(shopCol);
+
+  // floor[shopRow][shopCol] = ROOM_TYPE.SHOP;
+  // const shopCoord: [number, number] = [shopRow, shopCol];
+
+  // generatePath(floor, intermediateCoord, shopCoord, 5);
+  // floor[commons[intermediate][0]][commons[intermediate][1]] = ROOM_TYPE.COMMON; // Unassign this room as Intermediate Room.
+  // // console.log(floorToStringArray(floor));
+  // // console.log(floor);
 
   return floor;
 }
@@ -598,3 +651,82 @@ export function connectAdjacentRooms(floor: ROOM_TYPE[][]): IRoom[][] {
 
   return adjRooms;
 }
+
+export const generateFloorRooms = (): IRoom[][] => {
+  const floorPlan = generateFloorPlan(true);
+  const connectedFloor = connectAdjacentRooms(floorPlan);
+
+  const roomsQueue: IRoom[] = [...ROOMS_TARTARUS_COMMON];
+
+  // Shuffle the roomsQueue
+  for (let i = 0; i < ROOMS_TARTARUS_COMMON.length; i++) {
+    const randomIndex = Math.floor(
+      Math.random() * (ROOMS_TARTARUS_COMMON.length - 1)
+    );
+    if (randomIndex > Math.floor(ROOMS_TARTARUS_COMMON.length / 2)) {
+      const temp = roomsQueue[i];
+      roomsQueue[i] = ROOMS_TARTARUS_COMMON[randomIndex];
+      roomsQueue[randomIndex] = temp;
+    }
+  }
+
+  // Assign rooms to the floor
+  let id = 0;
+  const filledFloor = connectedFloor.map((row, r) =>
+    row.map((room, c) => {
+      const roomPosition: [number, number] = [r, c];
+
+      if (room.type === ROOM_TYPE.START) {
+        const startRoom: IRoom = {
+          ...ROOM_TARTARUS_START,
+          id: id++,
+          position: roomPosition,
+          northDoor: room.northDoor,
+          southDoor: room.southDoor,
+          eastDoor: room.eastDoor,
+          westDoor: room.westDoor,
+        };
+        return startRoom;
+      } else if (room.type === ROOM_TYPE.COMMON) {
+        const roomFromQueue = roomsQueue.shift();
+        if (roomFromQueue === undefined) {
+          console.error('generateFloorRooms: No more rooms in queue');
+          return room;
+        }
+        roomsQueue.push(roomFromQueue);
+
+        return {
+          ...room,
+          id: id++,
+          isCleared: true,
+          position: roomPosition,
+          roomTileMatrix: roomFromQueue.roomTileMatrix,
+          artFloor: roomFromQueue.artFloor,
+          artObstacle: roomFromQueue.artObstacle,
+        };
+      } else if (room.type === ROOM_TYPE.BOSS) {
+        return {
+          ...room,
+          id: id++,
+          position: roomPosition,
+          roomTileMatrix: ROOM_TARTARUS_BOSS.roomTileMatrix,
+          artFloor: ROOM_TARTARUS_BOSS.artFloor,
+          artObstacle: ROOM_TARTARUS_BOSS.artObstacle,
+        };
+      } else if (room.type === ROOM_TYPE.NULL) {
+        return {
+          ...room,
+          id: -1,
+          position: roomPosition,
+        };
+      } else {
+        return {
+          ...room,
+          position: roomPosition,
+        };
+      }
+    })
+  );
+
+  return filledFloor;
+};

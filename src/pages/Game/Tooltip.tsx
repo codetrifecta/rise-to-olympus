@@ -5,9 +5,11 @@ export const Tooltip: FC<{
   children: ReactNode;
   active?: boolean;
   width?: number;
+  zIndex?: number;
 }> = ({
   children,
   width = 300,
+  zIndex = 50,
   // active = false,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -51,10 +53,10 @@ export const Tooltip: FC<{
   return (
     <div
       className={clsx(
-        'absolute inline-block bg-neutral-900 text-white p-2 rounded-lg shadow-sm shadow-black transition-all ease duration-200 w-[300px] opacity-0 invisible peer-hover:opacity-100 peer-hover:z-50 peer-hover:visible pointer-events-none'
+        'absolute inline-block bg-neutral-900 text-white p-2 rounded-lg shadow-sm shadow-black transition-all ease duration-200 w-[300px] opacity-0 invisible peer-hover:opacity-100 peer-hover:visible pointer-events-none'
       )}
       ref={ref}
-      style={{ width }}
+      style={{ width, zIndex }}
     >
       {children}
     </div>

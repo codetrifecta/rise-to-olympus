@@ -24,6 +24,7 @@ import { ENTITY_SPRITE_DIRECTION, ENTITY_TYPE } from '../../constants/entity';
 import { useCampaignStore } from '../../stores/campaign';
 import { ProceedToNextFloor } from './ProceedToNextFloor';
 import { setEntityAnimationIdle } from '../../utils/entity';
+import { FLOOR_ID } from '../../constants/floor';
 
 const MAX_CAMERA_STRIGHT_MOVE_SPEED = 8;
 const MAX_CAMERA_DIAGONAL_MOVE_SPEED = Math.sqrt(
@@ -117,54 +118,61 @@ export const GameRoom: FC = () => {
 
   // When floor is initialized, set current room to the start room
   useEffect(() => {
-    if (floor && currentRoom === null) {
-      console.log('Floor initialized');
-      setFirstRoomRender(true);
+    const handleFloorInitialization = () => {
+      if (floor && currentRoom === null) {
+        console.log('Floor initialized');
+        setFirstRoomRender(true);
 
-      // Set first room to START room
-      let startRoom: IRoom | null = null;
+        // Set first room to START room
+        let startRoom: IRoom | null = null;
 
-      const rooms = floor.rooms;
+        const rooms = floor.rooms;
 
-      for (let row = 0; row < rooms.length; row++) {
-        for (let col = 0; col < rooms[row].length; col++) {
-          if (rooms[row][col].type === ROOM_TYPE.START) {
-            startRoom = rooms[row][col];
+        for (let row = 0; row < rooms.length; row++) {
+          for (let col = 0; col < rooms[row].length; col++) {
+            if (rooms[row][col].type === ROOM_TYPE.START) {
+              startRoom = rooms[row][col];
+              break;
+            }
+          }
+          if (startRoom) {
             break;
           }
         }
-        if (startRoom) {
-          break;
+
+        if (!startRoom) {
+          console.error('No start room found in floor!');
+          return;
         }
+
+        // Initialize player position to the start room
+        const newStartRoom: IRoom = {
+          ...startRoom,
+          roomEntityPositions: new Map([
+            [
+              `${Math.floor(startRoom.roomLength / 2)},${Math.floor(startRoom.roomLength / 2)}`,
+              [ENTITY_TYPE.PLAYER, 1],
+            ],
+          ]),
+        };
+
+        console.log('Setting current room to start room', newStartRoom);
+
+        setCurrentRoom(newStartRoom);
       }
-
-      if (!startRoom) {
-        console.error('No start room found in floor!');
-        return;
-      }
-
-      // Initialize player position to the start room
-      const newStartRoom: IRoom = {
-        ...startRoom,
-        roomEntityPositions: new Map([
-          [
-            `${Math.floor(startRoom.roomLength / 2)},${Math.floor(startRoom.roomLength / 2)}`,
-            [ENTITY_TYPE.PLAYER, 1],
-          ],
-        ]),
-      };
-
-      console.log('Setting current room to start room', newStartRoom);
-
-      setCurrentRoom(newStartRoom);
-    }
+    };
+    handleFloorInitialization();
   }, [floor]);
 
   // When selected campaign changes, check if the tutorial start room script is over.
   // If it is, open the game log and minimap
   useEffect(() => {
     // Check if the starter script is over
-    if (selectedCampaign?.scriptsCompleted.tutorialStartRoom) {
+    if (
+      floor &&
+      floor.id === FLOOR_ID.TUTORIAL &&
+      selectedCampaign?.scriptsCompleted.tutorialStartRoom
+    ) {
       setIsGameLogOpen(true);
       setIsMinimapOpen(true);
     }
@@ -267,7 +275,11 @@ export const GameRoom: FC = () => {
         }
 
         setFirstRoomRender(false);
-      }, 200);
+
+        if (floor && floor.id !== FLOOR_ID.TARTARUS_CAMP) {
+          setIsMinimapOpen(true);
+        }
+      }, 300);
     }
   };
 
@@ -501,7 +513,7 @@ export const GameRoom: FC = () => {
 
   return (
     <>
-      {firstRoomRender === true ? (
+      {firstRoomRender === true || !floor || !currentRoom ? (
         <h1 className="fixed w-screen h-screen flex justify-center items-center z-[1000] bg-black"></h1>
       ) : null}
       <div className="relative max-w-screen h-screen flex flex-col justify-start overflow-hidden">
