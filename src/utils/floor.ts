@@ -698,9 +698,11 @@ export const generateFloorRooms = (): IRoom[][] => {
         return {
           ...room,
           id: id++,
-          isCleared: true,
+          isCleared: false,
           position: roomPosition,
           roomTileMatrix: roomFromQueue.roomTileMatrix,
+          enemies: roomFromQueue.enemies,
+          roomEntityPositions: roomFromQueue.roomEntityPositions,
           artFloor: roomFromQueue.artFloor,
           artObstacle: roomFromQueue.artObstacle,
         };
@@ -708,8 +710,11 @@ export const generateFloorRooms = (): IRoom[][] => {
         return {
           ...room,
           id: id++,
+          isCleared: false,
           position: roomPosition,
           roomTileMatrix: ROOM_TARTARUS_BOSS.roomTileMatrix,
+          enemies: ROOM_TARTARUS_BOSS.enemies,
+          roomEntityPositions: ROOM_TARTARUS_BOSS.roomEntityPositions,
           artFloor: ROOM_TARTARUS_BOSS.artFloor,
           artObstacle: ROOM_TARTARUS_BOSS.artObstacle,
         };
