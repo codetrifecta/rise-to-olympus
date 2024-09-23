@@ -1,5 +1,5 @@
 import { SCRIPT_PARENT, SCRIPT_TYPE } from './constants/scripts';
-import { ENTITY_TYPE } from './constants/entity';
+import { ENEMY_PRESET_ID, ENTITY_TYPE } from './constants/entity';
 import { ICON_ID } from './constants/icon';
 import { ROOM_TYPE } from './constants/room';
 import { SKILL_ID, SKILL_TAG, SKILL_TYPE } from './constants/skill';
@@ -94,6 +94,7 @@ export interface IPlayerState {
 export interface IEnemy extends IEntity {
   sprite: SPRITE_ID;
   spriteSize: number;
+  presetID: ENEMY_PRESET_ID;
   range: number;
   damage: number;
 }

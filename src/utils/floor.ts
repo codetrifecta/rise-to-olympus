@@ -6,6 +6,7 @@ import {
   ROOMS_TARTARUS_COMMON,
 } from '../constants/room';
 import { IRoom } from '../types';
+import { scaleEnemy } from './entity';
 
 /**
  * Convert a floor to a string array representation.
@@ -370,7 +371,8 @@ export function generateFloorPlan(start: boolean): ROOM_TYPE[][] {
 
   // Get path from Start to Boss Room.
   // Get a random boolean to determine existance of Intermediate Room between Start and Boss Rooms.
-  const simple: boolean = Boolean(Math.floor(Math.random() * 2));
+  // const simple: boolean = Boolean(Math.floor(Math.random() * 2)); // Commented out for now.
+  const simple = false;
 
   if (simple) {
     // If there is no Intermediate Room.
@@ -469,24 +471,23 @@ export function generateFloorPlan(start: boolean): ROOM_TYPE[][] {
     }
   }
   // console.log(mbNulls);
+  // Get a MiniBoss Room from one of the NULL Rooms and assign it on the Floor
+  const mbNull = Math.floor(Math.random() * mbNulls.length);
+  const miniBossRow = mbNulls[mbNull][0];
+  const miniBossCol = mbNulls[mbNull][1];
+  // console.log(miniBossRow);
+  // console.log(miniBossCol);
 
-  floor[commons[intermediate][0]][commons[intermediate][1]] = ROOM_TYPE.COMMON; // Unassign this room from Intermediate to Common.
+  floor[miniBossRow][miniBossCol] = ROOM_TYPE.MINIBOSS;
+  const minibossCoord: [number, number] = [miniBossRow, miniBossCol];
 
-  // COMMENTING OUT INSERTION OF MINIBOSS, SHOP, AND PATH TO MINIBOSS AND SHOP ROOMS ========================
+  generatePath(floor, intermediateCoord, minibossCoord, 4);
+  floor[commons[intermediate][0]][commons[intermediate][1]] = ROOM_TYPE.COMMON; // Unassign this room as Intermediate Room.
 
-  // // Get a MiniBoss Room from one of the NULL Rooms and assign it on the Floor
-  // const mbNull = Math.floor(Math.random() * mbNulls.length);
-  // const miniBossRow = mbNulls[mbNull][0];
-  // const miniBossCol = mbNulls[mbNull][1];
-  // // console.log(miniBossRow);
-  // // console.log(miniBossCol);
-
-  // floor[miniBossRow][miniBossCol] = ROOM_TYPE.MINIBOSS;
-  // const minibossCoord: [number, number] = [miniBossRow, miniBossCol];
-
-  // generatePath(floor, intermediateCoord, minibossCoord, 4);
-  // floor[commons[intermediate][0]][commons[intermediate][1]] = ROOM_TYPE.COMMON; // Unassign this room as Intermediate Room.
-  // // console.log(floorToStringArray(floor));
+  // FROM HERE ON, THE CODE IS COMMENTED OUT BECAUSE IT IS NOT NEEDED FOR THE CURRENT IMPLEMENTATION.
+  // Unassign miniboss room as Common Room
+  floor[miniBossRow][miniBossCol] = ROOM_TYPE.COMMON; // Unassign this room as MiniBoss Room.
+  // console.log(floorToStringArray(floor));
 
   // // Get path from Intermediate to Shop Room
   // // Determine again which rooms are Common Rooms
@@ -559,7 +560,7 @@ export function generateFloorPlan(start: boolean): ROOM_TYPE[][] {
   //     }
   //   }
   // }
-  // // console.log(shNulls);
+  // console.log(shNulls);
 
   // // Get a Shop Room from one of the NULL Rooms and assign it on the Floor
   // const shNull = Math.floor(Math.random() * shNulls.length);
@@ -652,6 +653,99 @@ export function connectAdjacentRooms(floor: ROOM_TYPE[][]): IRoom[][] {
   return adjRooms;
 }
 
+export const getPathsFromStart = (
+  rooms: IRoom[][],
+  startCoord: [number, number]
+): Map<string, [number, number][]> => {
+  const dir: [number, number][] = [
+    [0, 1], // Right
+    [0, -1], // Left
+    [1, 0], // Down
+    [-1, 0], // Up
+  ]; // (vertical is dir[0], horizontal is dir[1])
+
+  const path_dict = new Map<string, [number, number][]>(); // Initialize path dictionary
+
+  const frontierQueue: [number, number][] = [];
+  const explored = new Map<string, [number, number]>();
+
+  frontierQueue.push(startCoord);
+  explored.set(`${startCoord[0]},${startCoord[1]}`, [-1, -1]);
+
+  while (frontierQueue.length > 0) {
+    const current: [number, number] | undefined = frontierQueue.shift();
+
+    if (current === undefined) {
+      break;
+    }
+
+    for (let i = 0; i < dir.length; i++) {
+      const row: number = current[0] + dir[i][0];
+      const col: number = current[1] + dir[i][1];
+
+      if (
+        row >= 0 &&
+        col >= 0 &&
+        row < rooms.length &&
+        col < rooms.length &&
+        (rooms[row][col].type === ROOM_TYPE.COMMON ||
+          rooms[row][col].type === ROOM_TYPE.BOSS) &&
+        explored.has(`${row},${col}`) === false
+      ) {
+        frontierQueue.push([row, col]);
+        explored.set(`${row},${col}`, current);
+      }
+    }
+  }
+
+  // Find path
+  const goals: [number, number][] = []; // Intialize goal coordinates
+
+  // Get goal coordinates
+  for (let row = 0; row < rooms.length; row++) {
+    for (let col = 0; col < rooms[row].length; col++) {
+      // If row and col are player location, skip
+      if (startCoord[0] == row && startCoord[1] == col) {
+        continue;
+      }
+
+      // If row and col indicate a floor tile, push to goal
+      if (
+        rooms[row][col].type == ROOM_TYPE.COMMON ||
+        rooms[row][col].type === ROOM_TYPE.BOSS
+      ) {
+        goals.push([row, col]);
+      }
+    }
+  }
+
+  for (const goal of goals) {
+    // While goal is not empty
+    let current: [number, number] = goal; // Set current position as the goal
+    const pathway: [number, number][] = []; // Initialize pathway array (from goal to player)
+
+    // Until we reach back to the player location, keep adding to pathway
+    while (current[0] !== startCoord[0] || current[1] !== startCoord[1]) {
+      // Check if the current location is an explored location
+      if (explored.get(`${current[0]},${current[1]}`) === undefined) {
+        break;
+      }
+
+      pathway.push(current); // Push current coordinate to pathway list
+      const prevPathLocation = explored.get(`${current[0]},${current[1]}`);
+      if (prevPathLocation !== undefined) {
+        current = prevPathLocation; // Update new current
+      }
+    }
+
+    pathway.reverse(); // Reverse order of path from beginning to goal/end
+
+    path_dict.set(`${goal[0]},${goal[1]}`, pathway);
+  }
+
+  return path_dict;
+};
+
 export const generateFloorRooms = (): IRoom[][] => {
   const floorPlan = generateFloorPlan(true);
   const connectedFloor = connectAdjacentRooms(floorPlan);
@@ -670,6 +764,25 @@ export const generateFloorRooms = (): IRoom[][] => {
 
   // Assign rooms to the floor
   let id = 0;
+  // const commonBossDifficulty = connectedFloor
+  //   .flat()
+  //   .filter(
+  //     (room) => room.type === ROOM_TYPE.BOSS || room.type === ROOM_TYPE.COMMON
+  //   ).length;
+
+  // Boss position
+  let startPosition: [number, number] = [0, 0];
+  for (let r = 0; r < connectedFloor.length; r++) {
+    for (let c = 0; c < connectedFloor[r].length; c++) {
+      if (connectedFloor[r][c].type === ROOM_TYPE.START) {
+        startPosition = [r, c];
+        break;
+      }
+    }
+  }
+
+  const pathsFromStart = getPathsFromStart(connectedFloor, startPosition);
+
   const filledFloor = connectedFloor.map((row, r) =>
     row.map((room, c) => {
       const roomPosition: [number, number] = [r, c];
@@ -693,25 +806,52 @@ export const generateFloorRooms = (): IRoom[][] => {
         }
         roomsQueue.push(roomFromQueue);
 
+        const pathFromStart = pathsFromStart.get(`${r},${c}`);
+
+        let roomDifficulty = 0;
+        if (pathFromStart !== undefined) {
+          roomDifficulty = pathFromStart.length - 1;
+        }
+
+        const scaledEnemies = roomFromQueue.enemies.map((enemy) => {
+          return {
+            ...scaleEnemy(enemy.presetID, roomDifficulty),
+            id: enemy.id,
+          };
+        });
+
         return {
           ...room,
           id: id++,
           isCleared: false,
+          // isKnown: true,
           position: roomPosition,
           roomTileMatrix: roomFromQueue.roomTileMatrix,
-          enemies: roomFromQueue.enemies,
+          enemies: scaledEnemies,
           roomEntityPositions: roomFromQueue.roomEntityPositions,
           artFloor: roomFromQueue.artFloor,
           artObstacle: roomFromQueue.artObstacle,
         };
       } else if (room.type === ROOM_TYPE.BOSS) {
+        const pathFromStart = pathsFromStart.get(`${r},${c}`);
+
+        let roomDifficulty = 0;
+        if (pathFromStart !== undefined) {
+          roomDifficulty = pathFromStart.length - 1;
+        }
+
+        const scaledEnemies = ROOM_TARTARUS_BOSS.enemies.map((enemy) => {
+          return scaleEnemy(enemy.presetID, roomDifficulty);
+        });
+
         return {
           ...room,
           id: id++,
           isCleared: false,
+          // isKnown: true,
           position: roomPosition,
           roomTileMatrix: ROOM_TARTARUS_BOSS.roomTileMatrix,
-          enemies: ROOM_TARTARUS_BOSS.enemies,
+          enemies: scaledEnemies,
           roomEntityPositions: ROOM_TARTARUS_BOSS.roomEntityPositions,
           artFloor: ROOM_TARTARUS_BOSS.artFloor,
           artObstacle: ROOM_TARTARUS_BOSS.artObstacle,

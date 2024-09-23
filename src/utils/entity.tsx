@@ -1,4 +1,6 @@
 import {
+  ENEMY_PRESET_ID,
+  ENEMY_PRESETS,
   ENTITY_SPRITE_DIRECTION,
   ENTITY_TYPE,
   STARTING_MAX_HEALTH,
@@ -1036,4 +1038,20 @@ export const removeLeftFacingEntityAnimationClassesExceptOne = (
   ].filter((className) => className !== exceptionClassString);
 
   entitySpriteSheetContainerElement.classList.remove(...classNamesToRemove);
+};
+
+export const scaleEnemy = (
+  enemyPresetID: ENEMY_PRESET_ID,
+  level: number
+): IEnemy => {
+  const enemyPreset = ENEMY_PRESETS[enemyPresetID];
+
+  const scaledEnemy: IEnemy = {
+    ...enemyPreset,
+    health: enemyPreset.health + 2 * level,
+    maxHealth: enemyPreset.maxHealth + 2 * level,
+    damage: enemyPreset.damage + 1 * level,
+  };
+
+  return scaledEnemy;
 };
