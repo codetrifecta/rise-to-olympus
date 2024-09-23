@@ -2661,11 +2661,46 @@ export const RoomLogic: FC<{
             }
           }
 
+          // Turn door tiles into walls if room doors are appropriate
+          let tileTypeAfterDoorCheck = tileType;
+
+          if (floor.id !== FLOOR_ID.TARTARUS_CAMP) {
+            if (
+              tileType === TILE_TYPE.DOOR &&
+              rowIndex < roomLength / 3 &&
+              currentRoom.northDoor === false
+            ) {
+              // North door
+              tileTypeAfterDoorCheck = TILE_TYPE.WALL;
+            } else if (
+              tileType === TILE_TYPE.DOOR &&
+              rowIndex > (roomLength / 3) * 2 &&
+              currentRoom.southDoor === false
+            ) {
+              // South door
+              tileTypeAfterDoorCheck = TILE_TYPE.WALL;
+            } else if (
+              tileType === TILE_TYPE.DOOR &&
+              columnIndex < roomLength / 3 &&
+              currentRoom.westDoor === false
+            ) {
+              // West door
+              tileTypeAfterDoorCheck = TILE_TYPE.WALL;
+            } else if (
+              // East door
+              tileType === TILE_TYPE.DOOR &&
+              columnIndex > (roomLength / 3) * 2 &&
+              currentRoom.eastDoor === false
+            ) {
+              tileTypeAfterDoorCheck = TILE_TYPE.WALL;
+            }
+          }
+
           return (
             <Tile
               rowIndex={rowIndex}
               colIndex={columnIndex}
-              tileType={tileType}
+              tileType={tileTypeAfterDoorCheck}
               entityIfExist={roomEntityPositions.get(
                 `${rowIndex},${columnIndex}`
               )}
@@ -2690,6 +2725,39 @@ export const RoomLogic: FC<{
                 // If room is over, player can move to any valid tile (floor, door)
                 if (isRoomOver && currentRoom) {
                   if (tileType === TILE_TYPE.DOOR) {
+                    // Prevent player from moving to the next room if the door is closed
+                    if (floor.id !== FLOOR_ID.TARTARUS_CAMP) {
+                      if (
+                        tileType === TILE_TYPE.DOOR &&
+                        rowIndex < roomLength / 3 &&
+                        currentRoom.northDoor === false
+                      ) {
+                        // North door
+                        return;
+                      } else if (
+                        tileType === TILE_TYPE.DOOR &&
+                        rowIndex > (roomLength / 3) * 2 &&
+                        currentRoom.southDoor === false
+                      ) {
+                        // South door
+                        return;
+                      } else if (
+                        tileType === TILE_TYPE.DOOR &&
+                        columnIndex < roomLength / 3 &&
+                        currentRoom.westDoor === false
+                      ) {
+                        // West door
+                        return;
+                      } else if (
+                        // East door
+                        tileType === TILE_TYPE.DOOR &&
+                        columnIndex > (roomLength / 3) * 2 &&
+                        currentRoom.eastDoor === false
+                      ) {
+                        return;
+                      }
+                    }
+
                     handlePlayerMove(rowIndex, columnIndex);
                   } else if (tileType === TILE_TYPE.FLOOR) {
                     handlePlayerMove(rowIndex, columnIndex);
