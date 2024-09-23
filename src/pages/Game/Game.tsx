@@ -183,6 +183,8 @@ export const Game = () => {
       console.log('Selected campaign:', campaign);
       setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
       setFloor(FLOOR_TARTARUS_CAMP);
+      setIsGameLogOpen(true);
+      setIsMinimapOpen(false);
 
       console.log('Skipping tutorial and going to camp');
     }

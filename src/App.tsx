@@ -47,7 +47,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} fallbackElement={<>...</>} />;
+  return <RouterProvider router={router} fallbackElement={<></>} />;
 }
 
 export default App;

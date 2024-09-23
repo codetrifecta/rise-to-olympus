@@ -89,7 +89,6 @@ export const RoomLogic: FC<{
     turnCycle,
     prevTurnCycle,
     setTurnCycle,
-    // setPrevTurnCycle,
     endTurn,
     isRoomOver,
     isGameOver,
@@ -103,6 +102,7 @@ export const RoomLogic: FC<{
     setHoveredTile,
     setIsEntityMoving,
     setIsCharacterSheetOpen,
+    setIsMinimapOpen,
   } = useGameStateStore();
   const { setCurrentSkillAnimation } = useSkillAnimationStore();
   const {
@@ -139,6 +139,13 @@ export const RoomLogic: FC<{
 
     handleRoomChange();
   }, [currentRoom, isRoomOver]);
+
+  // When first rendering a floor, check if it is a camp floor and set minimap to not open
+  useEffect(() => {
+    if (floor && floor.id === FLOOR_ID.TARTARUS_CAMP) {
+      setIsMinimapOpen(false);
+    }
+  }, [floor, currentRoom]);
 
   // When an enemy is defeated (i.e. removed from the game),
   // remove it from the room matrix,
@@ -1366,7 +1373,6 @@ export const RoomLogic: FC<{
               roomTileMatrix[newPlayerPosition[0]][newPlayerPosition[1]],
               currentRoom,
               newRoomEntityPositions,
-              [newPlayerPosition[0], newPlayerPosition[1]],
               [newPlayerPosition[0], newPlayerPosition[1]]
             );
           } else if (floor.id === FLOOR_ID.TARTARUS_CAMP) {
@@ -1393,6 +1399,7 @@ export const RoomLogic: FC<{
             }
 
             setCurrentRoom(null);
+            setRoomEntityPositions(new Map());
 
             const newFloor: IFloor = {
               ...BASE_FLOOR,
@@ -1419,7 +1426,6 @@ export const RoomLogic: FC<{
     tileType: TILE_TYPE,
     currentRoom: IRoom,
     roomEntityPositions: Map<string, [ENTITY_TYPE, number]>,
-    playerPosition: [number, number],
     tilePosition: [number, number]
   ) => {
     if (!floor) {
@@ -1433,11 +1439,11 @@ export const RoomLogic: FC<{
     }
     // Find out which door the player clicked (north, south, east, west)
 
-    const [playerRow, playerCol] = playerPosition;
+    // const [playerRow, playerCol] = playerPosition;
 
-    // Remove player position from current room to be updated in the floor state
-    const newRoomEntityPositions = new Map(roomEntityPositions);
-    newRoomEntityPositions.delete(`${playerRow},${playerCol}`);
+    // Remove player all entity positions from current room to be updated in the floor state
+    // const newRoomEntityPositions = new Map(roomEntityPositions);
+    // newRoomEntityPositions.delete(`${playerRow},${playerCol}`);
     const newFloor = {
       ...floor,
       rooms: floor.rooms.map((row) => {
@@ -1445,7 +1451,7 @@ export const RoomLogic: FC<{
           if (room.id === currentRoom.id) {
             return {
               ...room,
-              roomEntityPositions: newRoomEntityPositions,
+              roomEntityPositions: new Map(),
             };
           } else {
             return room;
@@ -1464,55 +1470,81 @@ export const RoomLogic: FC<{
       // Go to north door of the current room
       console.log('North Door');
 
-      // Remove room entity position for player for current room
+      // Set next room entity positions for player
+      const nextRoomEntityPositions = new Map(
+        floor.rooms[currentRoom.position[0] - 1][
+          currentRoom.position[1]
+        ].roomEntityPositions
+      );
+
+      nextRoomEntityPositions.set(
+        `${roomLength - 2},${Math.floor(roomLength / 2)}`,
+        [ENTITY_TYPE.PLAYER, 1]
+      );
 
       nextRoom = {
         ...floor.rooms[currentRoom.position[0] - 1][currentRoom.position[1]],
-        roomEntityPositions: floor.rooms[currentRoom.position[0] - 1][
-          currentRoom.position[1]
-        ].roomEntityPositions.set(
-          `${roomLength - 2},${Math.floor(roomLength / 2)}`,
-          [ENTITY_TYPE.PLAYER, 1]
-        ),
+        roomEntityPositions: nextRoomEntityPositions,
       };
     } else if (tileRow > (roomLength / 3) * 2) {
       // Go to south door of the current room
       console.log('South Door');
 
+      // Set next room entity positions for player
+      const nextRoomEntityPositions = new Map(
+        floor.rooms[currentRoom.position[0] + 1][
+          currentRoom.position[1]
+        ].roomEntityPositions
+      );
+
+      nextRoomEntityPositions.set(`3,${Math.floor(roomLength / 2)}`, [
+        ENTITY_TYPE.PLAYER,
+        1,
+      ]);
+
       nextRoom = {
         ...floor.rooms[currentRoom.position[0] + 1][currentRoom.position[1]],
-        roomEntityPositions: floor.rooms[currentRoom.position[0] + 1][
-          currentRoom.position[1]
-        ].roomEntityPositions.set(`3,${Math.floor(roomLength / 2)}`, [
-          ENTITY_TYPE.PLAYER,
-          1,
-        ]),
+        roomEntityPositions: nextRoomEntityPositions,
       };
     } else if (tileCol < roomLength / 3) {
       // Go to west door of the current room
       console.log('West Door');
 
+      // Set next room entity positions for player
+      const nextRoomEntityPositions = new Map(
+        floor.rooms[currentRoom.position[0]][
+          currentRoom.position[1] - 1
+        ].roomEntityPositions
+      );
+
+      nextRoomEntityPositions.set(
+        `${Math.floor(roomLength / 2)},${roomLength - 2}`,
+        [ENTITY_TYPE.PLAYER, 1]
+      );
+
       nextRoom = {
         ...floor.rooms[currentRoom.position[0]][currentRoom.position[1] - 1],
-        roomEntityPositions: floor.rooms[currentRoom.position[0]][
-          currentRoom.position[1] - 1
-        ].roomEntityPositions.set(
-          `${Math.floor(roomLength / 2)},${roomLength - 2}`,
-          [ENTITY_TYPE.PLAYER, 1]
-        ),
+        roomEntityPositions: nextRoomEntityPositions,
       };
     } else if (tileCol > (roomLength / 3) * 2) {
       // Go to east door of the current room
       console.log('East Door');
 
+      // Set next room entity positions for player
+      const nextRoomEntityPositions = new Map(
+        floor.rooms[currentRoom.position[0]][
+          currentRoom.position[1] + 1
+        ].roomEntityPositions
+      );
+
+      nextRoomEntityPositions.set(`${Math.floor(roomLength / 2)},${1}`, [
+        ENTITY_TYPE.PLAYER,
+        1,
+      ]);
+
       nextRoom = {
         ...floor.rooms[currentRoom.position[0]][currentRoom.position[1] + 1],
-        roomEntityPositions: floor.rooms[currentRoom.position[0]][
-          currentRoom.position[1] + 1
-        ].roomEntityPositions.set(`${Math.floor(roomLength / 2)},${1}`, [
-          ENTITY_TYPE.PLAYER,
-          1,
-        ]),
+        roomEntityPositions: nextRoomEntityPositions,
       };
     }
 
@@ -1520,6 +1552,8 @@ export const RoomLogic: FC<{
       console.error('Next room not found!');
       return;
     }
+
+    console.log('RoomLogic: nextRoom', nextRoom.roomEntityPositions);
 
     // Remove transition property from player
     document
@@ -1969,6 +2003,10 @@ export const RoomLogic: FC<{
 
     return [newEnemy, newPlayer];
   };
+
+  if (!currentRoom || !floor) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
