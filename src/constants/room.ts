@@ -154,7 +154,7 @@ export const ROOM_TARTARUS_BOSS: IRoom = {
   ],
   roomEntityPositions: new Map([
     ['10,10', [ENTITY_TYPE.ENEMY, 1]],
-    ['4,4', [ENTITY_TYPE.ENEMY, 1]],
+    ['4,4', [ENTITY_TYPE.ENEMY, 2]],
   ]),
   artFloor: art_room_tartarus_boss_floor,
   artObstacle: art_room_tartarus_boss_obstacle,
@@ -210,7 +210,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['11,4', [ENTITY_TYPE.ENEMY, 1]],
       ['7,10', [ENTITY_TYPE.ENEMY, 2]],
       ['11,15', [ENTITY_TYPE.ENEMY, 3]],
-      ['15,410', [ENTITY_TYPE.ENEMY, 4]],
+      ['15,10', [ENTITY_TYPE.ENEMY, 4]],
     ]),
     artFloor: art_room_tartarus_common_floor_1,
     artObstacle: art_room_tartarus_common_obstacle_1,

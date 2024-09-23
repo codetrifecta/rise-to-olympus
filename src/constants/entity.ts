@@ -336,7 +336,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     id: 0,
     name: 'Stygian Wraith',
     sprite: SPRITE_ID.STYGIAN_WRAITH,
-    spriteSize: TILE_SIZE * 1.4,
+    spriteSize: TILE_SIZE * 1.3,
     spritesheetRows: 5,
     spritesheetColumns: 6,
     spritesheetIdleRow: 0,

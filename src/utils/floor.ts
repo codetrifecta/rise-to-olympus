@@ -663,11 +663,9 @@ export const generateFloorRooms = (): IRoom[][] => {
     const randomIndex = Math.floor(
       Math.random() * (ROOMS_TARTARUS_COMMON.length - 1)
     );
-    if (randomIndex > Math.floor(ROOMS_TARTARUS_COMMON.length / 2)) {
-      const temp = roomsQueue[i];
-      roomsQueue[i] = ROOMS_TARTARUS_COMMON[randomIndex];
-      roomsQueue[randomIndex] = temp;
-    }
+    const temp = roomsQueue[i];
+    roomsQueue[i] = ROOMS_TARTARUS_COMMON[randomIndex];
+    roomsQueue[randomIndex] = temp;
   }
 
   // Assign rooms to the floor
