@@ -1372,7 +1372,6 @@ export const RoomLogic: FC<{
             handlePlayerMoveToDifferentRoom(
               roomTileMatrix[newPlayerPosition[0]][newPlayerPosition[1]],
               currentRoom,
-              newRoomEntityPositions,
               [newPlayerPosition[0], newPlayerPosition[1]]
             );
           } else if (floor.id === FLOOR_ID.TARTARUS_CAMP) {
@@ -1425,7 +1424,6 @@ export const RoomLogic: FC<{
   const handlePlayerMoveToDifferentRoom = (
     tileType: TILE_TYPE,
     currentRoom: IRoom,
-    roomEntityPositions: Map<string, [ENTITY_TYPE, number]>,
     tilePosition: [number, number]
   ) => {
     if (!floor) {

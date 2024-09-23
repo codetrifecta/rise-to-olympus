@@ -1,5 +1,6 @@
 import {
   BASE_ROOM,
+  ROOM_TARTARUS_BOSS,
   ROOM_TARTARUS_START,
   ROOM_TYPE,
   ROOMS_TARTARUS_COMMON,
@@ -686,10 +687,7 @@ export const generateFloorRooms = (): IRoom[][] => {
           westDoor: room.westDoor,
         };
         return startRoom;
-      } else if (
-        room.type === ROOM_TYPE.COMMON ||
-        room.type === ROOM_TYPE.BOSS
-      ) {
+      } else if (room.type === ROOM_TYPE.COMMON) {
         const roomFromQueue = roomsQueue.shift();
         if (roomFromQueue === undefined) {
           console.error('generateFloorRooms: No more rooms in queue');
@@ -705,6 +703,15 @@ export const generateFloorRooms = (): IRoom[][] => {
           roomTileMatrix: roomFromQueue.roomTileMatrix,
           artFloor: roomFromQueue.artFloor,
           artObstacle: roomFromQueue.artObstacle,
+        };
+      } else if (room.type === ROOM_TYPE.BOSS) {
+        return {
+          ...room,
+          id: id++,
+          position: roomPosition,
+          roomTileMatrix: ROOM_TARTARUS_BOSS.roomTileMatrix,
+          artFloor: ROOM_TARTARUS_BOSS.artFloor,
+          artObstacle: ROOM_TARTARUS_BOSS.artObstacle,
         };
       } else if (room.type === ROOM_TYPE.NULL) {
         return {
