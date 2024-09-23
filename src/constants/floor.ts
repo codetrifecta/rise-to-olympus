@@ -31,7 +31,15 @@ export enum FLOOR_ID {
   FLOOR_3 = 'FLOOR_3',
 }
 
+export const BASE_FLOOR: IFloor = {
+  id: FLOOR_ID.FLOOR_1,
+  name: 'Floor 1',
+  rooms: [],
+  nextFloorID: null,
+};
+
 export const FLOOR_TARTARUS_CAMP: IFloor = {
+  ...BASE_FLOOR,
   id: FLOOR_ID.TARTARUS_CAMP,
   name: 'Tartarus Camp',
   rooms: [
@@ -292,6 +300,7 @@ const createTutorialFloorRooms = () => {
 };
 
 export const FLOOR_TUTORIAL: IFloor = {
+  ...BASE_FLOOR,
   id: FLOOR_ID.TUTORIAL,
   name: 'Tutorial',
   rooms: [...createTutorialFloorRooms()],

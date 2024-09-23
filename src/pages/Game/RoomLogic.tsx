@@ -21,6 +21,7 @@ import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from '../../constants/weapon';
 import {
   IEnemy,
   IEntity,
+  IFloor,
   IPlayer,
   IRoom,
   ISkill,
@@ -65,6 +66,8 @@ import {
 import { useFloorStore } from '../../stores/floor';
 import { sleep } from '../../utils/general';
 import { ROOM_TYPE } from '../../constants/room';
+import { BASE_FLOOR, FLOOR_ID } from '../../constants/floor';
+import { generateFloorRooms } from '../../utils/floor';
 
 export const RoomLogic: FC<{
   currentHoveredEntity: IEntity | null;
@@ -1349,17 +1352,59 @@ export const RoomLogic: FC<{
           return;
         }
 
+        if (!floor) {
+          console.error('Floor not found!');
+          return;
+        }
+
         if (
           roomTileMatrix[newPlayerPosition[0]][newPlayerPosition[1]] ===
           TILE_TYPE.DOOR
         ) {
-          handlePlayerMoveToDifferentRoom(
-            roomTileMatrix[newPlayerPosition[0]][newPlayerPosition[1]],
-            currentRoom,
-            newRoomEntityPositions,
-            [newPlayerPosition[0], newPlayerPosition[1]],
-            [newPlayerPosition[0], newPlayerPosition[1]]
-          );
+          if (floor.id !== FLOOR_ID.TARTARUS_CAMP) {
+            handlePlayerMoveToDifferentRoom(
+              roomTileMatrix[newPlayerPosition[0]][newPlayerPosition[1]],
+              currentRoom,
+              newRoomEntityPositions,
+              [newPlayerPosition[0], newPlayerPosition[1]],
+              [newPlayerPosition[0], newPlayerPosition[1]]
+            );
+          } else if (floor.id === FLOOR_ID.TARTARUS_CAMP) {
+            const newRooms = generateFloorRooms();
+
+            // Ensure that the start room exists in the new floor
+            let startRoom = null;
+
+            for (let row = 0; row < newRooms.length; row++) {
+              for (let col = 0; col < newRooms[row].length; col++) {
+                if (newRooms[row][col].type === ROOM_TYPE.START) {
+                  startRoom = newRooms[row][col];
+                  break;
+                }
+              }
+              if (startRoom) {
+                break;
+              }
+            }
+
+            if (!startRoom) {
+              console.error('handlePlayerMove: Start room not found!');
+              return;
+            }
+
+            setCurrentRoom(null);
+
+            const newFloor: IFloor = {
+              ...BASE_FLOOR,
+              id: FLOOR_ID.FLOOR_1,
+              name: 'Floor 1',
+              rooms: newRooms,
+              nextFloorID: null,
+            };
+
+            console.log('go to new floor', newFloor);
+            setFloor(newFloor);
+          }
         }
       }
     }
