@@ -211,10 +211,12 @@ export const RoomLogic: FC<{
         setIsRoomOver(true);
 
         // Display message on chest to indicate that it can be opened
-        displayGeneralMessage(
-          `tile_${player.entityType}_${player.id}`,
-          'Chest Unlocked!'
-        );
+        if (floor.id !== FLOOR_ID.TARTARUS_CAMP) {
+          displayGeneralMessage(
+            `tile_${player.entityType}_${player.id}`,
+            'Chest Unlocked!'
+          );
+        }
 
         // Mark current room as cleared
         const newFloor = {

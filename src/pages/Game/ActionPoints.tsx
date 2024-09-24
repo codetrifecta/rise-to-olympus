@@ -1,11 +1,14 @@
 import { type FC } from 'react';
-import { MAX_ACTION_POINTS } from '../../constants/entity';
+import { ENTITY_TYPE, MAX_ACTION_POINTS } from '../../constants/entity';
 import { useLogStore } from '../../stores/log';
 import { usePlayerStore } from '../../stores/player';
+import { useGameStateStore } from '../../stores/game';
+import clsx from 'clsx';
 
 // Display action points as circles
 export const ActionPoints: FC = () => {
   const { playerMovementAPCost, player } = usePlayerStore();
+  const { turnCycle } = useGameStateStore();
 
   const {
     actionPoints,
@@ -54,7 +57,11 @@ export const ActionPoints: FC = () => {
   const availableActionPoints = actionPoints - usedActionPoints;
 
   return (
-    <div className="flex gap-2 justify-start items-center">
+    <div
+      className={clsx('flex gap-2 justify-start items-center', {
+        hidden: turnCycle[0].entityType !== ENTITY_TYPE.PLAYER,
+      })}
+    >
       {Array.from({ length: availableActionPoints }).map((_, index) => (
         <div
           key={index}
