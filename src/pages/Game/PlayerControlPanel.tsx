@@ -314,7 +314,9 @@ export const PlayerControlPanel: FC = () => {
 
             {/* Combat buttons */}
             <div
-              className={clsx('flex justify-center items-center col-span-1')}
+              className={clsx(
+                'relative flex justify-center items-center col-span-1'
+              )}
             >
               <div className="relative">
                 <IconButton
@@ -457,8 +459,7 @@ export const PlayerControlPanel: FC = () => {
                   <p></p>
                 </Tooltip>
               </div>
-
-              <div className="relative">
+              <div className="absolute right-0">
                 <IconButton
                   onClick={() => {
                     handleEndTurnClick();
@@ -486,6 +487,9 @@ export const PlayerControlPanel: FC = () => {
                 </Tooltip>
               </div>
             </div>
+
+            {/* Placeholder */}
+            <div></div>
 
             {/* Tool buttons */}
             {/* <div className="flex justify-center gap-5 col-span-1">
