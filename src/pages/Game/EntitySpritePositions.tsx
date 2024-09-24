@@ -154,13 +154,13 @@ export const EntitySpritePositions: FC<{
 
     return (
       <div className="absolute bottom-0 left-0 w-full flex justify-center items-end cursor-pointer">
-        <div
+        {/* <div
           className="absolute left-[50%]"
           style={{
             bottom: player.spriteSize + 5,
             transform: 'translateX(-50%)',
           }}
-        ></div>
+        ></div> */}
         {/* Cap off extra width and height */}
         <div
           id={`${player.entityType}_${player.id}`}
@@ -225,7 +225,7 @@ export const EntitySpritePositions: FC<{
             width:
               enemy.spriteSize < TILE_SIZE ? enemy.spriteSize : TILE_SIZE * 3,
             height:
-              enemy.spriteSize < TILE_SIZE ? enemy.spriteSize : TILE_SIZE * 4,
+              enemy.spriteSize < TILE_SIZE ? enemy.spriteSize : TILE_SIZE * 3.8,
           }}
         >
           <div
