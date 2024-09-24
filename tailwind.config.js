@@ -22,9 +22,21 @@ export default {
       },
       keyframes: {
         floatUpAndFadeOut: {
-          '0%': { transform: 'translateY(0)', opacity: 1 },
+          '0%': {
+            transform: 'translateY(0)',
+            opacity: 1,
+            pointerEvents: 'none',
+          },
+          '50%': {
+            transform: 'translateY(-15px)',
+            opacity: 0,
+          },
           '80%': { transform: 'translateY(-20px)', opacity: 0 },
-          '100%': { transform: 'translateY(-20px)', opacity: 0 },
+          '100%': {
+            transform: 'translateY(-20px)',
+            opacity: 0,
+            pointerEvents: 'none',
+          },
         },
         entityAnimate: {
           '0%': { transform: 'translate3d(0,0,0)' },
