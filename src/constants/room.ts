@@ -557,8 +557,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
     ],
     roomEntityPositions: new Map([
       ['9,10', [ENTITY_TYPE.ENEMY, 1]],
-      ['7,6', [ENTITY_TYPE.ENEMY, 2]],
-      ['9,15', [ENTITY_TYPE.ENEMY, 3]],
+      ['10,5', [ENTITY_TYPE.ENEMY, 2]],
+      ['10,15', [ENTITY_TYPE.ENEMY, 3]],
     ]),
     artFloor: art_room_tartarus_common_floor_8,
     artObstacle: art_room_tartarus_common_obstacle_8,

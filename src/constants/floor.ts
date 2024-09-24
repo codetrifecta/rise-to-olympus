@@ -379,7 +379,7 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
         name: 'Broadsword',
         icon: ICON_ID.WEAPON_SWORD,
         attackType: WEAPON_ATTACK_TYPE.MELEE,
-        type: WEAPON_TYPE.ONE_HANDED,
+        type: WEAPON_TYPE.BROADSWORD,
         itemType: ITEM_TYPE.WEAPON,
         damageMultiplier: 0.6,
         stats: {
@@ -396,7 +396,7 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
         name: 'Katana',
         icon: ICON_ID.WEAPON_KATANA,
         attackType: WEAPON_ATTACK_TYPE.MELEE,
-        type: WEAPON_TYPE.ONE_HANDED,
+        type: WEAPON_TYPE.KATANA,
         itemType: ITEM_TYPE.WEAPON,
         damageMultiplier: 0.6,
         stats: {
@@ -413,7 +413,7 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
         name: 'Greatsword',
         icon: ICON_ID.WEAPON_GREATSWORD,
         attackType: WEAPON_ATTACK_TYPE.MELEE,
-        type: WEAPON_TYPE.TWO_HANDED,
+        type: WEAPON_TYPE.GREATSWORD,
         itemType: ITEM_TYPE.WEAPON,
         damageMultiplier: 0.6,
         stats: {
@@ -430,7 +430,7 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
         name: 'Glaive',
         icon: ICON_ID.WEAPON_GLAIVE,
         attackType: WEAPON_ATTACK_TYPE.MELEE,
-        type: WEAPON_TYPE.TWO_HANDED,
+        type: WEAPON_TYPE.POLEARM,
         itemType: ITEM_TYPE.WEAPON,
         damageMultiplier: 0.6,
         stats: {
