@@ -67,6 +67,7 @@ export const GameRoom: FC = () => {
     isCompendiumOpen,
     isMinimapOpen,
     isCameraMoving,
+    isGameOver,
     setIsRoomOver,
     setIsInventoryOpen,
     setIsGameLogOpen,
@@ -683,7 +684,8 @@ export const GameRoom: FC = () => {
         </section>
 
         {/* Proceed to Next Floor Button */}
-        {isFloorCleared && isRoomOver && (
+        {((isGameOver && player.health <= 0) ||
+          (isFloorCleared && isRoomOver)) && (
           <section
             className="z-50 fixed right-10"
             style={{

@@ -520,7 +520,7 @@ export const RoomLogic: FC<{
             if (!cannotAttack) {
               let enemyAP = newEnemy.actionPoints;
               let newPlayer = player;
-              while (enemyAP >= 2) {
+              while (enemyAP >= 2 && newPlayer.health > 0) {
                 // Make enemy attack player if they can attack
                 const [enemyAfterAttack, playerAfterAttack] =
                   await handleEnemyAttack(
@@ -543,6 +543,10 @@ export const RoomLogic: FC<{
                 enemyAP -= 2;
                 setEnemy(newEnemy);
                 await sleep(1500);
+              }
+
+              if (newPlayer.health <= 0) {
+                return;
               }
             } else {
               addLog({
