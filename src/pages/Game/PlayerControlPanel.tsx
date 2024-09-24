@@ -381,7 +381,7 @@ export const PlayerControlPanel: FC = () => {
                 </IconButton>
                 <Tooltip>
                   <h2>Move</h2>
-                  <p>Move within a range of 2 tiles.</p>
+                  <p>Move within a range of {player.movementRange} tiles.</p>
                   <p>Cost: 1 AP</p>
                   <p></p>
                 </Tooltip>
