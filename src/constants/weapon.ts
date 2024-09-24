@@ -65,7 +65,7 @@ export const BASE_KATANA: IWeapon = {
   stats: {
     strength: 8,
     intelligence: 1,
-    defense: 1,
+    defense: 3,
     constitution: 0,
   },
   range: 1,
@@ -101,7 +101,7 @@ export const BASE_GLAIVE: IWeapon = {
   stats: {
     strength: 11,
     intelligence: 1,
-    defense: 2,
+    defense: 6,
     constitution: 0,
   },
   range: 2,
