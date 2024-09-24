@@ -1,14 +1,15 @@
+import { BASE_ARMORS } from '../constants/armor';
 import { ICON_ID } from '../constants/icon';
 import { ITEM_TYPE } from '../constants/item';
 import { BASE_WEAPONS, WEAPON_TYPE } from '../constants/weapon';
-import { Item, IWeapon } from '../types';
+import { IArmor, Item, IWeapon } from '../types';
 import { pick } from './general';
 
 export const getScaledItems = (level: number): Item[] => {
   // Gets scaled items based on the level of the rooms
   // The calling function will need to reassign the id of the items
 
-  let numberOfItems = 3 + Math.round(level / 2);
+  let numberOfItems = 4 + Math.round(level / 3);
   if (numberOfItems > 10) numberOfItems = 10;
 
   const items: Item[] = [];
@@ -20,8 +21,7 @@ export const getScaledItems = (level: number): Item[] => {
     } else if (random <= 0.6) {
       items.push(getRandomScaledWeapon(level));
     } else {
-      items.push(getRandomScaledWeapon(level));
-      //   items.push(getRandomScaledArmor());
+      items.push(getRandomScaledArmor(level));
     }
   }
 
@@ -38,7 +38,7 @@ const getRandomConsumable = (): Item => {
 };
 
 const getRandomScaledWeapon = (level: number): Item => {
-  const scaledMultiplier = level / 10;
+  const scaledMultiplier = level / 2;
 
   // Pick one of the base weapons
   const baseWeapon: IWeapon = pick(
@@ -47,23 +47,54 @@ const getRandomScaledWeapon = (level: number): Item => {
 
   const baseWeaponStats = baseWeapon.stats;
 
+  const defenseScale = Math.round(
+    baseWeaponStats.defense * (1 + Math.random() * scaledMultiplier)
+  );
+
   return {
     ...baseWeapon,
     id: 0,
     stats: {
       ...baseWeaponStats,
-      strength:
-        baseWeaponStats.strength *
-        Math.round(1 + Math.random() * scaledMultiplier),
-      intelligence:
-        baseWeaponStats.intelligence *
-        Math.round(1 + Math.random() * scaledMultiplier),
-      defense:
-        baseWeaponStats.defense *
-        Math.round(1 + Math.random() * scaledMultiplier),
-      constitution:
-        baseWeaponStats.constitution *
-        Math.round(1 + Math.random() * scaledMultiplier),
+      strength: Math.round(
+        baseWeaponStats.strength * (1 + Math.random() * scaledMultiplier)
+      ),
+      intelligence: Math.round(
+        baseWeaponStats.intelligence * (1 + Math.random() * scaledMultiplier)
+      ),
+      defense: defenseScale > 40 ? 40 : defenseScale,
+      constitution: Math.round(
+        baseWeaponStats.constitution * (1 + Math.random() * scaledMultiplier)
+      ),
+    },
+  };
+};
+
+const getRandomScaledArmor = (level: number): Item => {
+  const scaledMultiplier = level / 2;
+
+  // Pick one of the base armors
+  const baseArmor: IArmor = pick(BASE_ARMORS);
+
+  const baseArmorStats = baseArmor.stats;
+
+  return {
+    ...baseArmor,
+    id: 0,
+    stats: {
+      ...baseArmorStats,
+      strength: Math.round(
+        baseArmorStats.strength * (1 + Math.random() * scaledMultiplier)
+      ),
+      intelligence: Math.round(
+        baseArmorStats.intelligence * (1 + Math.random() * scaledMultiplier)
+      ),
+      defense: Math.round(
+        baseArmorStats.defense * (1 + Math.random() * scaledMultiplier)
+      ),
+      constitution: Math.round(
+        baseArmorStats.constitution * (1 + Math.random() * scaledMultiplier)
+      ),
     },
   };
 };

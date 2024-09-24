@@ -324,7 +324,7 @@ const EntitySpritePositionContainer: FC<{
   classNames,
   row,
   col,
-  // entity,
+  entity,
   roomTileMatrix,
   children,
   onMouseEnter,
@@ -332,7 +332,7 @@ const EntitySpritePositionContainer: FC<{
 }) => {
   // Check if the 3x1 tile right above the entity is a wall or door
   // If it is, set the z-index to 35 to ensure the entity is rendered above the wall
-  const isTileAboveEntityAnObstacle =
+  let isTileAboveEntityAnObstacle =
     roomTileMatrix &&
     row - 1 >= 0 &&
     col - 1 >= 0 &&
@@ -343,6 +343,25 @@ const EntitySpritePositionContainer: FC<{
       roomTileMatrix[row - 1][col] === TILE_TYPE.CHEST ||
       roomTileMatrix[row - 1][col + 1] === TILE_TYPE.OBSTACLE ||
       roomTileMatrix[row - 1][col - 1] === TILE_TYPE.OBSTACLE);
+
+  // For enemies, check 2 tiles above the entity (because they are taller)
+  if (entity.entityType === ENTITY_TYPE.ENEMY) {
+    isTileAboveEntityAnObstacle =
+      roomTileMatrix &&
+      row - 2 >= 0 &&
+      col - 1 >= 0 &&
+      col + 1 < roomTileMatrix.length &&
+      (roomTileMatrix[row - 1][col] === TILE_TYPE.OBSTACLE ||
+        roomTileMatrix[row - 1][col] === TILE_TYPE.DOOR ||
+        roomTileMatrix[row - 1][col] === TILE_TYPE.NULL ||
+        roomTileMatrix[row - 1][col] === TILE_TYPE.CHEST ||
+        roomTileMatrix[row - 2][col] === TILE_TYPE.OBSTACLE ||
+        roomTileMatrix[row - 2][col] === TILE_TYPE.DOOR ||
+        roomTileMatrix[row - 2][col] === TILE_TYPE.NULL ||
+        roomTileMatrix[row - 2][col] === TILE_TYPE.CHEST ||
+        roomTileMatrix[row - 1][col + 1] === TILE_TYPE.OBSTACLE ||
+        roomTileMatrix[row - 1][col - 1] === TILE_TYPE.OBSTACLE);
+  }
 
   // Check if the second tile above the entity is a wall or door if the entity is more than 1 tile tall
   // If it is, set the z-index to 35 to ensure the tall entity is rendered above the wall

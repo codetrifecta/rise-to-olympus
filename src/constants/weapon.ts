@@ -99,7 +99,7 @@ export const BASE_GLAIVE: IWeapon = {
   itemType: ITEM_TYPE.WEAPON,
   damageMultiplier: 0.6,
   stats: {
-    strength: 12,
+    strength: 11,
     intelligence: 1,
     defense: 2,
     constitution: 0,
