@@ -752,7 +752,7 @@ export const RoomLogic: FC<{
 
       const weaponRange = weapon.range;
 
-      const visionRangeForWeaponAttack = getVisionFromEntityPosition(
+      let visionRangeForWeaponAttack = getVisionFromEntityPosition(
         roomTileMatrix,
         playerPosition,
         weaponRange,
@@ -765,6 +765,26 @@ export const RoomLogic: FC<{
               ? 100
               : 40
       );
+
+      if (weapon.name === 'Test Sword') {
+        const emptyRoomTileMatrix = Array.from({ length: roomLength }, () =>
+          Array.from({ length: roomLength }, () => TILE_TYPE.FLOOR)
+        );
+
+        visionRangeForWeaponAttack = getVisionFromEntityPosition(
+          emptyRoomTileMatrix,
+          playerPosition,
+          weaponRange,
+          new Map(),
+          weaponRange >= 50
+            ? 360
+            : weaponRange >= 8
+              ? 122
+              : weaponRange >= 6
+                ? 100
+                : 40
+        );
+      }
 
       // console.log('visionRangeForWeaponAttack', visionRangeForWeaponAttack);
 
