@@ -97,6 +97,7 @@ export interface IEnemy extends IEntity {
   presetID: ENEMY_PRESET_ID;
   range: number;
   damage: number;
+  divinity: number;
 }
 
 export interface ISummon extends IEntity {

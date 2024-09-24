@@ -68,6 +68,7 @@ import { sleep } from '../../utils/general';
 import { ROOM_TYPE } from '../../constants/room';
 import { BASE_FLOOR, FLOOR_ID } from '../../constants/floor';
 import { generateFloorRoomsAndChestItems } from '../../utils/floor';
+import { useCampaignStore } from '../../stores/campaign';
 
 export const RoomLogic: FC<{
   currentHoveredEntity: IEntity | null;
@@ -123,6 +124,9 @@ export const RoomLogic: FC<{
     useFloorStore();
 
   const { addLog } = useLogStore();
+
+  const { selectedCampaign, campaigns, setCampaigns, setSelectedCampaign } =
+    useCampaignStore();
 
   // When player changes room, check if the room is over and set it to true if it is
   useEffect(() => {
@@ -575,7 +579,7 @@ export const RoomLogic: FC<{
             if (!cannotAttack) {
               let enemyAP = newEnemy.actionPoints;
               let newPlayer = player;
-              while (enemyAP >= 2) {
+              while (enemyAP >= 2 && newPlayer.health > 0) {
                 if (!enemyPosition) {
                   console.error('Enemy position not found!');
                   return;
@@ -1241,6 +1245,29 @@ export const RoomLogic: FC<{
           ),
           type: 'info',
         });
+
+        // Gain divinity points if enemy is defeated
+        if (floor?.id !== FLOOR_ID.TUTORIAL) {
+          if (!selectedCampaign) {
+            console.error('Selected campaign not found!');
+            return;
+          }
+
+          const newCampaign = { ...selectedCampaign };
+
+          newCampaign.divinity = newCampaign.divinity + newEnemy.divinity; // 10 divinity points per enemy defeated
+
+          setSelectedCampaign(newCampaign);
+
+          const newCampaigns = campaigns.map((campaign) => {
+            if (campaign.id === newCampaign.id) {
+              return newCampaign;
+            }
+            return campaign;
+          });
+
+          setCampaigns(newCampaigns);
+        }
       } else {
         setEnemies(
           enemies.map((e) => {
