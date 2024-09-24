@@ -37,9 +37,11 @@ const getRandomConsumable = (): Item => {
   };
 };
 
-const getRandomScaledWeapon = (level: number): Item => {
-  const scaledMultiplier = level / 2;
+const randomlyScaleStat = (base: number, level: number) => {
+  return base * (1 + Math.random() * 0.6 * (level / 3));
+};
 
+const getRandomScaledWeapon = (level: number): Item => {
   // Pick one of the base weapons
   const baseWeapon: IWeapon = pick(
     BASE_WEAPONS.filter((w) => w.type !== WEAPON_TYPE.FIST)
@@ -47,32 +49,24 @@ const getRandomScaledWeapon = (level: number): Item => {
 
   const baseWeaponStats = baseWeapon.stats;
 
-  const defenseScale = Math.round(
-    baseWeaponStats.defense * (1 + Math.random() * scaledMultiplier)
-  );
-
   return {
     ...baseWeapon,
     id: 0,
     stats: {
       ...baseWeaponStats,
-      strength: Math.round(
-        baseWeaponStats.strength * (1 + Math.random() * scaledMultiplier)
-      ),
+      strength: Math.round(randomlyScaleStat(baseWeaponStats.strength, level)),
       intelligence: Math.round(
-        baseWeaponStats.intelligence * (1 + Math.random() * scaledMultiplier)
+        randomlyScaleStat(baseWeaponStats.intelligence, level)
       ),
-      defense: defenseScale > 40 ? 40 : defenseScale,
+      defense: Math.round(randomlyScaleStat(baseWeaponStats.defense, level)),
       constitution: Math.round(
-        baseWeaponStats.constitution * (1 + Math.random() * scaledMultiplier)
+        randomlyScaleStat(baseWeaponStats.constitution, level)
       ),
     },
   };
 };
 
 const getRandomScaledArmor = (level: number): Item => {
-  const scaledMultiplier = level / 2;
-
   // Pick one of the base armors
   const baseArmor: IArmor = pick(BASE_ARMORS);
 
@@ -83,17 +77,13 @@ const getRandomScaledArmor = (level: number): Item => {
     id: 0,
     stats: {
       ...baseArmorStats,
-      strength: Math.round(
-        baseArmorStats.strength * (1 + Math.random() * scaledMultiplier)
-      ),
+      strength: Math.round(randomlyScaleStat(baseArmorStats.strength, level)),
       intelligence: Math.round(
-        baseArmorStats.intelligence * (1 + Math.random() * scaledMultiplier)
+        randomlyScaleStat(baseArmorStats.intelligence, level)
       ),
-      defense: Math.round(
-        baseArmorStats.defense * (1 + Math.random() * scaledMultiplier)
-      ),
+      defense: Math.round(randomlyScaleStat(baseArmorStats.defense, level)),
       constitution: Math.round(
-        baseArmorStats.constitution * (1 + Math.random() * scaledMultiplier)
+        randomlyScaleStat(baseArmorStats.constitution, level)
       ),
     },
   };
