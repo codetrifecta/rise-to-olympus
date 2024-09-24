@@ -181,11 +181,11 @@ export const Tile: FC<{
         style={{ width: TILE_SIZE, height: TILE_SIZE }}
         className={clsx('absolute top-0 left-0 z-0', {
           // Effect zone
-          'bg-black group-hover:opacity-50 opacity-30':
+          'bg-black opacity-40':
             isEffectZone && isSkillEffectTile && !isTargetZone,
 
           // Target zone
-          'bg-black opacity-60': isTargetZone && isSkillEffectTile,
+          'bg-black opacity-70': isTargetZone && isSkillEffectTile,
         })}
       ></div>
       {/* {renderEntity()} */}
