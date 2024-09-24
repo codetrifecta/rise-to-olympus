@@ -68,6 +68,7 @@ import { sleep } from '../../utils/general';
 import { ROOM_TYPE } from '../../constants/room';
 import { BASE_FLOOR, FLOOR_ID } from '../../constants/floor';
 import { generateFloorRoomsAndChestItems } from '../../utils/floor';
+import { useCampaignStore } from '../../stores/campaign';
 
 export const RoomLogic: FC<{
   currentHoveredEntity: IEntity | null;
@@ -123,6 +124,9 @@ export const RoomLogic: FC<{
     useFloorStore();
 
   const { addLog } = useLogStore();
+
+  const { selectedCampaign, campaigns, setCampaigns, setSelectedCampaign } =
+    useCampaignStore();
 
   // When player changes room, check if the room is over and set it to true if it is
   useEffect(() => {
@@ -520,7 +524,7 @@ export const RoomLogic: FC<{
             if (!cannotAttack) {
               let enemyAP = newEnemy.actionPoints;
               let newPlayer = player;
-              while (enemyAP >= 2) {
+              while (enemyAP >= 2 && newPlayer.health > 0) {
                 // Make enemy attack player if they can attack
                 const [enemyAfterAttack, playerAfterAttack] =
                   await handleEnemyAttack(
@@ -543,6 +547,10 @@ export const RoomLogic: FC<{
                 enemyAP -= 2;
                 setEnemy(newEnemy);
                 await sleep(1500);
+              }
+
+              if (newPlayer.health <= 0) {
+                return;
               }
             } else {
               addLog({
@@ -571,7 +579,7 @@ export const RoomLogic: FC<{
             if (!cannotAttack) {
               let enemyAP = newEnemy.actionPoints;
               let newPlayer = player;
-              while (enemyAP >= 2) {
+              while (enemyAP >= 2 && newPlayer.health > 0) {
                 if (!enemyPosition) {
                   console.error('Enemy position not found!');
                   return;
@@ -752,7 +760,7 @@ export const RoomLogic: FC<{
 
       const weaponRange = weapon.range;
 
-      const visionRangeForWeaponAttack = getVisionFromEntityPosition(
+      let visionRangeForWeaponAttack = getVisionFromEntityPosition(
         roomTileMatrix,
         playerPosition,
         weaponRange,
@@ -765,6 +773,26 @@ export const RoomLogic: FC<{
               ? 100
               : 40
       );
+
+      if (weapon.name === 'Test Sword') {
+        const emptyRoomTileMatrix = Array.from({ length: roomLength }, () =>
+          Array.from({ length: roomLength }, () => TILE_TYPE.FLOOR)
+        );
+
+        visionRangeForWeaponAttack = getVisionFromEntityPosition(
+          emptyRoomTileMatrix,
+          playerPosition,
+          weaponRange,
+          new Map(),
+          weaponRange >= 50
+            ? 360
+            : weaponRange >= 8
+              ? 122
+              : weaponRange >= 6
+                ? 100
+                : 40
+        );
+      }
 
       // console.log('visionRangeForWeaponAttack', visionRangeForWeaponAttack);
 
@@ -894,6 +922,17 @@ export const RoomLogic: FC<{
         return enemy.health <= 0;
       });
 
+      // Gain divinity points if enemy is defeated
+      let divinityGained = 0;
+      if (isEnemyDead) {
+        newEnemies.forEach((enemy) => {
+          if (enemy.health <= 0) {
+            divinityGained += enemy.divinity;
+          }
+        });
+        console.log('divinityGained', divinityGained);
+      }
+
       setEnemies([...newEnemies]);
       setPlayerState({
         ...newPlayer.state,
@@ -916,6 +955,27 @@ export const RoomLogic: FC<{
               s.id === skill.id ? { ...s, cooldownCounter: s.cooldown } : s
             ),
           });
+          if (floor?.id !== FLOOR_ID.TUTORIAL) {
+            if (!selectedCampaign) {
+              console.error('Selected campaign not found!');
+              return;
+            }
+
+            const newCampaign = { ...selectedCampaign };
+
+            newCampaign.divinity = newCampaign.divinity + divinityGained;
+
+            setSelectedCampaign(newCampaign);
+
+            const newCampaigns = campaigns.map((campaign) => {
+              if (campaign.id === newCampaign.id) {
+                return newCampaign;
+              }
+              return campaign;
+            });
+
+            setCampaigns(newCampaigns);
+          }
         }, 1000);
       } else {
         setPlayer({
@@ -1217,6 +1277,29 @@ export const RoomLogic: FC<{
           ),
           type: 'info',
         });
+
+        // Gain divinity points if enemy is defeated
+        if (floor?.id !== FLOOR_ID.TUTORIAL) {
+          if (!selectedCampaign) {
+            console.error('Selected campaign not found!');
+            return;
+          }
+
+          const newCampaign = { ...selectedCampaign };
+
+          newCampaign.divinity = newCampaign.divinity + newEnemy.divinity; // 10 divinity points per enemy defeated
+
+          setSelectedCampaign(newCampaign);
+
+          const newCampaigns = campaigns.map((campaign) => {
+            if (campaign.id === newCampaign.id) {
+              return newCampaign;
+            }
+            return campaign;
+          });
+
+          setCampaigns(newCampaigns);
+        }
       } else {
         setEnemies(
           enemies.map((e) => {

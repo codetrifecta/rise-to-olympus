@@ -240,7 +240,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'Deal critical damage to an enemy. Damage is doubled if used when hidden. Deal bleeding to an enemy for 1 turns.',
-    damageMultiplier: 1.2,
+    damageMultiplier: 0.8,
     range: 1,
     cooldown: 2,
     cooldownCounter: 0,
@@ -268,7 +268,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'Coat your weapon with poison. Deal increased damage and inflict poisoned for 3 turns.',
-    damageMultiplier: 1.2,
+    damageMultiplier: 0.8,
     range: 1,
     cooldown: 3,
     cooldownCounter: 0,
@@ -281,7 +281,7 @@ export const SKILLS: ISkill[] = [
     skillType: SKILL_TYPE.ST,
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description: 'Strike a target, applying disabled on them for 1 turns.',
-    damageMultiplier: 1,
+    damageMultiplier: 0.8,
     range: 1,
     cooldown: 3,
     cooldownCounter: 0,
@@ -295,7 +295,7 @@ export const SKILLS: ISkill[] = [
     tags: [SKILL_TAG.SINGLE_TARGET, SKILL_TAG.DAMAGE, SKILL_TAG.STATUS],
     description:
       'Puncture a target with a strike that wounds them. Applies wounded to a target for 2 turns.',
-    damageMultiplier: 1,
+    damageMultiplier: 0.8,
     range: 1,
     cooldown: 4,
     cooldownCounter: 0,
@@ -567,7 +567,7 @@ export const SKILLS: ISkill[] = [
     description:
       "Unleash a warcry to boost your courage. Gain Battle Fury for 3 turns. Battle Fury's efffects stacks with the amount of enemies in range",
     damageMultiplier: 0,
-    range: 3,
+    range: 5,
     cooldown: 3,
     cooldownCounter: 0,
     cost: 2,
@@ -806,7 +806,7 @@ export const SKILLS: ISkill[] = [
     description: 'Fly to an empty tile in the room.',
     damageMultiplier: 0,
     range: 10,
-    cooldown: 4,
+    cooldown: 5,
     cooldownCounter: 0,
     cost: 1,
   },

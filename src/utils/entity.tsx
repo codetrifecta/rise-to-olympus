@@ -1044,13 +1044,15 @@ export const scaleEnemy = (
   enemyPresetID: ENEMY_PRESET_ID,
   level: number
 ): IEnemy => {
+  const multiplier = level >= 5 ? 1.75 : level >= 3 ? 1.5 : 1;
+
   const enemyPreset = ENEMY_PRESETS[enemyPresetID];
 
   const scaledEnemy: IEnemy = {
     ...enemyPreset,
-    health: enemyPreset.health + 2 * level,
-    maxHealth: enemyPreset.maxHealth + 2 * level,
-    damage: enemyPreset.damage + 1 * level,
+    health: Math.round(enemyPreset.health + 2 * level * multiplier),
+    maxHealth: Math.round(enemyPreset.maxHealth + 2 * level * multiplier),
+    damage: Math.round(enemyPreset.damage + 1 * level * multiplier),
   };
 
   return scaledEnemy;

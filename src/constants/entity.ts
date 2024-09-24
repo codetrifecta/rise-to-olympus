@@ -162,9 +162,17 @@ export enum ENEMY_PRESET_ID {
   // FLAMING_SKULL_A = id++,
 }
 
+const BASE_ENEMY: IEnemy = {
+  ...BASE_ENTITY,
+  presetID: ENEMY_PRESET_ID.CERBERUS_PUP,
+  range: 1,
+  damage: 1,
+  divinity: 10,
+};
+
 export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
   [ENEMY_PRESET_ID.ABYSSAL_CYCLOPEAN_WRAITH]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Abyssal Cyclopean Wraith',
     sprite: SPRITE_ID.ABYSSAL_CYCLOPEAN_WRAITH,
@@ -184,9 +192,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 8,
     damageBonus: 0,
     statuses: [],
+    divinity: 30,
   },
   [ENEMY_PRESET_ID.CERBERUS_PUP]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Corrupted Cat',
     sprite: SPRITE_ID.CERBERUS_PUP,
@@ -206,9 +215,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 4,
     damageBonus: 0,
     statuses: [],
+    divinity: 10,
   },
   [ENEMY_PRESET_ID.CORRUPT_MINOTAUR]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Corrupt Minotaur',
     sprite: SPRITE_ID.CORRUPT_MINOTAUR,
@@ -228,9 +238,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 15,
     damageBonus: 0,
     statuses: [],
+    divinity: 30,
   },
   [ENEMY_PRESET_ID.CORRUPT_OLYMPIAN]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Corrupt Olympian',
     sprite: SPRITE_ID.CORRUPT_OLYMPIAN,
@@ -250,9 +261,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 6,
     damageBonus: 0,
     statuses: [],
+    divinity: 30,
   },
   [ENEMY_PRESET_ID.EREBUS_FIEND]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Erebus Fiend',
     sprite: SPRITE_ID.EREBUS_FIEND,
@@ -272,9 +284,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 6,
     damageBonus: 0,
     statuses: [],
+    divinity: 20,
   },
   [ENEMY_PRESET_ID.INFERNAL_MINOTAUR]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Infernal Minotaur',
     sprite: SPRITE_ID.INFERNAL_MINOTAUR,
@@ -294,9 +307,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 8,
     damageBonus: 0,
     statuses: [],
+    divinity: 20,
   },
   [ENEMY_PRESET_ID.MYRMIDON_HOUND]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Myrmidon Hound',
     sprite: SPRITE_ID.MYRMIDON_HOUND,
@@ -316,9 +330,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 5,
     damageBonus: 0,
     statuses: [],
+    divinity: 20,
   },
   [ENEMY_PRESET_ID.SKYWARD_TITAN]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Skyward Titan',
     sprite: SPRITE_ID.ENEMY_SKYWARD_TITAN,
@@ -338,9 +353,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 10,
     damageBonus: 0,
     statuses: [],
+    divinity: 20,
   },
   [ENEMY_PRESET_ID.STYGIAN_WRAITH]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Stygian Wraith',
     sprite: SPRITE_ID.STYGIAN_WRAITH,
@@ -360,9 +376,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 2,
     damageBonus: 0,
     statuses: [],
+    divinity: 10,
   },
   [ENEMY_PRESET_ID.TARTARIAN_HOUND]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Tartarian Hound',
     sprite: SPRITE_ID.TARTARIAN_HOUND,
@@ -382,9 +399,10 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 10,
     damageBonus: 0,
     statuses: [],
+    divinity: 20,
   },
   [ENEMY_PRESET_ID.TARTARIAN_LYCAN]: {
-    ...BASE_ENTITY,
+    ...BASE_ENEMY,
     id: 0,
     name: 'Tartarian Lycan',
     sprite: SPRITE_ID.TARTARIAN_LYCAN,
@@ -404,6 +422,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     damage: 8,
     damageBonus: 0,
     statuses: [],
+    divinity: 20,
   },
   // [ENEMY_PRESET_ID.MINOTAUR]: {
   //   id: 0,

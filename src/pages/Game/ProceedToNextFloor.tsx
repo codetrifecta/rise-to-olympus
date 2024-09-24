@@ -12,11 +12,12 @@ import { useScriptStore } from '../../stores/script';
 
 export const ProceedToNextFloor: FC = () => {
   const { currentRoom, floor, setCurrentRoom, setFloor } = useFloorStore();
-  const { setIsFloorCleared, resetGameState } = useGameStateStore();
+  const { isGameOver, setIsFloorCleared, setIsGameLogOpen, resetGameState } =
+    useGameStateStore();
   const { selectedCampaign, campaigns, setCampaigns, setSelectedCampaign } =
     useCampaignStore();
   const { setLogs } = useLogStore();
-  const { resetPlayerStore } = usePlayerStore();
+  const { player, resetPlayerStore } = usePlayerStore();
   const { resetScriptStore } = useScriptStore();
 
   const handleProceedButtonClick = () => {
@@ -32,26 +33,30 @@ export const ProceedToNextFloor: FC = () => {
       return;
     }
 
-    if (!floor.nextFloorID) {
-      console.error('ProceedToNextFloor: No next floor');
-      return;
-    }
-
     let nextFloor: IFloor | null = null;
 
     // Set next floor based on next floor ID
     switch (floor.nextFloorID) {
       case FLOOR_ID.TARTARUS_CAMP:
         // setFloor(FLOOR_TARTARUS_CAMP);
-        nextFloor = FLOOR_TARTARUS_CAMP;
+        nextFloor = { ...FLOOR_TARTARUS_CAMP };
         break;
       default:
         console.error('ProceedToNextFloor: Unknown next floor ID');
         break;
     }
 
+    // If no next floor, then game is won.
+    // Reset game state and return to camp
     if (!nextFloor) {
-      console.error('ProceedToNextFloor: No next floor');
+      resetScriptStore();
+      setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
+      resetGameState();
+      resetPlayerStore();
+      setCurrentRoom(null);
+      setFloor({ ...FLOOR_TARTARUS_CAMP });
+      setIsFloorCleared(false);
+      setIsGameLogOpen(true);
       return;
     }
 
@@ -113,7 +118,16 @@ export const ProceedToNextFloor: FC = () => {
     setIsFloorCleared(false);
   };
 
+  const renderProceedButtonText = () => {
+    if (isGameOver && player.health <= 0) return 'Game over. Return to Camp.';
+    else if (floor?.nextFloorID === null)
+      return 'You have won. Return to Camp.';
+    else return 'Proceed to next floor';
+  };
+
   return (
-    <Button onClick={handleProceedButtonClick}>Proceed to Next Floor</Button>
+    <Button onClick={handleProceedButtonClick}>
+      {renderProceedButtonText()}
+    </Button>
   );
 };

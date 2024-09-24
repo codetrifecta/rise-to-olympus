@@ -140,7 +140,7 @@ export const BASE_MAGIC_STAFF: IWeapon = {
     defense: 2,
     constitution: 0,
   },
-  range: 6,
+  range: 7,
   cost: 2,
 };
 

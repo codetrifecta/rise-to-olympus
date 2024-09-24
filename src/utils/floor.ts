@@ -762,12 +762,17 @@ export const generateFloorRoomsAndChestItems = (): [
       Math.random() * (ROOMS_TARTARUS_COMMON.length - 1)
     );
     const temp = roomsQueue[i];
-    roomsQueue[i] = ROOMS_TARTARUS_COMMON[randomIndex];
+    roomsQueue[i] = roomsQueue[randomIndex];
     roomsQueue[randomIndex] = temp;
   }
 
+  // console.log(
+  //   'roomsQueue',
+  //   roomsQueue.map((room) => room.id)
+  // );
+
   // Assign rooms to the floor
-  let id = 0;
+  let roomId = 10;
   let itemId = 0;
   // Start position
   let startPosition: [number, number] = [0, 0];
@@ -791,7 +796,7 @@ export const generateFloorRoomsAndChestItems = (): [
       if (room.type === ROOM_TYPE.START) {
         const startRoom: IRoom = {
           ...ROOM_TARTARUS_START,
-          id: id++,
+          id: roomId++,
           position: roomPosition,
           northDoor: room.northDoor,
           southDoor: room.southDoor,
@@ -836,7 +841,7 @@ export const generateFloorRoomsAndChestItems = (): [
 
         return {
           ...room,
-          id: id++,
+          id: roomId++,
           isCleared: false,
           // isKnown: true,
           position: roomPosition,
@@ -847,6 +852,8 @@ export const generateFloorRoomsAndChestItems = (): [
           artObstacle: roomFromQueue.artObstacle,
         };
       } else if (room.type === ROOM_TYPE.BOSS) {
+        const tartarusBossRoom = { ...ROOM_TARTARUS_BOSS };
+
         const pathFromStart = pathsFromStart.get(`${r},${c}`);
 
         let roomDifficulty = 0;
@@ -854,9 +861,14 @@ export const generateFloorRoomsAndChestItems = (): [
           roomDifficulty = pathFromStart.length - 1;
         }
 
-        const scaledEnemies = ROOM_TARTARUS_BOSS.enemies.map((enemy) => {
-          return scaleEnemy(enemy.presetID, roomDifficulty);
+        const scaledEnemies = tartarusBossRoom.enemies.map((enemy) => {
+          return {
+            ...scaleEnemy(enemy.presetID, roomDifficulty),
+            id: enemy.id,
+          };
         });
+
+        // console.log('boss room enemies', scaledEnemies);
 
         const newItems = getScaledItems(roomDifficulty).map((item) => {
           return { ...item, id: itemId++ };
@@ -866,15 +878,15 @@ export const generateFloorRoomsAndChestItems = (): [
 
         return {
           ...room,
-          id: id++,
+          id: roomId++,
           isCleared: false,
           // isKnown: true,
           position: roomPosition,
-          roomTileMatrix: ROOM_TARTARUS_BOSS.roomTileMatrix,
+          roomTileMatrix: tartarusBossRoom.roomTileMatrix,
           enemies: scaledEnemies,
-          roomEntityPositions: ROOM_TARTARUS_BOSS.roomEntityPositions,
-          artFloor: ROOM_TARTARUS_BOSS.artFloor,
-          artObstacle: ROOM_TARTARUS_BOSS.artObstacle,
+          roomEntityPositions: tartarusBossRoom.roomEntityPositions,
+          artFloor: tartarusBossRoom.artFloor,
+          artObstacle: tartarusBossRoom.artObstacle,
         };
       } else if (room.type === ROOM_TYPE.NULL) {
         return {

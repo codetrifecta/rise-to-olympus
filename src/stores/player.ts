@@ -273,5 +273,6 @@ export const usePlayerStore = create<IPlayerStore>((set, get) => ({
     set({ player: newPlayer });
   },
 
-  resetPlayerStore: () => set({ player: getDefaultPlayer() }),
+  resetPlayerStore: () =>
+    set({ player: { ...getDefaultPlayer(), skills: get().player.skills } }),
 }));
