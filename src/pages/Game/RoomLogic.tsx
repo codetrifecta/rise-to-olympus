@@ -922,6 +922,17 @@ export const RoomLogic: FC<{
         return enemy.health <= 0;
       });
 
+      // Gain divinity points if enemy is defeated
+      let divinityGained = 0;
+      if (isEnemyDead) {
+        newEnemies.forEach((enemy) => {
+          if (enemy.health <= 0) {
+            divinityGained += enemy.divinity;
+          }
+        });
+        console.log('divinityGained', divinityGained);
+      }
+
       setEnemies([...newEnemies]);
       setPlayerState({
         ...newPlayer.state,
@@ -944,6 +955,27 @@ export const RoomLogic: FC<{
               s.id === skill.id ? { ...s, cooldownCounter: s.cooldown } : s
             ),
           });
+          if (floor?.id !== FLOOR_ID.TUTORIAL) {
+            if (!selectedCampaign) {
+              console.error('Selected campaign not found!');
+              return;
+            }
+
+            const newCampaign = { ...selectedCampaign };
+
+            newCampaign.divinity = newCampaign.divinity + divinityGained;
+
+            setSelectedCampaign(newCampaign);
+
+            const newCampaigns = campaigns.map((campaign) => {
+              if (campaign.id === newCampaign.id) {
+                return newCampaign;
+              }
+              return campaign;
+            });
+
+            setCampaigns(newCampaigns);
+          }
         }, 1000);
       } else {
         setPlayer({
