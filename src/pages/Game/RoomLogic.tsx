@@ -837,7 +837,7 @@ export const RoomLogic: FC<{
     const movementPossibilities = findPathsFromCurrentLocation(
       playerPosition,
       roomTileMatrix,
-      roomIsCleared ? 10 : player.actionPoints,
+      roomIsCleared ? roomLength * 1.5 : player.actionPoints,
       roomIsCleared ? new Map() : roomEntityPositions,
       DEFAULT_MOVEMENT_RANGE + movementRangeBonus,
       roomIsCleared
@@ -1650,7 +1650,7 @@ export const RoomLogic: FC<{
     const path = findPathsFromCurrentLocation(
       newEnemyPosition,
       roomTileMatrix,
-      Math.round(roomLength / 2),
+      roomLength * 1.5,
       newRoomEntityPositions
     );
 

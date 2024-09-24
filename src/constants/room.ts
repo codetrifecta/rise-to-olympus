@@ -80,6 +80,7 @@ import art_room_tartarus_common_obstacle_8 from '../assets/sprites/tiles/tartaru
 
 import art_room_tartarus_boss_floor from '../assets/sprites/tiles/tartarus/room_tartarus_boss_floor.png';
 import art_room_tartarus_boss_obstacle from '../assets/sprites/tiles/tartarus/room_tartarus_boss_obstacle.png';
+import { ENEMY_PRESET_ID, ENEMY_PRESETS, ENTITY_TYPE } from './entity';
 
 export const ROOM_TARTARUS_START: IRoom = {
   ...BASE_ROOM,
@@ -141,6 +142,20 @@ export const ROOM_TARTARUS_BOSS: IRoom = {
     [3, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3],
     [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   ],
+  enemies: [
+    {
+      ...ENEMY_PRESETS[ENEMY_PRESET_ID.CORRUPT_MINOTAUR],
+      id: 1,
+    },
+    {
+      ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+      id: 2,
+    },
+  ],
+  roomEntityPositions: new Map([
+    ['10,10', [ENTITY_TYPE.ENEMY, 1]],
+    ['4,4', [ENTITY_TYPE.ENEMY, 2]],
+  ]),
   artFloor: art_room_tartarus_boss_floor,
   artObstacle: art_room_tartarus_boss_obstacle,
 };
@@ -173,6 +188,30 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 2,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 3,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 4,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['11,4', [ENTITY_TYPE.ENEMY, 1]],
+      ['7,10', [ENTITY_TYPE.ENEMY, 2]],
+      ['11,15', [ENTITY_TYPE.ENEMY, 3]],
+      ['15,10', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
     artFloor: art_room_tartarus_common_floor_1,
     artObstacle: art_room_tartarus_common_obstacle_1,
   },
@@ -203,6 +242,35 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_HOUND],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 2,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 3,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 4,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 5,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['11,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['7,6', [ENTITY_TYPE.ENEMY, 2]],
+      ['9,15', [ENTITY_TYPE.ENEMY, 3]],
+      ['16,13', [ENTITY_TYPE.ENEMY, 4]],
+      ['14,15', [ENTITY_TYPE.ENEMY, 5]],
+    ]),
     artFloor: art_room_tartarus_common_floor_2,
     artObstacle: art_room_tartarus_common_obstacle_2,
   },
@@ -233,6 +301,20 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.SKYWARD_TITAN],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.SKYWARD_TITAN],
+        id: 2,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['8,8', [ENTITY_TYPE.ENEMY, 1]],
+      ['13,11', [ENTITY_TYPE.ENEMY, 2]],
+    ]),
     artFloor: art_room_tartarus_common_floor_3,
     artObstacle: art_room_tartarus_common_obstacle_3,
   },
@@ -263,6 +345,20 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+        id: 2,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['8,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['12,10', [ENTITY_TYPE.ENEMY, 2]],
+    ]),
     artFloor: art_room_tartarus_common_floor_4,
     artObstacle: art_room_tartarus_common_obstacle_4,
   },
@@ -293,6 +389,30 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.EREBUS_FIEND],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.EREBUS_FIEND],
+        id: 2,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 3,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 4,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['8,7', [ENTITY_TYPE.ENEMY, 1]],
+      ['13,13', [ENTITY_TYPE.ENEMY, 2]],
+      ['13,8', [ENTITY_TYPE.ENEMY, 3]],
+      ['10,12', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
     artFloor: art_room_tartarus_common_floor_5,
     artObstacle: art_room_tartarus_common_obstacle_5,
   },
@@ -323,6 +443,20 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+        id: 2,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['7,6', [ENTITY_TYPE.ENEMY, 1]],
+      ['16,14', [ENTITY_TYPE.ENEMY, 2]],
+    ]),
     artFloor: art_room_tartarus_common_floor_6,
     artObstacle: art_room_tartarus_common_obstacle_6,
   },
@@ -353,6 +487,30 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 2,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 3,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+        id: 4,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['9,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['4,2', [ENTITY_TYPE.ENEMY, 2]],
+      ['14,1', [ENTITY_TYPE.ENEMY, 3]],
+      ['17,19', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
     artFloor: art_room_tartarus_common_floor_7,
     artObstacle: art_room_tartarus_common_obstacle_7,
   },
@@ -383,6 +541,25 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 2,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 3,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['9,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['7,6', [ENTITY_TYPE.ENEMY, 2]],
+      ['9,15', [ENTITY_TYPE.ENEMY, 3]],
+    ]),
     artFloor: art_room_tartarus_common_floor_8,
     artObstacle: art_room_tartarus_common_obstacle_8,
   },

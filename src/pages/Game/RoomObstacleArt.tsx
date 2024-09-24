@@ -57,10 +57,10 @@ export const RoomObstacleArt: FC<{
       context.imageSmoothingEnabled = false;
 
       if (!currentRoom.artObstacle) {
-        console.log(
-          'RoomObstacleArt: No obstacle art',
-          currentRoom.artObstacle
-        );
+        // console.log(
+        //   'RoomObstacleArt: No obstacle art',
+        //   currentRoom.artObstacle
+        // );
         context.clearRect(0, 0, canvas.width, canvas.height);
         return;
       }
@@ -143,17 +143,17 @@ export const RoomObstacleArt: FC<{
 
         // Initially start right at the entity's position
         let startRow = entityRow * TILE_SIZE;
-        let endRow = startRow + TILE_SIZE;
+        const endRow = startRow + TILE_SIZE;
 
-        console.log('entityRender.style.width', entityRender.style.width);
-        console.log('entityRender.style.height', entityRender.style.height);
-        console.log('cutOffSize', cutOffHeight, cutOffWidth);
+        // console.log('entityRender.style.width', entityRender.style.width);
+        // console.log('entityRender.style.height', entityRender.style.height);
+        // console.log('cutOffSize', cutOffHeight, cutOffWidth);
 
         // If the entity is bigger than 1 tile (whats seen on screen, the entity render size is usually bigger due to padding),
         // adjust the starting position to start at the top left corner of the entity
         if (entityHeight >= cutOffHeight) {
           startRow -= TILE_SIZE;
-          endRow += TILE_SIZE;
+          // endRow += TILE_SIZE;
         }
 
         // Get the end row and column of the entity
