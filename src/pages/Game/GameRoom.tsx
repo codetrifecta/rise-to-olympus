@@ -165,20 +165,6 @@ export const GameRoom: FC = () => {
     handleFloorInitialization();
   }, [floor]);
 
-  // When selected campaign changes, check if the tutorial start room script is over.
-  // If it is, open the game log and minimap
-  useEffect(() => {
-    // Check if the starter script is over
-    if (
-      floor &&
-      floor.id === FLOOR_ID.TUTORIAL &&
-      selectedCampaign?.scriptsCompleted.tutorialStartRoom
-    ) {
-      setIsGameLogOpen(true);
-      setIsMinimapOpen(true);
-    }
-  }, [selectedCampaign, floor]);
-
   // When room changes, initialize game state according to the room specifications
   useEffect(() => {
     const handleRoomInitialization = () => {
@@ -277,7 +263,11 @@ export const GameRoom: FC = () => {
 
         setFirstRoomRender(false);
 
-        if (floor && floor.id !== FLOOR_ID.TARTARUS_CAMP) {
+        if (
+          floor &&
+          floor.id !== FLOOR_ID.TARTARUS_CAMP &&
+          floor.id !== FLOOR_ID.TUTORIAL
+        ) {
           setIsMinimapOpen(true);
         }
       }, 300);

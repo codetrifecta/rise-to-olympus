@@ -128,6 +128,9 @@ export const Game = () => {
         setCurrentScript(SCRIPT_TUTORIAL_START_ROOM);
         setIsGameLogOpen(false);
         setIsMinimapOpen(false);
+      } else {
+        setIsGameLogOpen(true);
+        setIsMinimapOpen(true);
       }
       setLogs(LOGS_TUTORIAL_START_ROOM);
       setSelectedCampaign(campaign);
@@ -174,6 +177,7 @@ export const Game = () => {
         'Selected campaign after tutorial is skipped:',
         newSelectedCampaign
       );
+      setIsGameLogOpen(true);
       setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
       setFloor(FLOOR_TARTARUS_CAMP);
       console.log('Skipping tutorial and going to camp');
