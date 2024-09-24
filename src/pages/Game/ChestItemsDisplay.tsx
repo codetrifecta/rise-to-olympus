@@ -153,12 +153,18 @@ export const ChestItemsDisplay: FC = () => {
       <div className="grid grid-rows-2 grid-cols-5 justify-center items-center h-full gap-2">
         {roomChestItems.map((item: Item) => {
           if (item.itemType === ITEM_TYPE.WEAPON) {
+            if (!player.equipment.weapon) {
+              console.error('No weapon equipped');
+              return null;
+            }
+
             const weapon = item as IWeapon;
             return (
               <WeaponCard
                 key={weapon.id}
                 weapon={weapon}
                 active={false}
+                playerWeapon={player.equipment.weapon}
                 onClick={() => {
                   handleSwitchItem(item, roomChestItems.indexOf(item));
                 }}
@@ -166,11 +172,27 @@ export const ChestItemsDisplay: FC = () => {
             );
           } else if (item.itemType === ITEM_TYPE.ARMOR) {
             const armor = item as IArmor;
+
+            let playerArmor = null;
+
+            switch (armor.armorPart) {
+              case ARMOR_PART.HELMET:
+                playerArmor = player.equipment.helmet;
+                break;
+              case ARMOR_PART.CHESTPIECE:
+                playerArmor = player.equipment.chestpiece;
+                break;
+              case ARMOR_PART.LEGGING:
+                playerArmor = player.equipment.legging;
+                break;
+            }
+
             return (
               <ArmorCard
                 key={armor.id}
                 armor={armor}
                 active={false}
+                playerArmor={playerArmor}
                 onClick={() => {
                   handleSwitchItem(item, roomChestItems.indexOf(item));
                 }}
@@ -206,14 +228,22 @@ export const ChestItemsDisplay: FC = () => {
 // const cardContainerClasses = 'relative flex gap-3 pb-5 p-3';
 // const cardClasses =
 //   'p-3 bg-zinc-700 border border-white min-w-[175px] cursor-pointer';
-const cardParagraphClasses = 'text-base';
+const cardParagraphClasses = 'text-md';
 const EQUIPMENT_ICON_SIZE = 50;
 
 const WeaponCard: FC<{
   weapon: IWeapon;
   active: boolean;
+  playerWeapon: IWeapon;
   onClick: () => void;
-}> = ({ weapon, active, onClick }) => {
+}> = ({ weapon, active, playerWeapon, onClick }) => {
+  const strengthDiff = weapon.stats.strength - playerWeapon.stats.strength;
+  const intelligenceDiff =
+    weapon.stats.intelligence - playerWeapon.stats.intelligence;
+  const defenseDiff = weapon.stats.defense - playerWeapon.stats.defense;
+  const constitutionDiff =
+    weapon.stats.constitution - playerWeapon.stats.constitution;
+
   return (
     <div className="relative">
       <IconButton onClick={onClick} disabled={active} active={active}>
@@ -224,25 +254,69 @@ const WeaponCard: FC<{
         />
       </IconButton>
       <Tooltip>
-        <h3>{weapon.name}</h3>
+        <h2>{weapon.name}</h2>
         {weapon.stats.strength > 0 && (
           <p className={clsx(cardParagraphClasses)}>
             Strength: {weapon.stats.strength}
+            {strengthDiff !== 0 ? (
+              strengthDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(strengthDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(strengthDiff)}
+                </span>
+              )
+            ) : null}
           </p>
         )}
         {weapon.stats.intelligence > 0 && (
           <p className={clsx(cardParagraphClasses)}>
             Intelligence: {weapon.stats.intelligence}
+            {intelligenceDiff !== 0 ? (
+              intelligenceDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(intelligenceDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(intelligenceDiff)}
+                </span>
+              )
+            ) : null}
           </p>
         )}
         {weapon.stats.defense > 0 && (
           <p className={clsx(cardParagraphClasses)}>
             Defense: {weapon.stats.defense}
+            {defenseDiff !== 0 ? (
+              defenseDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(defenseDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(defenseDiff)}
+                </span>
+              )
+            ) : null}
           </p>
         )}
         {weapon.stats.constitution > 0 && (
           <p className={clsx(cardParagraphClasses)}>
             Constitution: {weapon.stats.constitution}
+            {constitutionDiff !== 0 ? (
+              constitutionDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(constitutionDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(constitutionDiff)}
+                </span>
+              )
+            ) : null}
           </p>
         )}
         <p className={clsx(cardParagraphClasses)}>Range: {weapon.range}</p>
@@ -255,8 +329,25 @@ const WeaponCard: FC<{
 const ArmorCard: FC<{
   armor: IArmor;
   active: boolean;
+  playerArmor: IArmor | null;
   onClick?: () => void;
-}> = ({ armor, active, onClick }) => {
+}> = ({ armor, active, playerArmor, onClick }) => {
+  let strengthDiff = armor.stats.strength;
+  let intelligenceDiff = armor.stats.intelligence;
+  let defenseDiff = armor.stats.defense;
+  let constitutionDiff = armor.stats.constitution;
+
+  if (playerArmor) {
+    strengthDiff = armor.stats.strength - playerArmor.stats.strength;
+    intelligenceDiff =
+      armor.stats.intelligence - playerArmor.stats.intelligence;
+    defenseDiff = armor.stats.defense - playerArmor.stats.defense;
+    constitutionDiff =
+      armor.stats.constitution - playerArmor.stats.constitution;
+  }
+
+  console.log('armor:', armor, playerArmor);
+
   return (
     <div className="relative">
       <IconButton onClick={onClick} disabled={active} active={active}>
@@ -267,25 +358,69 @@ const ArmorCard: FC<{
         />
       </IconButton>
       <Tooltip>
-        <h3>{armor.name}</h3>
+        <h2>{armor.name}</h2>
         {armor.stats.strength > 0 && (
           <p className={clsx(cardParagraphClasses)}>
             Strength: {armor.stats.strength}
+            {strengthDiff !== 0 ? (
+              strengthDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(strengthDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(strengthDiff)}
+                </span>
+              )
+            ) : null}
           </p>
         )}
         {armor.stats.intelligence > 0 && (
           <p className={clsx(cardParagraphClasses)}>
             Intelligence: {armor.stats.intelligence}
+            {intelligenceDiff !== 0 ? (
+              intelligenceDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(intelligenceDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(intelligenceDiff)}
+                </span>
+              )
+            ) : null}
           </p>
         )}
         {armor.stats.defense > 0 && (
           <p className={clsx(cardParagraphClasses)}>
             Defense: {armor.stats.defense}
+            {defenseDiff !== 0 ? (
+              defenseDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(defenseDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(defenseDiff)}
+                </span>
+              )
+            ) : null}
           </p>
         )}
         {armor.stats.constitution > 0 && (
           <p className={clsx(cardParagraphClasses)}>
             Constitution: {armor.stats.constitution}
+            {constitutionDiff !== 0 ? (
+              constitutionDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(constitutionDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(constitutionDiff)}
+                </span>
+              )
+            ) : null}
           </p>
         )}
       </Tooltip>
@@ -308,7 +443,7 @@ const ConsumableCard: FC<{
         />
       </IconButton>
       <Tooltip>
-        <h3>{consumable.name}</h3>
+        <h2>{consumable.name}</h2>
         <p>
           Potion to recover lost health points. Heals a % of maximum health.
         </p>
