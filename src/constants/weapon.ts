@@ -8,12 +8,159 @@ export enum WEAPON_ATTACK_TYPE {
 }
 
 export enum WEAPON_TYPE {
-  ONE_HANDED = 'one-handed',
-  TWO_HANDED = 'two-handed',
+  FIST = 'fist',
+  BROADSWORD = 'broadsword',
+  KATANA = 'katana',
+  GREATSWORD = 'greatsword',
+  POLEARM = 'polearm',
   BOW = 'bow',
   WAND = 'wand',
   STAFF = 'staff',
 }
+
+export const BASE_FIST: IWeapon = {
+  id: 1,
+  name: 'Fists',
+  icon: ICON_ID.WEAPON_FIST,
+  attackType: WEAPON_ATTACK_TYPE.MELEE,
+  type: WEAPON_TYPE.FIST,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.6,
+  stats: {
+    strength: 5,
+    intelligence: 5,
+    defense: 0,
+    constitution: 0,
+  },
+  range: 1,
+  cost: 1,
+};
+
+export const BASE_BROADSWORD: IWeapon = {
+  ...BASE_FIST,
+  name: 'Broadsword',
+  icon: ICON_ID.WEAPON_SWORD,
+  attackType: WEAPON_ATTACK_TYPE.MELEE,
+  type: WEAPON_TYPE.BROADSWORD,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.6,
+  stats: {
+    strength: 6,
+    intelligence: 1,
+    defense: 10,
+    constitution: 0,
+  },
+  range: 1,
+  cost: 1,
+};
+
+export const BASE_KATANA: IWeapon = {
+  ...BASE_FIST,
+  name: 'Katana',
+  icon: ICON_ID.WEAPON_KATANA,
+  attackType: WEAPON_ATTACK_TYPE.MELEE,
+  type: WEAPON_TYPE.KATANA,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.6,
+  stats: {
+    strength: 8,
+    intelligence: 1,
+    defense: 1,
+    constitution: 0,
+  },
+  range: 1,
+  cost: 1,
+};
+
+export const BASE_GREATSWORD: IWeapon = {
+  ...BASE_FIST,
+  name: 'Greatsword',
+  icon: ICON_ID.WEAPON_GREATSWORD,
+  attackType: WEAPON_ATTACK_TYPE.MELEE,
+  type: WEAPON_TYPE.GREATSWORD,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.6,
+  stats: {
+    strength: 9,
+    intelligence: 1,
+    defense: 20,
+    constitution: 0,
+  },
+  range: 2,
+  cost: 2,
+};
+
+export const BASE_GLAIVE: IWeapon = {
+  ...BASE_FIST,
+  name: 'Glaive',
+  icon: ICON_ID.WEAPON_GLAIVE,
+  attackType: WEAPON_ATTACK_TYPE.MELEE,
+  type: WEAPON_TYPE.POLEARM,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.6,
+  stats: {
+    strength: 12,
+    intelligence: 1,
+    defense: 2,
+    constitution: 0,
+  },
+  range: 2,
+  cost: 2,
+};
+
+export const BASE_MAGIC_WAND: IWeapon = {
+  ...BASE_FIST,
+  name: 'Magic Wand',
+  icon: ICON_ID.WEAPON_MAGIC_WAND,
+  attackType: WEAPON_ATTACK_TYPE.RANGED,
+  type: WEAPON_TYPE.WAND,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.4,
+  stats: {
+    strength: 1,
+    intelligence: 5,
+    defense: 0,
+    constitution: 0,
+  },
+  range: 4,
+  cost: 1,
+};
+
+export const BASE_MAGIC_STAFF: IWeapon = {
+  ...BASE_FIST,
+  name: 'Magic Staff',
+  icon: ICON_ID.WEAPON_MAGIC_STAFF,
+  attackType: WEAPON_ATTACK_TYPE.RANGED,
+  type: WEAPON_TYPE.STAFF,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.3,
+  stats: {
+    strength: 1,
+    intelligence: 8,
+    defense: 2,
+    constitution: 0,
+  },
+  range: 6,
+  cost: 2,
+};
+
+export const BASE_MELEE_WEAPONS: IWeapon[] = [
+  { ...BASE_FIST },
+  { ...BASE_BROADSWORD },
+  { ...BASE_KATANA },
+  { ...BASE_GREATSWORD },
+  { ...BASE_GLAIVE },
+];
+
+export const BASE_RANGED_WEAPONS: IWeapon[] = [
+  { ...BASE_MAGIC_WAND },
+  { ...BASE_MAGIC_STAFF },
+];
+
+export const BASE_WEAPONS: IWeapon[] = [
+  ...BASE_MELEE_WEAPONS,
+  ...BASE_RANGED_WEAPONS,
+];
 
 export const WEAPONS: IWeapon[] = [
   {
@@ -21,7 +168,7 @@ export const WEAPONS: IWeapon[] = [
     name: 'Fists',
     icon: ICON_ID.WEAPON_FIST,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
-    type: WEAPON_TYPE.ONE_HANDED,
+    type: WEAPON_TYPE.FIST,
     itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.6,
     stats: {
@@ -38,7 +185,7 @@ export const WEAPONS: IWeapon[] = [
     name: 'Sword',
     icon: ICON_ID.WEAPON_SWORD,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
-    type: WEAPON_TYPE.ONE_HANDED,
+    type: WEAPON_TYPE.BROADSWORD,
     itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.6,
     stats: {
@@ -55,7 +202,7 @@ export const WEAPONS: IWeapon[] = [
     name: 'Katana',
     icon: ICON_ID.WEAPON_KATANA,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
-    type: WEAPON_TYPE.ONE_HANDED,
+    type: WEAPON_TYPE.KATANA,
     itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 0.6,
     stats: {
@@ -72,7 +219,7 @@ export const WEAPONS: IWeapon[] = [
     name: 'Greatsword',
     icon: ICON_ID.WEAPON_GREATSWORD,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
-    type: WEAPON_TYPE.TWO_HANDED,
+    type: WEAPON_TYPE.GREATSWORD,
     itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 1,
     stats: {
@@ -89,7 +236,7 @@ export const WEAPONS: IWeapon[] = [
     name: 'Glaive',
     icon: ICON_ID.WEAPON_GLAIVE,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
-    type: WEAPON_TYPE.TWO_HANDED,
+    type: WEAPON_TYPE.POLEARM,
     itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 1,
     stats: {
@@ -157,7 +304,7 @@ export const WEAPONS: IWeapon[] = [
     name: 'Test Sword',
     icon: ICON_ID.WEAPON_GREATSWORD,
     attackType: WEAPON_ATTACK_TYPE.MELEE,
-    type: WEAPON_TYPE.TWO_HANDED,
+    type: WEAPON_TYPE.GREATSWORD,
     itemType: ITEM_TYPE.WEAPON,
     damageMultiplier: 1,
     stats: {

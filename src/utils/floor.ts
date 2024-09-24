@@ -5,8 +5,9 @@ import {
   ROOM_TYPE,
   ROOMS_TARTARUS_COMMON,
 } from '../constants/room';
-import { IRoom } from '../types';
+import { IRoom, Item } from '../types';
 import { scaleEnemy } from './entity';
+import { getScaledItems } from './item';
 
 /**
  * Convert a floor to a string array representation.
@@ -746,7 +747,10 @@ export const getPathsFromStart = (
   return path_dict;
 };
 
-export const generateFloorRooms = (): IRoom[][] => {
+export const generateFloorRoomsAndChestItems = (): [
+  IRoom[][],
+  Map<string, Item[]>,
+] => {
   const floorPlan = generateFloorPlan(true);
   const connectedFloor = connectAdjacentRooms(floorPlan);
 
@@ -764,13 +768,8 @@ export const generateFloorRooms = (): IRoom[][] => {
 
   // Assign rooms to the floor
   let id = 0;
-  // const commonBossDifficulty = connectedFloor
-  //   .flat()
-  //   .filter(
-  //     (room) => room.type === ROOM_TYPE.BOSS || room.type === ROOM_TYPE.COMMON
-  //   ).length;
-
-  // Boss position
+  let itemId = 0;
+  // Start position
   let startPosition: [number, number] = [0, 0];
   for (let r = 0; r < connectedFloor.length; r++) {
     for (let c = 0; c < connectedFloor[r].length; c++) {
@@ -782,6 +781,8 @@ export const generateFloorRooms = (): IRoom[][] => {
   }
 
   const pathsFromStart = getPathsFromStart(connectedFloor, startPosition);
+
+  const roomChestItems = new Map<string, Item[]>();
 
   const filledFloor = connectedFloor.map((row, r) =>
     row.map((room, c) => {
@@ -797,6 +798,13 @@ export const generateFloorRooms = (): IRoom[][] => {
           eastDoor: room.eastDoor,
           westDoor: room.westDoor,
         };
+
+        const newItems = getScaledItems(0).map((item) => {
+          return { ...item, id: itemId++ };
+        });
+
+        roomChestItems.set(`${r},${c}`, newItems);
+
         return startRoom;
       } else if (room.type === ROOM_TYPE.COMMON) {
         const roomFromQueue = roomsQueue.shift();
@@ -819,6 +827,12 @@ export const generateFloorRooms = (): IRoom[][] => {
             id: enemy.id,
           };
         });
+
+        const newItems = getScaledItems(roomDifficulty).map((item) => {
+          return { ...item, id: itemId++ };
+        });
+
+        roomChestItems.set(`${r},${c}`, newItems);
 
         return {
           ...room,
@@ -843,6 +857,12 @@ export const generateFloorRooms = (): IRoom[][] => {
         const scaledEnemies = ROOM_TARTARUS_BOSS.enemies.map((enemy) => {
           return scaleEnemy(enemy.presetID, roomDifficulty);
         });
+
+        const newItems = getScaledItems(roomDifficulty).map((item) => {
+          return { ...item, id: itemId++ };
+        });
+
+        roomChestItems.set(`${r},${c}`, newItems);
 
         return {
           ...room,
@@ -871,5 +891,5 @@ export const generateFloorRooms = (): IRoom[][] => {
     })
   );
 
-  return filledFloor;
+  return [filledFloor, roomChestItems];
 };

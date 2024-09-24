@@ -67,7 +67,7 @@ import { useFloorStore } from '../../stores/floor';
 import { sleep } from '../../utils/general';
 import { ROOM_TYPE } from '../../constants/room';
 import { BASE_FLOOR, FLOOR_ID } from '../../constants/floor';
-import { generateFloorRooms } from '../../utils/floor';
+import { generateFloorRoomsAndChestItems } from '../../utils/floor';
 
 export const RoomLogic: FC<{
   currentHoveredEntity: IEntity | null;
@@ -119,7 +119,8 @@ export const RoomLogic: FC<{
   const { enemies, setEnemies, setEnemy } = useEnemyStore();
   const { summons } = useSummonStore();
 
-  const { floor, currentRoom, setFloor, setCurrentRoom } = useFloorStore();
+  const { floor, currentRoom, setFloor, setCurrentRoom, setFloorChestItems } =
+    useFloorStore();
 
   const { addLog } = useLogStore();
 
@@ -1375,7 +1376,7 @@ export const RoomLogic: FC<{
               [newPlayerPosition[0], newPlayerPosition[1]]
             );
           } else if (floor.id === FLOOR_ID.TARTARUS_CAMP) {
-            const newRooms = generateFloorRooms();
+            const [newRooms, chestItems] = generateFloorRoomsAndChestItems();
 
             // Ensure that the start room exists in the new floor
             let startRoom = null;
@@ -1410,6 +1411,7 @@ export const RoomLogic: FC<{
 
             console.log('go to new floor', newFloor);
             setFloor(newFloor);
+            setFloorChestItems(chestItems);
           }
         }
       }
