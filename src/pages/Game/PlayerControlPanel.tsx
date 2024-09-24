@@ -28,14 +28,14 @@ export const PlayerControlPanel: FC = () => {
     endTurn,
     isRoomOver,
     isGameOver,
-    isInventoryOpen,
+    // isInventoryOpen,
     isGameLogOpen,
     isCharacterSheetOpen,
     isGenerateRoomOpen,
     isCompendiumOpen,
     isMinimapOpen,
     setIsCharacterSheetOpen,
-    setIsInventoryOpen,
+    // setIsInventoryOpen,
     setIsGameLogOpen,
     setIsGenerateRoomOpen,
     setIsCompendiumOpen,
@@ -274,7 +274,7 @@ export const PlayerControlPanel: FC = () => {
                   <p>Character Sheet (C)</p>
                 </Tooltip>
               </div>
-              <div className="relative">
+              {/* <div className="relative">
                 <IconButton
                   onClick={() => {
                     if (isGenerateRoomOpen) return;
@@ -290,7 +290,7 @@ export const PlayerControlPanel: FC = () => {
                 <Tooltip>
                   <p>Inventory (I)</p>
                 </Tooltip>
-              </div>
+              </div> */}
               <div className="relative">
                 <IconButton
                   onClick={() => {

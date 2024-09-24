@@ -10,7 +10,7 @@ import { usePlayerStore } from '../../stores/player';
 import { useEnemyStore } from '../../stores/enemy';
 import { Logger } from './Logger';
 import clsx from 'clsx';
-import { InventoryChooser } from './InventoryChooser';
+// import { InventoryChooser } from './InventoryChooser';
 import { CharacterSheet } from './CharacterSheet';
 import { GenerateRoomModal } from './GenerateRoomModal';
 import { PLAYER_CONTROL_PANEL_HEIGHT } from '../../constants/game';
@@ -636,8 +636,8 @@ export const GameRoom: FC = () => {
           <Compendium />
         </section>
 
-        {/* Inventory Chooser */}
-        <section
+        {/* Inventory Chooser (FOR DEBUGGING) */}
+        {/* <section
           className="fixed z-[51] top-0 w-[400px] shadow-lg transition-all ease duration-300 delay-0"
           style={{
             height: `calc(100vh - ${PLAYER_CONTROL_PANEL_HEIGHT}px)`,
@@ -647,7 +647,7 @@ export const GameRoom: FC = () => {
         >
           <InventoryChooser />
           <div></div>
-        </section>
+        </section> */}
 
         {/* Minimap */}
         <section
