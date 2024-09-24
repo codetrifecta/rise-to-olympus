@@ -243,6 +243,8 @@ const WeaponCard: FC<{
   const defenseDiff = weapon.stats.defense - playerWeapon.stats.defense;
   const constitutionDiff =
     weapon.stats.constitution - playerWeapon.stats.constitution;
+  const rangeDiff = weapon.range - playerWeapon.range;
+  const costDiff = weapon.cost - playerWeapon.cost;
 
   return (
     <div className="relative">
@@ -319,8 +321,28 @@ const WeaponCard: FC<{
             ) : null}
           </p>
         )}
-        <p className={clsx(cardParagraphClasses)}>Range: {weapon.range}</p>
-        <p className={clsx(cardParagraphClasses)}>Cost: {weapon.cost} AP</p>
+        <p className={clsx(cardParagraphClasses)}>
+          Range: {weapon.range}
+          {rangeDiff !== 0 ? (
+            rangeDiff > 0 ? (
+              <span className="text-green-600 ml-2">
+                +{Math.abs(rangeDiff)}
+              </span>
+            ) : (
+              <span className="text-red-600 ml-2">-{Math.abs(rangeDiff)}</span>
+            )
+          ) : null}
+        </p>
+        <p className={clsx(cardParagraphClasses)}>
+          Cost: {weapon.cost} AP
+          {costDiff !== 0 ? (
+            costDiff > 0 ? (
+              <span className="text-red-600 ml-2">-{Math.abs(costDiff)}</span>
+            ) : (
+              <span className="text-green-600 ml-2">+{Math.abs(costDiff)}</span>
+            )
+          ) : null}
+        </p>
       </Tooltip>
     </div>
   );
