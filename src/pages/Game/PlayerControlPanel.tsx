@@ -34,6 +34,7 @@ export const PlayerControlPanel: FC = () => {
     isGenerateRoomOpen,
     isCompendiumOpen,
     isMinimapOpen,
+    isEntityMoving,
     setIsCharacterSheetOpen,
     // setIsInventoryOpen,
     setIsGameLogOpen,
@@ -132,9 +133,10 @@ export const PlayerControlPanel: FC = () => {
     return (
       (turnCycle[0] !== null &&
         turnCycle[0].entityType !== ENTITY_TYPE.PLAYER) ||
-      isGameOver
+      isGameOver ||
+      isEntityMoving
     );
-  }, [isGameOver, turnCycle]);
+  }, [isGameOver, turnCycle, isEntityMoving]);
 
   return (
     <div
@@ -381,7 +383,7 @@ export const PlayerControlPanel: FC = () => {
                 </IconButton>
                 <Tooltip>
                   <h2>Move</h2>
-                  <p>Move within a range of 2 tiles.</p>
+                  <p>Move within a range of {player.movementRange} tiles.</p>
                   <p>Cost: 1 AP</p>
                   <p></p>
                 </Tooltip>

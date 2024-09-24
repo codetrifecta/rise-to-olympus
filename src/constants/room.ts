@@ -556,7 +556,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       },
       {
         ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
-        id: 3,
+        id: 4,
       },
     ],
     roomEntityPositions: new Map([

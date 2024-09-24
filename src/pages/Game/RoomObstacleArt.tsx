@@ -179,7 +179,7 @@ export const RoomObstacleArt: FC<{
               data[index + 1] !== 0 &&
               data[index + 2] !== 0
             ) {
-              data[index + 3] = 128; // Set alpha to 50% (128 out of 255)
+              data[index + 3] = 100; // Set alpha to 39% (100 out of 255)
             }
           }
         }
@@ -222,7 +222,7 @@ export const RoomObstacleArt: FC<{
                 data[index + 1] !== 0 &&
                 data[index + 2] !== 0
               ) {
-                data[index + 3] = 128; // Set alpha to 50% (128 out of 255)
+                data[index + 3] = 69; // Set alpha to 27% (69 out of 255)
               }
             }
           }

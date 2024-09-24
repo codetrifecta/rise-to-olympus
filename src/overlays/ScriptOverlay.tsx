@@ -10,6 +10,7 @@ import {
 import { useCampaignStore } from '../stores/campaign';
 import clsx from 'clsx';
 import { useScriptStore } from '../stores/script';
+import { useGameStateStore } from '../stores/game';
 
 export const ScriptOverlay: FC = () => {
   const {
@@ -21,6 +22,8 @@ export const ScriptOverlay: FC = () => {
 
   const { campaigns, selectedCampaign, setSelectedCampaign, setCampaigns } =
     useCampaignStore();
+
+  const { setIsGameLogOpen, setIsMinimapOpen } = useGameStateStore();
 
   useEffect(() => {
     if (currentScript === null || currentScript.length === 0) return;
@@ -45,6 +48,8 @@ export const ScriptOverlay: FC = () => {
           tutorialStartRoom: true,
         },
       };
+      setIsGameLogOpen(true);
+      setIsMinimapOpen(true);
     } else if (currentScript[0].parent === SCRIPT_PARENT.TUTORIAL) {
       editedCampaign = {
         ...editedCampaign,

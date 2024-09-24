@@ -8,6 +8,7 @@ import { useFloorStore } from '../../stores/floor';
 const TILE_HIGHLIGHT_PADDING = 12;
 
 export const Tile: FC<{
+  id: string;
   rowIndex: number;
   colIndex: number;
   tileType: number;
@@ -23,6 +24,7 @@ export const Tile: FC<{
   onMouseLeave: () => void;
   classNames?: string;
 }> = ({
+  id,
   tileType,
   entityIfExist,
   // playerState,
@@ -61,6 +63,8 @@ export const Tile: FC<{
       }
 
       idString += entityIfExist[1];
+    } else {
+      return id;
     }
 
     return idString;
