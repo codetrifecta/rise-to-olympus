@@ -1,6 +1,5 @@
 import {
   ENTITY_TYPE,
-  MAX_ACTION_POINTS,
   SUMMON_PRESET_ID,
   SUMMON_PRESETS,
 } from '../constants/entity';
@@ -469,10 +468,7 @@ const handleSkillDamage = (
       if (newEnemy.health <= 0) {
         // For Execute skill, player gains 4 AP if enemy is defeated
         if ([SKILL_ID.EXECUTE].includes(skill.id)) {
-          playerAfterDamage.actionPoints = Math.min(
-            playerAfterDamage.actionPoints + 4,
-            MAX_ACTION_POINTS
-          );
+          playerAfterDamage.actionPoints = playerAfterDamage.actionPoints + 4;
         }
 
         // enemiesAfterDamage.splice(enemyIndex, 1);

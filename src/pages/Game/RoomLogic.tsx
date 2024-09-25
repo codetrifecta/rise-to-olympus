@@ -973,7 +973,10 @@ export const RoomLogic: FC<{
               isUsingSkill: false,
               skillId: null,
             },
-            actionPoints: newPlayer.actionPoints - skill.cost,
+            actionPoints: Math.min(
+              newPlayer.actionPoints - skill.cost,
+              MAX_ACTION_POINTS
+            ),
             skills: newPlayer.skills.map((s) =>
               s.id === skill.id ? { ...s, cooldownCounter: s.cooldown } : s
             ),
