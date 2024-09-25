@@ -4,7 +4,7 @@
 <p align="center">Tactical Turn-Based Roguelike Web Game based on Greek Mythology</p>
 
 <p align="center">View Demo:
-<a href="rise-to-olympus.netlify.app/">rise-to-olympus.netlify.app</a>
+<a href="https://rise-to-olympus.netlify.app/">rise-to-olympus.netlify.app</a>
 </p>
 
 <p align="center">
