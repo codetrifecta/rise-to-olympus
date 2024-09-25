@@ -322,6 +322,30 @@ export const PlayerControlPanel: FC = () => {
                 <IconButton
                   onClick={() => {
                     setPlayerState({
+                      isAttacking: false,
+                      isMoving: !player.state.isMoving,
+                      isUsingSkill: false,
+                    });
+                  }}
+                  disabled={disabled || isRoomOver}
+                >
+                  <Icon
+                    icon={ICON_ID.MOVE}
+                    width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+                    height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+                  />
+                </IconButton>
+                <Tooltip>
+                  <h2>Move</h2>
+                  <p>Move within a range of {player.movementRange} tiles.</p>
+                  <p>Cost: 1 AP</p>
+                  <p></p>
+                </Tooltip>
+              </div>
+              <div className="relative">
+                <IconButton
+                  onClick={() => {
+                    setPlayerState({
                       isAttacking: !player.state.isAttacking,
                       isMoving: false,
                       isUsingSkill: false,
@@ -365,32 +389,6 @@ export const PlayerControlPanel: FC = () => {
                   )}
                 </Tooltip>
               </div>
-
-              <div className="relative">
-                <IconButton
-                  onClick={() => {
-                    setPlayerState({
-                      isAttacking: false,
-                      isMoving: !player.state.isMoving,
-                      isUsingSkill: false,
-                    });
-                  }}
-                  disabled={disabled || isRoomOver}
-                >
-                  <Icon
-                    icon={ICON_ID.MOVE}
-                    width={PLAYER_CONTROL_PANEL_ICON_SIZE}
-                    height={PLAYER_CONTROL_PANEL_ICON_SIZE}
-                  />
-                </IconButton>
-                <Tooltip>
-                  <h2>Move</h2>
-                  <p>Move within a range of {player.movementRange} tiles.</p>
-                  <p>Cost: 1 AP</p>
-                  <p></p>
-                </Tooltip>
-              </div>
-
               <div className="relative">
                 <IconButton
                   onClick={() => {
