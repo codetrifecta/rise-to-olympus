@@ -211,7 +211,10 @@ export const RoomLogic: FC<{
         setIsRoomOver(true);
 
         // Display message on chest to indicate that it can be opened
-        if (floor.id !== FLOOR_ID.TARTARUS_CAMP) {
+        if (
+          floor.id !== FLOOR_ID.TARTARUS_CAMP &&
+          currentRoom.type !== ROOM_TYPE.START
+        ) {
           displayGeneralMessage(
             `tile_${player.entityType}_${player.id}`,
             'Chest Unlocked!'
@@ -291,6 +294,18 @@ export const RoomLogic: FC<{
         };
 
         setPlayer(newPlayer);
+
+        if (
+          floor.id !== FLOOR_ID.TARTARUS_CAMP &&
+          currentRoom.type !== ROOM_TYPE.START
+        ) {
+          addLog({
+            message: (
+              <span className="text-green-500">Player cleared the room!</span>
+            ),
+            type: 'info',
+          });
+        }
       }
     };
 
@@ -301,21 +316,21 @@ export const RoomLogic: FC<{
   }, [enemies.length]);
 
   // When room is cleared, log a message and reset player's action points
-  useEffect(() => {
-    if (
-      currentRoom &&
-      currentRoom.enemies.length > 0 &&
-      enemies.length === 0 &&
-      currentRoom.isCleared
-    ) {
-      addLog({
-        message: (
-          <span className="text-green-500">Player cleared the room!</span>
-        ),
-        type: 'info',
-      });
-    }
-  }, [currentRoom, player]);
+  // useEffect(() => {
+  //   if (
+  //     currentRoom &&
+  //     currentRoom.enemies.length > 0 &&
+  //     enemies.length === 0 &&
+  //     currentRoom.isCleared
+  //   ) {
+  //     addLog({
+  //       message: (
+  //         <span className="text-green-500">Player cleared the room!</span>
+  //       ),
+  //       type: 'info',
+  //     });
+  //   }
+  // }, [currentRoom, player]);
 
   // When player's action points reach 0 and there are still enemies in the room (room is not over),
   // Automatically end player's turn
