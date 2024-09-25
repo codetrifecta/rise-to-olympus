@@ -567,8 +567,6 @@ export const GameRoom: FC = () => {
         <section
           className={clsx('relative max-w-screen max-h-screen', {
             'pointer-events-none':
-              isInventoryOpen ||
-              isCharacterSheetOpen ||
               isCompendiumOpen ||
               !selectedCampaign?.scriptsCompleted.tutorialStartRoom,
           })}

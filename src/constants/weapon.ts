@@ -45,7 +45,7 @@ export const BASE_BROADSWORD: IWeapon = {
   itemType: ITEM_TYPE.WEAPON,
   damageMultiplier: 0.6,
   stats: {
-    strength: 6,
+    strength: 8,
     intelligence: 1,
     defense: 10,
     constitution: 0,
@@ -63,9 +63,9 @@ export const BASE_KATANA: IWeapon = {
   itemType: ITEM_TYPE.WEAPON,
   damageMultiplier: 0.6,
   stats: {
-    strength: 8,
+    strength: 10,
     intelligence: 1,
-    defense: 3,
+    defense: 2,
     constitution: 0,
   },
   range: 1,
@@ -79,9 +79,9 @@ export const BASE_GREATSWORD: IWeapon = {
   attackType: WEAPON_ATTACK_TYPE.MELEE,
   type: WEAPON_TYPE.GREATSWORD,
   itemType: ITEM_TYPE.WEAPON,
-  damageMultiplier: 0.6,
+  damageMultiplier: 0.8,
   stats: {
-    strength: 9,
+    strength: 6,
     intelligence: 1,
     defense: 20,
     constitution: 0,
@@ -97,15 +97,33 @@ export const BASE_GLAIVE: IWeapon = {
   attackType: WEAPON_ATTACK_TYPE.MELEE,
   type: WEAPON_TYPE.POLEARM,
   itemType: ITEM_TYPE.WEAPON,
-  damageMultiplier: 0.6,
+  damageMultiplier: 0.8,
   stats: {
-    strength: 11,
+    strength: 10,
     intelligence: 1,
-    defense: 6,
+    defense: 2,
     constitution: 0,
   },
   range: 2,
   cost: 2,
+};
+
+export const BASE_SCEPTRE: IWeapon = {
+  ...BASE_FIST,
+  name: 'Sceptre',
+  icon: ICON_ID.WEAPON_SCEPTRE,
+  attackType: WEAPON_ATTACK_TYPE.MELEE,
+  type: WEAPON_TYPE.WAND,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.6,
+  stats: {
+    strength: 7,
+    intelligence: 7,
+    defense: 2,
+    constitution: 0,
+  },
+  range: 1,
+  cost: 1,
 };
 
 export const BASE_MAGIC_WAND: IWeapon = {
@@ -118,31 +136,85 @@ export const BASE_MAGIC_WAND: IWeapon = {
   damageMultiplier: 0.4,
   stats: {
     strength: 1,
-    intelligence: 5,
-    defense: 0,
+    intelligence: 9,
+    defense: 5,
     constitution: 0,
   },
   range: 4,
   cost: 1,
 };
 
-export const BASE_MAGIC_STAFF: IWeapon = {
+export const BASE_FIRE_STAFF: IWeapon = {
   ...BASE_FIST,
-  name: 'Magic Staff',
-  icon: ICON_ID.WEAPON_MAGIC_STAFF,
+  name: 'Fire Staff',
+  icon: ICON_ID.WEAPON_FIRE_STAFF,
   attackType: WEAPON_ATTACK_TYPE.RANGED,
   type: WEAPON_TYPE.STAFF,
   itemType: ITEM_TYPE.WEAPON,
   damageMultiplier: 0.3,
   stats: {
     strength: 1,
-    intelligence: 8,
-    defense: 2,
+    intelligence: 10,
+    defense: 1,
     constitution: 0,
   },
-  range: 7,
+  range: 8,
   cost: 2,
 };
+
+export const BASE_ICE_STAFF: IWeapon = {
+  ...BASE_FIST,
+  name: 'Ice Staff',
+  icon: ICON_ID.WEAPON_ICE_STAFF,
+  attackType: WEAPON_ATTACK_TYPE.RANGED,
+  type: WEAPON_TYPE.STAFF,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.3,
+  stats: {
+    strength: 1,
+    intelligence: 6,
+    defense: 20,
+    constitution: 0,
+  },
+  range: 8,
+  cost: 2,
+};
+
+export const BASE_EARTH_STAFF: IWeapon = {
+  ...BASE_FIST,
+  name: 'Earth Staff',
+  icon: ICON_ID.WEAPON_EARTH_STAFF,
+  attackType: WEAPON_ATTACK_TYPE.RANGED,
+  type: WEAPON_TYPE.STAFF,
+  itemType: ITEM_TYPE.WEAPON,
+  damageMultiplier: 0.3,
+  stats: {
+    strength: 1,
+    intelligence: 5,
+    defense: 10,
+    constitution: 10,
+  },
+  range: 8,
+  cost: 2,
+};
+
+// export const BASE_MAGIC_STAFF: IWeapon = {
+//   ...BASE_FIST,
+//   name: 'Magic Staff',
+//   icon: ICON_ID.WEAPON_MAGIC_STAFF,
+//   attackType: WEAPON_ATTACK_TYPE.RANGED,
+//   type: WEAPON_TYPE.STAFF,
+//   itemType: ITEM_TYPE.WEAPON,
+//   damageMultiplier: 0.3,
+//   stats: {
+//     strength: 1,
+//     intelligence: 11,
+//     defense: 2,
+//     constitution: 0,
+//   },
+//   range: 8,
+//   cost: 2,
+// };
 
 export const BASE_MELEE_WEAPONS: IWeapon[] = [
   { ...BASE_FIST },
@@ -150,11 +222,15 @@ export const BASE_MELEE_WEAPONS: IWeapon[] = [
   { ...BASE_KATANA },
   { ...BASE_GREATSWORD },
   { ...BASE_GLAIVE },
+  { ...BASE_SCEPTRE },
 ];
 
 export const BASE_RANGED_WEAPONS: IWeapon[] = [
   { ...BASE_MAGIC_WAND },
-  { ...BASE_MAGIC_STAFF },
+  // { ...BASE_MAGIC_STAFF },
+  { ...BASE_FIRE_STAFF },
+  { ...BASE_ICE_STAFF },
+  { ...BASE_EARTH_STAFF },
 ];
 
 export const BASE_WEAPONS: IWeapon[] = [

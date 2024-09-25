@@ -31,7 +31,16 @@ export const Game = () => {
   const { player, setPlayer } = usePlayerStore();
   const { setLogs } = useLogStore();
   const { setFloor, setFloorChestItems } = useFloorStore();
-  const { setIsMinimapOpen, setIsGameLogOpen } = useGameStateStore();
+  const {
+    isCompendiumOpen,
+    isCharacterSheetOpen,
+    isChestOpen,
+    setIsMinimapOpen,
+    setIsGameLogOpen,
+    setIsCompendiumOpen,
+    setIsCharacterSheetOpen,
+    setIsChestOpen,
+  } = useGameStateStore();
 
   const [escModalOpen, setEscModalOpen] = useState(false);
 
@@ -39,7 +48,16 @@ export const Game = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setEscModalOpen(!escModalOpen);
+        if (isCompendiumOpen) {
+          setIsCompendiumOpen(false);
+        } else if (isCharacterSheetOpen) {
+          setIsCharacterSheetOpen(false);
+        } else if (isChestOpen) {
+          setIsChestOpen(false);
+          setIsCharacterSheetOpen(false);
+        } else {
+          setEscModalOpen(!escModalOpen);
+        }
       }
     };
 
@@ -48,7 +66,7 @@ export const Game = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [escModalOpen]);
+  }, [escModalOpen, isCompendiumOpen, isCharacterSheetOpen, isChestOpen]);
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
