@@ -4,13 +4,13 @@ import { FC } from 'react';
 import { useFloorStore } from '../stores/floor';
 import { useGameStateStore } from '../stores/game';
 import { usePlayerStore } from '../stores/player';
-import { FLOOR_TARTARUS_CAMP } from '../constants/floor';
+import { FLOOR_ID, FLOOR_TARTARUS_CAMP } from '../constants/floor';
 
 export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
   onClose,
 }) => {
   const navigate = useNavigate();
-  const { setFloor, resetFloorStore } = useFloorStore();
+  const { floor, setFloor, resetFloorStore } = useFloorStore();
   const { resetGameState } = useGameStateStore();
   const { resetPlayerStore } = usePlayerStore();
 
@@ -35,16 +35,19 @@ export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
         >
           Back to Game
         </Button>
-        <Button
-          className="mb-5"
-          onClick={() => {
-            reset();
-            setFloor(FLOOR_TARTARUS_CAMP);
-            onClose();
-          }}
-        >
-          Back to Camp
-        </Button>
+        {floor?.id !== FLOOR_ID.TARTARUS_CAMP ? (
+          <Button
+            className="mb-5"
+            onClick={() => {
+              reset();
+              setFloor(FLOOR_TARTARUS_CAMP);
+              onClose();
+            }}
+          >
+            Back to Camp
+          </Button>
+        ) : null}
+
         <Button
           onClick={() => {
             reset();
