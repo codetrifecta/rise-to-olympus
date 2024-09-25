@@ -31,7 +31,7 @@ export const BASE_CAMPAIGN: ICampaign = {
   },
   checkpoint: CHECKPOINT.TUTORIAL,
   unlockedSkillIDs: [SKILL_ID.CLEAVE, SKILL_ID.FIREBALL, SKILL_ID.FLY],
-  divinity: 500,
+  divinity: 100,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 } as const;
