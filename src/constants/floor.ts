@@ -27,11 +27,14 @@ import {
 } from './armor';
 import {
   BASE_BROADSWORD,
-  BASE_GLAIVE,
-  BASE_GREATSWORD,
   BASE_KATANA,
-  BASE_MAGIC_STAFF,
+  BASE_GREATSWORD,
+  BASE_GLAIVE,
+  BASE_SCEPTRE,
   BASE_MAGIC_WAND,
+  BASE_FIRE_STAFF,
+  BASE_ICE_STAFF,
+  BASE_EARTH_STAFF,
 } from './weapon';
 
 export const DEFAULT_CHEST_ITEM_COUNT = 10;
@@ -355,6 +358,18 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
         icon: ICON_ID.HEALTH_POTION,
         itemType: ITEM_TYPE.CONSUMABLE,
       },
+      {
+        id: id++,
+        name: 'Health Potion',
+        icon: ICON_ID.HEALTH_POTION,
+        itemType: ITEM_TYPE.CONSUMABLE,
+      },
+      {
+        id: id++,
+        name: 'Health Potion',
+        icon: ICON_ID.HEALTH_POTION,
+        itemType: ITEM_TYPE.CONSUMABLE,
+      },
     ],
   ],
   [
@@ -377,19 +392,25 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
         id: id++,
       } as IWeapon,
       {
+        ...BASE_SCEPTRE,
+        id: id++,
+      } as IWeapon,
+      {
         ...BASE_MAGIC_WAND,
         id: id++,
       } as IWeapon,
       {
-        ...BASE_MAGIC_STAFF,
+        ...BASE_FIRE_STAFF,
         id: id++,
       } as IWeapon,
       {
+        ...BASE_ICE_STAFF,
         id: id++,
-        name: 'Health Potion',
-        icon: ICON_ID.HEALTH_POTION,
-        itemType: ITEM_TYPE.CONSUMABLE,
-      },
+      } as IWeapon,
+      {
+        ...BASE_EARTH_STAFF,
+        id: id++,
+      } as IWeapon,
     ],
   ],
   [
@@ -403,6 +424,24 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
         ...BASE_COWL,
         id: id++,
       } as IArmor,
+      {
+        id: id++,
+        name: 'Health Potion',
+        icon: ICON_ID.HEALTH_POTION,
+        itemType: ITEM_TYPE.CONSUMABLE,
+      },
+      {
+        id: id++,
+        name: 'Health Potion',
+        icon: ICON_ID.HEALTH_POTION,
+        itemType: ITEM_TYPE.CONSUMABLE,
+      },
+      {
+        id: id++,
+        name: 'Health Potion',
+        icon: ICON_ID.HEALTH_POTION,
+        itemType: ITEM_TYPE.CONSUMABLE,
+      },
       {
         id: id++,
         name: 'Health Potion',

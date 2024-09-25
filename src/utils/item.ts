@@ -9,7 +9,7 @@ export const getScaledItems = (level: number): Item[] => {
   // Gets scaled items based on the level of the rooms
   // The calling function will need to reassign the id of the items
 
-  let numberOfItems = 4 + Math.round(level / 3);
+  let numberOfItems = 5 + Math.round(level / 3);
   if (numberOfItems > 10) numberOfItems = 10;
 
   const items: Item[] = [];

@@ -20,8 +20,12 @@ import katana from '../assets/icons/weapons/icon_weapon_katana_1.png';
 import greatsword from '../assets/icons/weapons/icon_weapon_greatsword_1.png';
 import glaive from '../assets/icons/weapons/icon_weapon_polearm_1.png';
 import bow from '../assets/icons/weapons/icon_weapon_bow_1.png';
+import sceptre from '../assets/icons/weapons/icon_weapon_sceptre_1.png';
 import magic_wand from '../assets/icons/weapons/icon_weapon_wand_1.png';
 import magic_staff from '../assets/icons/weapons/icon_weapon_staff_1.png';
+import fire_staff from '../assets/icons/weapons/icon_weapon_staff_2.png';
+import ice_staff from '../assets/icons/weapons/icon_weapon_staff_3.png';
+import earth_staff from '../assets/icons/weapons/icon_weapon_staff_4.png';
 
 // HELMETS
 import helmet_leather_1 from '../assets/icons/helmets/icon_helmet_leather_1.png';
@@ -153,9 +157,13 @@ export enum ICON_ID {
   WEAPON_KATANA = 'weapon_katana',
   WEAPON_GREATSWORD = 'weapon_greatsword',
   WEAPON_GLAIVE = 'weapon_glaive',
+  WEAPON_SCEPTRE = 'weapon_sceptre',
   WEAPON_BOW = 'weapon_bow',
   WEAPON_MAGIC_WAND = 'weapon_magic_scepter',
   WEAPON_MAGIC_STAFF = 'weapon_magic_staff',
+  WEAPON_FIRE_STAFF = 'weapon_fire_staff',
+  WEAPON_ICE_STAFF = 'weapon_ice_staff',
+  WEAPON_EARTH_STAFF = 'weapon_earth_staff',
 
   // HELMETS
   HELMET_LEATHER_1 = 'helmet_leather_1',
@@ -289,9 +297,13 @@ const ICONS: Record<ICON_ID, string> = {
   [ICON_ID.WEAPON_KATANA]: katana,
   [ICON_ID.WEAPON_GREATSWORD]: greatsword,
   [ICON_ID.WEAPON_GLAIVE]: glaive,
+  [ICON_ID.WEAPON_SCEPTRE]: sceptre,
   [ICON_ID.WEAPON_BOW]: bow,
   [ICON_ID.WEAPON_MAGIC_WAND]: magic_wand,
   [ICON_ID.WEAPON_MAGIC_STAFF]: magic_staff,
+  [ICON_ID.WEAPON_FIRE_STAFF]: fire_staff,
+  [ICON_ID.WEAPON_ICE_STAFF]: ice_staff,
+  [ICON_ID.WEAPON_EARTH_STAFF]: earth_staff,
 
   // HELMETS
   [ICON_ID.HELMET_LEATHER_1]: helmet_leather_1,
