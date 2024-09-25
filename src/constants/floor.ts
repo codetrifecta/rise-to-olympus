@@ -179,14 +179,14 @@ const createTutorialFloorRooms = () => {
         id: 2,
       },
       {
-        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
         id: 3,
       },
     ],
     roomEntityPositions: new Map([
       ['8,6', [ENTITY_TYPE.ENEMY, 1]],
       ['10,18', [ENTITY_TYPE.ENEMY, 2]],
-      ['16,14', [ENTITY_TYPE.ENEMY, 3]],
+      ['4,10', [ENTITY_TYPE.ENEMY, 3]],
     ]),
     roomTileMatrix: [
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],

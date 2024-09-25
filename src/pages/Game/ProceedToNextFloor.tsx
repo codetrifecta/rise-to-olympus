@@ -5,7 +5,6 @@ import { useGameStateStore } from '../../stores/game';
 import {
   FLOOR_ID,
   FLOOR_TARTARUS_CAMP,
-  FLOOR_TUTORIAL,
   FLOOR_TUTORIAL_CHEST_ITEMS,
 } from '../../constants/floor';
 import { ICampaign, IFloor } from '../../types';
@@ -62,8 +61,16 @@ export const ProceedToNextFloor: FC = () => {
       resetScriptStore();
       resetGameState();
       resetPlayerStore();
+
       setCurrentRoom(null);
-      setFloor({ ...FLOOR_TUTORIAL });
+
+      // const newFloorRooms = FLOOR_TUTORIAL.rooms.map((row) =>
+      //   row.map((room) => {
+
+      //   })
+      // );
+
+      setFloor({ ...floor });
       setFloorChestItems(FLOOR_TUTORIAL_CHEST_ITEMS);
       setIsFloorCleared(false);
       setIsGameLogOpen(true);
@@ -137,17 +144,17 @@ export const ProceedToNextFloor: FC = () => {
       )
     );
 
-    // Set logs for the next floor
-    if (nextFloor.id === FLOOR_ID.TARTARUS_CAMP) {
-      setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
-    }
-
     resetScriptStore();
     resetGameState();
     resetPlayerStore();
     setCurrentRoom(null);
     setFloor(nextFloor);
     setIsFloorCleared(false);
+
+    // Set logs for the next floor
+    if (nextFloor.id === FLOOR_ID.TARTARUS_CAMP) {
+      setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
+    }
   };
 
   const renderProceedButtonText = () => {
