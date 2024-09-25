@@ -18,8 +18,21 @@ import art_room_tartarus_camp_floor from '../assets/sprites/tiles/tartarus/room_
 import art_room_tartarus_camp_wall from '../assets/sprites/tiles/tartarus/room_tartarus_camp_wall.png';
 import { ICON_ID } from './icon';
 import { ITEM_TYPE } from './item';
-import { ARMOR_PART } from './armor';
-import { WEAPON_ATTACK_TYPE, WEAPON_TYPE } from './weapon';
+import {
+  BASE_BRIGANDINE,
+  BASE_CHESTPLATE,
+  BASE_COWL,
+  BASE_HELMET,
+  BASE_ROBE,
+} from './armor';
+import {
+  BASE_BROADSWORD,
+  BASE_GLAIVE,
+  BASE_GREATSWORD,
+  BASE_KATANA,
+  BASE_MAGIC_STAFF,
+  BASE_MAGIC_WAND,
+} from './weapon';
 
 export const DEFAULT_CHEST_ITEM_COUNT = 10;
 
@@ -313,43 +326,16 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
     '2,1',
     [
       {
+        ...BASE_CHESTPLATE,
         id: id++,
-        name: 'Leather Chestplate',
-        icon: ICON_ID.CHESTPIECE_LEATHER_1,
-        itemType: ITEM_TYPE.ARMOR,
-        armorPart: ARMOR_PART.CHESTPIECE,
-        stats: {
-          strength: 6,
-          intelligence: 2,
-          defense: 5,
-          constitution: 5,
-        },
       } as IArmor,
       {
+        ...BASE_ROBE,
         id: id++,
-        name: 'Leather Robe',
-        icon: ICON_ID.CHESTPIECE_LEATHER_2,
-        itemType: ITEM_TYPE.ARMOR,
-        armorPart: ARMOR_PART.CHESTPIECE,
-        stats: {
-          strength: 2,
-          intelligence: 6,
-          defense: 5,
-          constitution: 5,
-        },
       } as IArmor,
       {
+        ...BASE_BRIGANDINE,
         id: id++,
-        name: 'Leather Brigandine',
-        icon: ICON_ID.CHESTPIECE_LEATHER_3,
-        itemType: ITEM_TYPE.ARMOR,
-        armorPart: ARMOR_PART.CHESTPIECE,
-        stats: {
-          strength: 4,
-          intelligence: 4,
-          defense: 5,
-          constitution: 5,
-        },
       } as IArmor,
       {
         id: id++,
@@ -375,106 +361,28 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
     '2,2',
     [
       {
+        ...BASE_BROADSWORD,
         id: id++,
-        name: 'Broadsword',
-        icon: ICON_ID.WEAPON_SWORD,
-        attackType: WEAPON_ATTACK_TYPE.MELEE,
-        type: WEAPON_TYPE.BROADSWORD,
-        itemType: ITEM_TYPE.WEAPON,
-        damageMultiplier: 0.6,
-        stats: {
-          strength: 6,
-          intelligence: 1,
-          defense: 4,
-          constitution: 0,
-        },
-        range: 1,
-        cost: 1,
       } as IWeapon,
       {
+        ...BASE_KATANA,
         id: id++,
-        name: 'Katana',
-        icon: ICON_ID.WEAPON_KATANA,
-        attackType: WEAPON_ATTACK_TYPE.MELEE,
-        type: WEAPON_TYPE.KATANA,
-        itemType: ITEM_TYPE.WEAPON,
-        damageMultiplier: 0.6,
-        stats: {
-          strength: 8,
-          intelligence: 1,
-          defense: 1,
-          constitution: 0,
-        },
-        range: 1,
-        cost: 1,
       } as IWeapon,
       {
+        ...BASE_GREATSWORD,
         id: id++,
-        name: 'Greatsword',
-        icon: ICON_ID.WEAPON_GREATSWORD,
-        attackType: WEAPON_ATTACK_TYPE.MELEE,
-        type: WEAPON_TYPE.GREATSWORD,
-        itemType: ITEM_TYPE.WEAPON,
-        damageMultiplier: 0.6,
-        stats: {
-          strength: 9,
-          intelligence: 1,
-          defense: 8,
-          constitution: 0,
-        },
-        range: 2,
-        cost: 2,
       } as IWeapon,
       {
+        ...BASE_GLAIVE,
         id: id++,
-        name: 'Glaive',
-        icon: ICON_ID.WEAPON_GLAIVE,
-        attackType: WEAPON_ATTACK_TYPE.MELEE,
-        type: WEAPON_TYPE.POLEARM,
-        itemType: ITEM_TYPE.WEAPON,
-        damageMultiplier: 0.6,
-        stats: {
-          strength: 12,
-          intelligence: 1,
-          defense: 2,
-          constitution: 0,
-        },
-        range: 2,
-        cost: 2,
       } as IWeapon,
       {
+        ...BASE_MAGIC_WAND,
         id: id++,
-        name: 'Magic Wand',
-        icon: ICON_ID.WEAPON_MAGIC_WAND,
-        attackType: WEAPON_ATTACK_TYPE.RANGED,
-        type: WEAPON_TYPE.WAND,
-        itemType: ITEM_TYPE.WEAPON,
-        damageMultiplier: 0.4,
-        stats: {
-          strength: 1,
-          intelligence: 5,
-          defense: 0,
-          constitution: 0,
-        },
-        range: 4,
-        cost: 1,
       } as IWeapon,
       {
+        ...BASE_MAGIC_STAFF,
         id: id++,
-        name: 'Magic Staff',
-        icon: ICON_ID.WEAPON_MAGIC_STAFF,
-        attackType: WEAPON_ATTACK_TYPE.RANGED,
-        type: WEAPON_TYPE.STAFF,
-        itemType: ITEM_TYPE.WEAPON,
-        damageMultiplier: 0.3,
-        stats: {
-          strength: 1,
-          intelligence: 8,
-          defense: 2,
-          constitution: 0,
-        },
-        range: 6,
-        cost: 2,
       } as IWeapon,
       {
         id: id++,
@@ -488,30 +396,12 @@ export const FLOOR_TUTORIAL_CHEST_ITEMS: Map<string, Item[]> = new Map([
     '1,2',
     [
       {
+        ...BASE_HELMET,
         id: id++,
-        name: 'Leather Helmet',
-        icon: ICON_ID.HELMET_LEATHER_1,
-        itemType: ITEM_TYPE.ARMOR,
-        armorPart: ARMOR_PART.HELMET,
-        stats: {
-          strength: 6,
-          intelligence: 2,
-          defense: 5,
-          constitution: 5,
-        },
       } as IArmor,
       {
+        ...BASE_COWL,
         id: id++,
-        name: 'Leather Cowl',
-        icon: ICON_ID.HELMET_LEATHER_2,
-        itemType: ITEM_TYPE.ARMOR,
-        armorPart: ARMOR_PART.HELMET,
-        stats: {
-          strength: 2,
-          intelligence: 6,
-          defense: 5,
-          constitution: 5,
-        },
       } as IArmor,
       {
         id: id++,

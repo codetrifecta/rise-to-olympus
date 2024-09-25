@@ -3,6 +3,7 @@ import { Button } from '../components/Button';
 import { FC } from 'react';
 import { useFloorStore } from '../stores/floor';
 import { useGameStateStore } from '../stores/game';
+import { usePlayerStore } from '../stores/player';
 
 export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
   onClose,
@@ -10,8 +11,10 @@ export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
   const navigate = useNavigate();
   const { resetFloorStore } = useFloorStore();
   const { resetGameState } = useGameStateStore();
+  const { resetPlayerStore } = usePlayerStore();
 
   const reset = () => {
+    resetPlayerStore();
     resetFloorStore();
     resetGameState();
   };

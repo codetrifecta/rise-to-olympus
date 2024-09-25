@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { IEntity } from '../../types';
 import { ENTITY_TYPE } from '../../constants/entity';
 import clsx from 'clsx';
@@ -64,9 +64,29 @@ const EntityCard: FC<{
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }> = ({ entity, active, onMouseEnter, onMouseLeave }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   if (!entity) {
     return null;
   }
+
+  const renderEntityHP = () => {
+    let str = 'HP: ';
+    if (isHovered) {
+      str +=
+        entity.health > 0
+          ? Math.round((entity.health / entity.maxHealth) * 100)
+          : 0;
+      str += '%';
+    } else {
+      str +=
+        entity.health > 0
+          ? entity.health + ' / ' + entity.maxHealth
+          : 0 + ' / ' + entity.maxHealth;
+    }
+
+    return str;
+  };
 
   return (
     <div>
@@ -81,8 +101,14 @@ const EntityCard: FC<{
           'shadow-intense-red z-10':
             entity.entityType === ENTITY_TYPE.ENEMY && active,
         })}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        onMouseEnter={() => {
+          onMouseEnter();
+          setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          onMouseLeave();
+          setIsHovered(false);
+        }}
       >
         <div
           className={clsx(
@@ -100,9 +126,7 @@ const EntityCard: FC<{
           }}
         ></div>
         <h3 className="whitespace-nowrap">{entity.name}</h3>
-        <h4 className="whitespace-nowrap">
-          HP: {entity.health > 0 ? entity.health : 0} / {entity.maxHealth}
-        </h4>
+        <h4 className="whitespace-nowrap">{renderEntityHP()}</h4>
       </div>
       {/* Display statuses if present */}
       <div className="mt-3 flex flex-wrap justify-center items-center">

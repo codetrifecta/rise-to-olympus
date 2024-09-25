@@ -1,5 +1,6 @@
 // PLAYER
-import player_01 from '../assets/sprites/players/sprite_player_01.png';
+// import player_01 from '../assets/sprites/players/sprite_player_01.png';
+import player_16 from '../assets/sprites/players/sprite_player_16.png';
 
 // ENEMIES
 // From Rogue Adventures Asset Pack
@@ -52,7 +53,8 @@ export const FLOOR_SIZE = 32;
 
 export enum SPRITE_ID {
   // PLAYER
-  PLAYER_01 = 'PLAYER_01',
+  // PLAYER_01 = 'PLAYER_01',
+  PLAYER_16 = 'PLAYER_16',
 
   // ENEMIES
   // From Rogue Adventures Asset Pack
@@ -103,7 +105,8 @@ export enum SPRITE_ID {
 
 export const SPRITES: Record<SPRITE_ID, string> = {
   // PLAYER
-  [SPRITE_ID.PLAYER_01]: player_01,
+  // [SPRITE_ID.PLAYER_01]: player_01,
+  [SPRITE_ID.PLAYER_16]: player_16,
 
   // ENEMIES
   // From Rogue Adventures Asset Pack

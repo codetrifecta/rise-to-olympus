@@ -166,23 +166,23 @@ export const EntitySpritePositions: FC<{
           id={`${player.entityType}_${player.id}`}
           className="absolute flex justify-center items-center overflow-hidden"
           style={{
-            // width: player.spriteSize,
-            // height: player.spriteSize,
-            width:
-              player.spriteSize < TILE_SIZE
-                ? player.spriteSize
-                : TILE_SIZE * 1.5,
-            height:
-              player.spriteSize < TILE_SIZE
-                ? player.spriteSize
-                : TILE_SIZE * 1.5,
+            width: player.spriteSize,
+            height: player.spriteSize,
+            // width:
+            //   player.spriteSize < TILE_SIZE
+            //     ? player.spriteSize
+            //     : TILE_SIZE * 1.5,
+            // height:
+            //   player.spriteSize < TILE_SIZE
+            //     ? player.spriteSize
+            //     : TILE_SIZE * 1.5,
           }}
         >
           <div
-            className="absolute bottom-[10px] overflow-hidden"
+            className="absolute bottom-[20px] overflow-hidden"
             style={{
               width: player.spriteSize,
-              height: player.spriteSize + 2,
+              height: player.spriteSize,
             }}
           >
             <div
@@ -225,14 +225,14 @@ export const EntitySpritePositions: FC<{
             width:
               enemy.spriteSize < TILE_SIZE ? enemy.spriteSize : TILE_SIZE * 3,
             height:
-              enemy.spriteSize < TILE_SIZE ? enemy.spriteSize : TILE_SIZE * 3.8,
+              enemy.spriteSize < TILE_SIZE ? enemy.spriteSize : TILE_SIZE * 3,
           }}
         >
           <div
-            className="absolute bottom-[10px] overflow-hidden"
+            className="absolute bottom-[20px] overflow-hidden"
             style={{
               width: enemy.spriteSize,
-              height: enemy.spriteSize + 2,
+              height: enemy.spriteSize,
             }}
           >
             <div
