@@ -151,10 +151,20 @@ export const ROOM_TARTARUS_BOSS: IRoom = {
       ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
       id: 2,
     },
+    {
+      ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+      id: 3,
+    },
+    {
+      ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+      id: 4,
+    },
   ],
   roomEntityPositions: new Map([
     ['10,10', [ENTITY_TYPE.ENEMY, 1]],
     ['4,4', [ENTITY_TYPE.ENEMY, 2]],
+    ['5,15', [ENTITY_TYPE.ENEMY, 3]],
+    ['15,12', [ENTITY_TYPE.ENEMY, 4]],
   ]),
   artFloor: art_room_tartarus_boss_floor,
   artObstacle: art_room_tartarus_boss_obstacle,
