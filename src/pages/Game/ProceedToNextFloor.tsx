@@ -2,7 +2,12 @@ import { FC } from 'react';
 import { useFloorStore } from '../../stores/floor';
 import { Button } from './Button';
 import { useGameStateStore } from '../../stores/game';
-import { FLOOR_ID, FLOOR_TARTARUS_CAMP } from '../../constants/floor';
+import {
+  FLOOR_ID,
+  FLOOR_TARTARUS_CAMP,
+  FLOOR_TUTORIAL,
+  FLOOR_TUTORIAL_CHEST_ITEMS,
+} from '../../constants/floor';
 import { ICampaign, IFloor } from '../../types';
 import { useCampaignStore } from '../../stores/campaign';
 import { useLogStore } from '../../stores/log';
@@ -11,9 +16,15 @@ import { usePlayerStore } from '../../stores/player';
 import { useScriptStore } from '../../stores/script';
 
 export const ProceedToNextFloor: FC = () => {
-  const { currentRoom, floor, setCurrentRoom, setFloor } = useFloorStore();
-  const { isGameOver, setIsFloorCleared, setIsGameLogOpen, resetGameState } =
-    useGameStateStore();
+  const { currentRoom, floor, setCurrentRoom, setFloor, setFloorChestItems } =
+    useFloorStore();
+  const {
+    isGameOver,
+    setIsFloorCleared,
+    setIsGameLogOpen,
+    setIsMinimapOpen,
+    resetGameState,
+  } = useGameStateStore();
   const { selectedCampaign, campaigns, setCampaigns, setSelectedCampaign } =
     useCampaignStore();
   const { setLogs } = useLogStore();
@@ -46,6 +57,20 @@ export const ProceedToNextFloor: FC = () => {
         break;
     }
 
+    // Check for death in tutorial room
+    if (isGameOver && player.health <= 0 && floor.id === FLOOR_ID.TUTORIAL) {
+      resetScriptStore();
+      resetGameState();
+      resetPlayerStore();
+      setCurrentRoom(null);
+      setFloor({ ...FLOOR_TUTORIAL });
+      setFloorChestItems(FLOOR_TUTORIAL_CHEST_ITEMS);
+      setIsFloorCleared(false);
+      setIsGameLogOpen(true);
+      setIsMinimapOpen(true);
+      return;
+    }
+
     // If no next floor, then game is won.
     // Reset game state and return to camp
     if (!nextFloor) {
@@ -76,10 +101,17 @@ export const ProceedToNextFloor: FC = () => {
       return;
     }
     switch (floor.nextFloorID) {
-      case 'TUTORIAL':
+      case FLOOR_ID.TUTORIAL:
         // setFloor(FLOOR_TUTORIAL);
+        newSelectedCampaign = {
+          ...newSelectedCampaign,
+          scriptsCompleted: {
+            ...newSelectedCampaign.scriptsCompleted,
+            tutorialStartRoom: true,
+          },
+        };
         break;
-      case 'TARTARUS_CAMP':
+      case FLOOR_ID.TARTARUS_CAMP:
         // setFloor(FLOOR_TARTARUS_CAMP);
         newSelectedCampaign = {
           ...newSelectedCampaign,
@@ -119,7 +151,13 @@ export const ProceedToNextFloor: FC = () => {
   };
 
   const renderProceedButtonText = () => {
-    if (isGameOver && player.health <= 0) return 'Game over. Return to Camp.';
+    if (!floor) {
+      console.error('ProceedToNextFloor: No current floor');
+      return '';
+    } else if (floor?.nextFloorID === FLOOR_ID.TUTORIAL)
+      return 'Game over. Going back to start';
+    else if (isGameOver && player.health <= 0)
+      return 'Game over. Return to the start';
     else if (floor?.nextFloorID === null)
       return 'You have won. Return to Camp.';
     else return 'Proceed to next floor';
