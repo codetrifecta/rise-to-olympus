@@ -63,6 +63,10 @@ body {
   min-height: 100vh;
 }
 
+input {
+  background-color: #18181b;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
