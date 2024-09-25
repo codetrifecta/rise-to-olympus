@@ -343,7 +343,8 @@ export const Compendium: FC = () => {
                           console.log('Unlocking skill', skill);
                           handleUnlockSkill(skill);
                           return;
-                        } else {
+                        } else if (floor?.id === FLOOR_ID.TARTARUS_CAMP) {
+                          // Only be able to equip skills in the camp
                           addToEquippedSkills(skill);
                         }
                       }}

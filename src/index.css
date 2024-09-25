@@ -16,7 +16,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -63,6 +63,10 @@ body {
   min-height: 100vh;
 }
 
+input {
+  background-color: #18181b;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -96,7 +100,7 @@ button {
   font-size: 1.25em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #18181b;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -122,14 +126,14 @@ button {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    /* color: #213547; */
+    /* background-color: #ffffff; */
   }
   a:hover {
-    color: #747bff;
+    /* color: #747bff; */
   }
   button {
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
   }
 }
 

@@ -5,6 +5,8 @@ import { useFloorStore } from '../stores/floor';
 import { useGameStateStore } from '../stores/game';
 import { usePlayerStore } from '../stores/player';
 import { FLOOR_ID, FLOOR_TARTARUS_CAMP } from '../constants/floor';
+import { useLogStore } from '../stores/log';
+import { LOGS_TUTORIAL_TARTARUS_CAMP } from '../constants/log';
 
 export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
   onClose,
@@ -13,6 +15,7 @@ export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
   const { floor, setFloor, resetFloorStore } = useFloorStore();
   const { resetGameState } = useGameStateStore();
   const { resetPlayerStore } = usePlayerStore();
+  const { setLogs } = useLogStore();
 
   const reset = () => {
     resetPlayerStore();
@@ -41,6 +44,7 @@ export const StartRoomEscModalOverlay: FC<{ onClose: () => void }> = ({
             onClick={() => {
               reset();
               setFloor(FLOOR_TARTARUS_CAMP);
+              setLogs(LOGS_TUTORIAL_TARTARUS_CAMP);
               onClose();
             }}
           >
