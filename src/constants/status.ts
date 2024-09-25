@@ -252,8 +252,8 @@ export const STATUSES: IStatus[] = [
     name: 'Hidden',
     icon: ICON_ID.STATUS_HIDDEN,
     description: 'Cannot be seen or targeted by enemies.',
-    duration: 2,
-    durationCounter: 2,
+    duration: 3,
+    durationCounter: 3,
     effect: {
       ...BASE_STATUS_EFFECTS,
       hidden: true,

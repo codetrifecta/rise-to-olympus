@@ -1725,6 +1725,11 @@ export const RoomLogic: FC<{
       return [newEnemy, newEnemyPosition];
     }
 
+    // If player is hidden, do not move the enemy
+    if (player.statuses.some((status) => status.id === STATUS_ID.HIDDEN)) {
+      return [newEnemy, newEnemyPosition];
+    }
+
     // Get enemy range and get tiles around the player's vision with the same range (one of these will be the enemy's target tile)
     const range = newEnemy.range;
     const possibleTiles = getVisionFromEntityPosition(
@@ -1910,6 +1915,10 @@ export const RoomLogic: FC<{
     const isPlayerHidden = player.statuses.some(
       (status) => status.id === STATUS_ID.HIDDEN
     );
+
+    if (isPlayerHidden) {
+      return [newEnemy, newPlayer];
+    }
 
     if (canAttackPlayer && !isPlayerHidden) {
       // Change sprite animation from idle to attack

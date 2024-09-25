@@ -675,7 +675,7 @@ export const SKILLS: ISkill[] = [
     skillType: SKILL_TYPE.SELF,
     tags: [SKILL_TAG.SELF, SKILL_TAG.STATUS],
     description:
-      'Become hidden to enemies, stopping them from seeing and attacking you for 2 turns.',
+      'Become hidden to enemies, stopping them from seeing and attacking you for 3 turns.',
     damageMultiplier: 0,
     range: 0,
     cooldown: 4,
