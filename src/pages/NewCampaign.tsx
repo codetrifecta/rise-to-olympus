@@ -112,7 +112,7 @@ export const NewCampaign = () => {
         Create
       </Button>
       <Link to={'/'} className="w-full">
-        <Button className="w-full hover:border-yellow-500 mb-5 text-white bg-unset text-2xl">
+        <Button className="w-full hover:border-yellow-500 mb-5 text-white text-2xl">
           Back
         </Button>
       </Link>

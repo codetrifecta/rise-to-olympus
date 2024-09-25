@@ -26,7 +26,7 @@ export const MainMenu = () => {
 
       <div className="flex flex-col items-center">
         <Link to="/new">
-          <Button className="w-[350px] hover:border-yellow-500 text-white text-2xl">
+          <Button className="w-[350px] mb-5 hover:border-yellow-500 text-white text-2xl">
             New Campaign
           </Button>
         </Link>
