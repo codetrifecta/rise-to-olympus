@@ -135,7 +135,7 @@ export const ScriptOverlay: FC = () => {
 
     return (
       <div className="container mx-auto px-40 text-xl">
-        <p>{scriptItem.speakerNames.join(', ')}</p>
+        <p className="mb-3">{scriptItem.speakerNames.join(', ')}</p>
         <p>{scriptItem.text}</p>
       </div>
     );

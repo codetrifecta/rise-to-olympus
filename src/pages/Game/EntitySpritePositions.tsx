@@ -179,7 +179,7 @@ export const EntitySpritePositions: FC<{
           }}
         >
           <div
-            className="absolute bottom-[10px] overflow-hidden"
+            className="absolute bottom-[20px] overflow-hidden"
             style={{
               width: player.spriteSize,
               height: player.spriteSize,
@@ -229,7 +229,7 @@ export const EntitySpritePositions: FC<{
           }}
         >
           <div
-            className="absolute bottom-[10px] overflow-hidden"
+            className="absolute bottom-[20px] overflow-hidden"
             style={{
               width: enemy.spriteSize,
               height: enemy.spriteSize,
