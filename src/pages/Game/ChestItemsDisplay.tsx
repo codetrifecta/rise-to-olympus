@@ -337,9 +337,9 @@ const WeaponCard: FC<{
           Cost: {weapon.cost} AP
           {costDiff !== 0 ? (
             costDiff > 0 ? (
-              <span className="text-red-600 ml-2">-{Math.abs(costDiff)}</span>
+              <span className="text-red-600 ml-2">+{Math.abs(costDiff)}</span>
             ) : (
-              <span className="text-green-600 ml-2">+{Math.abs(costDiff)}</span>
+              <span className="text-green-600 ml-2">-{Math.abs(costDiff)}</span>
             )
           ) : null}
         </p>
