@@ -133,22 +133,31 @@ export const Compendium: FC = () => {
       if (isAboutToUnlockSkill?.id === skill.id) {
         if (selectedCampaign.divinity >= 100) {
           return (
-            <h2 className="text-yellow-600">
-              <strong>CLICK TO AGAIN TO UNLOCK</strong>
-            </h2>
+            <>
+              <h2 className="text-yellow-600">
+                <strong>CLICK TO AGAIN TO UNLOCK</strong>
+              </h2>
+              <p>Cost: 100 Divinity</p>
+            </>
           );
         } else {
           return (
-            <h2 className="text-yellow-800">
-              <strong>INSUFFICIENT DIVINITY</strong>
-            </h2>
+            <>
+              <h2 className="text-yellow-800">
+                <strong>INSUFFICIENT DIVINITY</strong>
+              </h2>
+              <p>Cost: 100 Divinity</p>
+            </>
           );
         }
       } else {
         return (
-          <h2 className="text-red-800">
-            <strong>LOCKED</strong>
-          </h2>
+          <>
+            <h2 className="text-red-800">
+              <strong>LOCKED</strong>
+            </h2>
+            <p>Cost: 100 Divinity</p>
+          </>
         );
       }
     }
