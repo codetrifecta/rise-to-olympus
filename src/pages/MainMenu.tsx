@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useCampaignStore } from '../stores/campaign';
 import { useEffect } from 'react';
 import clsx from 'clsx';
+import { Button } from '../components/Button';
 
 export const MainMenu = () => {
   const { campaigns } = useCampaignStore();
@@ -24,13 +25,13 @@ export const MainMenu = () => {
       </header>
 
       <div className="flex flex-col items-center">
-        <Link to="/new" className="mb-5">
-          <button className="w-[350px] hover:border-yellow-500 text-white text-2xl">
+        <Link to="/new">
+          <Button className="w-[350px] hover:border-yellow-500 text-white text-2xl">
             New Campaign
-          </button>
+          </Button>
         </Link>
         <Link to={campaigns.length > 0 ? '/load' : '/'}>
-          <button
+          <Button
             className={clsx('w-[350px] text-white text-2xl', {
               'hover:border-yellow-500': campaigns.length > 0,
               'opacity-50 cursor-default': campaigns.length <= 0,
@@ -38,7 +39,7 @@ export const MainMenu = () => {
             disabled={campaigns.length <= 0}
           >
             Load Campaign
-          </button>
+          </Button>
         </Link>
         {/* <button className="w-[300px] hover:border-white">Settings</button> */}
       </div>

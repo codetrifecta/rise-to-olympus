@@ -229,7 +229,7 @@ export const ScriptOverlay: FC = () => {
       {/* Buttons */}
       <div className="absolute bottom-5 right-5">
         <button
-          className={clsx('text-white', {
+          className={clsx('text-white bg-zinc-850', {
             'hover:border-yellow-500':
               currentScript[currentScriptItemIndex].id !== 0,
             'opacity-50 cursor-default':
@@ -242,7 +242,7 @@ export const ScriptOverlay: FC = () => {
         </button>
         {currentScript[currentScriptItemIndex].type !== SCRIPT_TYPE.CHOICE && (
           <button
-            className={clsx('text-white hover:border-yellow-500')}
+            className={clsx('text-white hover:border-yellow-500 bg-zinc-850')}
             onClick={() => {
               if (
                 currentScript[currentScriptItemIndex].id ===

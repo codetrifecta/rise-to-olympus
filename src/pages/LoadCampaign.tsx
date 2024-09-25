@@ -107,7 +107,7 @@ export const LoadCampaign = () => {
 
       <div className="flex flex-col justify-center items-center">
         <Button
-          className="w-[350px] hover:border-yellow-500 mb-5 text-white bg-unset text-2xl"
+          className="w-[350px] hover:border-yellow-500 mb-5 text-white text-2xl"
           disabled={selectedCampaign === null}
           onClick={() => handleLoadCampaign(selectedCampaign)}
         >
@@ -115,14 +115,14 @@ export const LoadCampaign = () => {
         </Button>
 
         <Button
-          className="w-[350px] hover:border-yellow-500 mb-5 text-white bg-unset text-2xl"
+          className="w-[350px] hover:border-yellow-500 mb-5 text-white text-2xl"
           disabled={selectedCampaign === null}
           onClick={() => handleDeleteCampaign(selectedCampaign)}
         >
           Delete Campaign
         </Button>
         <Link to={'/'} className="w-[350px]">
-          <Button className="w-full hover:border-yellow-500 mb-5 text-white bg-unset text-2xl">
+          <Button className="w-full hover:border-yellow-500 mb-5 text-white text-2xl">
             Back
           </Button>
         </Link>
