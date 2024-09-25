@@ -81,7 +81,7 @@ export const NewCampaign = () => {
         <label className="mb-5 w-[350px] grid grid-rows-1 grid-cols-5 items-center text-xl">
           <span className="text-right mr-3 col-span-2">Campaign Name</span>
           <input
-            className="border-2 border-black px-3 py-1 col-span-3 bg-zinc-850"
+            className="border-2 border-black px-3 py-1 col-span-3 bg-zinc-900"
             value={campaignName}
             onChange={(e) => setCampaignName(e.target.value)}
           />
@@ -89,7 +89,7 @@ export const NewCampaign = () => {
         <label className="mb-5 w-[350px] grid grid-rows-1 grid-cols-5 items-center text-xl">
           <span className="text-right mr-3 col-span-2">Player Name</span>
           <input
-            className="border-2 border-black px-3 py-1 col-span-3 bg-zinc-850"
+            className="border-2 border-black px-3 py-1 col-span-3 bg-zinc-900"
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
           />
