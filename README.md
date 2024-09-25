@@ -70,5 +70,13 @@ This game was built with the following technologies:
 
 - [ ] Toggle button to speed up enemy actions
 - [ ] Refactor obstacle and entity layering
+- [ ] More floors
+  - [ ] More rooms for floor 1
+  - [ ] Floor 2
+  - [ ] Floor 3
 
 ## 👥 Contributors
+
+- [Afuza](https://github.com/afutofu) - Tech Lead, System architect and design, UI
+- [Denise](https://github.com/Detadja) - Pathfinding, Vision, Floor Rooms Generation
+- [Sehyun](https://github.com/parksehyun91) - Scripts, Map creation
