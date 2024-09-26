@@ -68,12 +68,17 @@ This game was built with the following technologies:
 
 ## 🛣️ Roadmap
 
-- [ ] Toggle button to speed up enemy actions
-- [ ] Refactor obstacle and entity layering
+- [x] Toggle button to speed up enemy actions
+- [ ] Refactor obstacle and entity layering to fix entity-obstacle layering bugs
+- [ ] Shop room so players can buy specific equipment
+- [ ] Miniboss room for extra challenge and higher quality loot
 - [ ] More floors
   - [ ] More rooms for floor 1
   - [ ] Floor 2
   - [ ] Floor 3
+- [ ] Dedicated tutorial overlay
+- [ ] Scripts for the story
+- [ ] Sound efffects and music
 
 ## 👥 Contributors
 
