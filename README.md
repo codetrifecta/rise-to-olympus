@@ -61,6 +61,7 @@ In addition, it is good to have an editor to work with the code such as [VSCode]
 
 This game was built with the following technologies:
 
+- Typescript
 - React
 - Zustand
 - Tailwind
