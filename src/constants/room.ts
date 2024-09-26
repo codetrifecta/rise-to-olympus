@@ -54,32 +54,32 @@ export const BASE_ROOM: IRoom = {
   artWall: art_room_tutorial_wall,
 };
 
-import art_room_tartarus_common_floor_1 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_1.png';
-import art_room_tartarus_common_obstacle_1 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_1.png';
+import art_room_tartarus_common_floor_01 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_01.png';
+import art_room_tartarus_common_obstacle_01 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_01.png';
 
-import art_room_tartarus_common_floor_2 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_2.png';
-import art_room_tartarus_common_obstacle_2 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_2.png';
+import art_room_tartarus_common_floor_02 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_02.png';
+import art_room_tartarus_common_obstacle_02 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_02.png';
 
-import art_room_tartarus_common_floor_3 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_3.png';
-import art_room_tartarus_common_obstacle_3 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_3.png';
+import art_room_tartarus_common_floor_03 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_03.png';
+import art_room_tartarus_common_obstacle_03 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_03.png';
 
-import art_room_tartarus_common_floor_4 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_4.png';
-import art_room_tartarus_common_obstacle_4 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_4.png';
+import art_room_tartarus_common_floor_04 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_04.png';
+import art_room_tartarus_common_obstacle_04 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_04.png';
 
-import art_room_tartarus_common_floor_5 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_5.png';
-import art_room_tartarus_common_obstacle_5 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_5.png';
+import art_room_tartarus_common_floor_05 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_05.png';
+import art_room_tartarus_common_obstacle_05 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_05.png';
 
-import art_room_tartarus_common_floor_6 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_6.png';
-import art_room_tartarus_common_obstacle_6 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_6.png';
+import art_room_tartarus_common_floor_06 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_06.png';
+import art_room_tartarus_common_obstacle_06 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_06.png';
 
-import art_room_tartarus_common_floor_7 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_7.png';
-import art_room_tartarus_common_obstacle_7 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_7.png';
+import art_room_tartarus_common_floor_07 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_07.png';
+import art_room_tartarus_common_obstacle_07 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_07.png';
 
-import art_room_tartarus_common_floor_8 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_8.png';
-import art_room_tartarus_common_obstacle_8 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_8.png';
+import art_room_tartarus_common_floor_08 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_08.png';
+import art_room_tartarus_common_obstacle_08 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_08.png';
 
-import art_room_tartarus_common_floor_9 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_9.png';
-import art_room_tartarus_common_obstacle_9 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_9.png';
+import art_room_tartarus_common_floor_09 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_09.png';
+import art_room_tartarus_common_obstacle_09 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_09.png';
 
 import art_room_tartarus_common_floor_10 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_10.png';
 import art_room_tartarus_common_obstacle_10 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_10.png';
@@ -228,8 +228,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['11,15', [ENTITY_TYPE.ENEMY, 3]],
       ['15,10', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_1,
-    artObstacle: art_room_tartarus_common_obstacle_1,
+    artFloor: art_room_tartarus_common_floor_01,
+    artObstacle: art_room_tartarus_common_obstacle_01,
   },
   {
     ...BASE_ROOM,
@@ -287,8 +287,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['16,13', [ENTITY_TYPE.ENEMY, 4]],
       ['14,15', [ENTITY_TYPE.ENEMY, 5]],
     ]),
-    artFloor: art_room_tartarus_common_floor_2,
-    artObstacle: art_room_tartarus_common_obstacle_2,
+    artFloor: art_room_tartarus_common_floor_02,
+    artObstacle: art_room_tartarus_common_obstacle_02,
   },
   {
     ...BASE_ROOM,
@@ -331,8 +331,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['8,8', [ENTITY_TYPE.ENEMY, 1]],
       ['13,11', [ENTITY_TYPE.ENEMY, 2]],
     ]),
-    artFloor: art_room_tartarus_common_floor_3,
-    artObstacle: art_room_tartarus_common_obstacle_3,
+    artFloor: art_room_tartarus_common_floor_03,
+    artObstacle: art_room_tartarus_common_obstacle_03,
   },
   {
     ...BASE_ROOM,
@@ -375,8 +375,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['8,10', [ENTITY_TYPE.ENEMY, 1]],
       ['12,10', [ENTITY_TYPE.ENEMY, 2]],
     ]),
-    artFloor: art_room_tartarus_common_floor_4,
-    artObstacle: art_room_tartarus_common_obstacle_4,
+    artFloor: art_room_tartarus_common_floor_04,
+    artObstacle: art_room_tartarus_common_obstacle_04,
   },
   {
     ...BASE_ROOM,
@@ -429,8 +429,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['13,8', [ENTITY_TYPE.ENEMY, 3]],
       ['10,12', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_5,
-    artObstacle: art_room_tartarus_common_obstacle_5,
+    artFloor: art_room_tartarus_common_floor_05,
+    artObstacle: art_room_tartarus_common_obstacle_05,
   },
   {
     ...BASE_ROOM,
@@ -473,8 +473,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['7,6', [ENTITY_TYPE.ENEMY, 1]],
       ['16,14', [ENTITY_TYPE.ENEMY, 2]],
     ]),
-    artFloor: art_room_tartarus_common_floor_6,
-    artObstacle: art_room_tartarus_common_obstacle_6,
+    artFloor: art_room_tartarus_common_floor_06,
+    artObstacle: art_room_tartarus_common_obstacle_06,
   },
   {
     ...BASE_ROOM,
@@ -527,8 +527,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['14,1', [ENTITY_TYPE.ENEMY, 3]],
       ['17,19', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_7,
-    artObstacle: art_room_tartarus_common_obstacle_7,
+    artFloor: art_room_tartarus_common_floor_07,
+    artObstacle: art_room_tartarus_common_obstacle_07,
   },
   {
     ...BASE_ROOM,
@@ -581,8 +581,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['6,15', [ENTITY_TYPE.ENEMY, 3]],
       ['15,10', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_8,
-    artObstacle: art_room_tartarus_common_obstacle_8,
+    artFloor: art_room_tartarus_common_floor_08,
+    artObstacle: art_room_tartarus_common_obstacle_08,
   },
   {
     ...BASE_ROOM,
@@ -635,8 +635,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['12,9', [ENTITY_TYPE.ENEMY, 3]],
       ['13,11', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_9,
-    artObstacle: art_room_tartarus_common_obstacle_9,
+    artFloor: art_room_tartarus_common_floor_09,
+    artObstacle: art_room_tartarus_common_obstacle_09,
   },
   {
     ...BASE_ROOM,
