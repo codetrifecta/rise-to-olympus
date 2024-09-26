@@ -131,10 +131,7 @@ export const RoomLogic: FC<{
     useCampaignStore();
 
   const movementTime = useMemo(() => {
-    if (gameSpeed === 2) {
-      return BASE_MOVEMENT_TIME / 2;
-    }
-    return BASE_MOVEMENT_TIME;
+    return BASE_MOVEMENT_TIME / gameSpeed;
   }, [gameSpeed]);
 
   // When player changes room, check if the room is over and set it to true if it is

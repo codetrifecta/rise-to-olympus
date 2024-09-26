@@ -14,6 +14,7 @@ import compendium from '../assets/icons/icon_compendium.png';
 import map from '../assets/icons/icon_map.png';
 import one from '../assets/icons/icon_speed_1.png';
 import two from '../assets/icons/icon_speed_2.png';
+import three from '../assets/icons/icon_speed_3.png';
 
 // WEAPONS
 import fist from '../assets/icons/weapons/icon_weapon_fist.png';
@@ -154,6 +155,7 @@ export enum ICON_ID {
   MAP = 'map',
   ONE = 'one',
   TWO = 'two',
+  THREE = 'three',
 
   // WEAPONS
   WEAPON_FIST = 'weapon_fist',
@@ -296,6 +298,7 @@ const ICONS: Record<ICON_ID, string> = {
   [ICON_ID.MAP]: map,
   [ICON_ID.ONE]: one,
   [ICON_ID.TWO]: two,
+  [ICON_ID.THREE]: three,
 
   // WEAPONS
   [ICON_ID.WEAPON_FIST]: fist,

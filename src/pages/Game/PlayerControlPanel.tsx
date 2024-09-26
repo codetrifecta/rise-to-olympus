@@ -140,6 +140,43 @@ export const PlayerControlPanel: FC = () => {
     );
   }, [isGameOver, turnCycle, isEntityMoving]);
 
+  const gameSpeedButton = useMemo(() => {
+    switch (gameSpeed) {
+      case 1:
+        return (
+          <Icon
+            icon={ICON_ID.ONE}
+            width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+            height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+          />
+        );
+      case 2:
+        return (
+          <Icon
+            icon={ICON_ID.TWO}
+            width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+            height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+          />
+        );
+      case 3:
+        return (
+          <Icon
+            icon={ICON_ID.THREE}
+            width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+            height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+          />
+        );
+      default:
+        return (
+          <Icon
+            icon={ICON_ID.ONE}
+            width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+            height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+          />
+        );
+    }
+  }, [gameSpeed]);
+
   return (
     <div
       className="flex justify-center items-center bg-black shadow-lg shadow-white"
@@ -496,27 +533,17 @@ export const PlayerControlPanel: FC = () => {
                     console.log('Speed Up Button');
                     if (gameSpeed === 1) {
                       setGameSpeed(2);
-                    } else {
+                    } else if (gameSpeed === 2) {
+                      setGameSpeed(3);
+                    } else if (gameSpeed === 3) {
                       setGameSpeed(1);
                     }
                   }}
                 >
-                  {gameSpeed === 2 ? (
-                    <Icon
-                      icon={ICON_ID.TWO}
-                      width={PLAYER_CONTROL_PANEL_ICON_SIZE}
-                      height={PLAYER_CONTROL_PANEL_ICON_SIZE}
-                    />
-                  ) : (
-                    <Icon
-                      icon={ICON_ID.ONE}
-                      width={PLAYER_CONTROL_PANEL_ICON_SIZE}
-                      height={PLAYER_CONTROL_PANEL_ICON_SIZE}
-                    />
-                  )}
+                  {gameSpeedButton}
                 </IconButton>
                 <Tooltip width={200}>
-                  <h2>{gameSpeed === 2 ? '2' : '1'}x Speed</h2>
+                  <h2>{gameSpeed}x Speed</h2>
                 </Tooltip>
               </div>
               {/* <div className="relative">
