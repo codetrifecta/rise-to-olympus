@@ -164,7 +164,7 @@ export const ProceedToNextFloor: FC = () => {
     } else if (floor?.nextFloorID === FLOOR_ID.TUTORIAL)
       return 'Game over. Going back to start';
     else if (isGameOver && player.health <= 0)
-      return 'Game over. Return to the start';
+      return 'Game over. Return to camp';
     else if (floor?.nextFloorID === null)
       return 'You have won. Return to Camp.';
     else return 'Proceed to next floor';

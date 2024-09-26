@@ -12,6 +12,8 @@ import inventory from '../assets/icons/icon_inventory.png';
 import generate_room from '../assets/icons/icon_generate_room.png';
 import compendium from '../assets/icons/icon_compendium.png';
 import map from '../assets/icons/icon_map.png';
+import one from '../assets/icons/icon_speed_1.png';
+import two from '../assets/icons/icon_speed_2.png';
 
 // WEAPONS
 import fist from '../assets/icons/weapons/icon_weapon_fist.png';
@@ -150,6 +152,8 @@ export enum ICON_ID {
   GENERATE_ROOM = 'generate_room',
   COMPENDIUM = 'compendium',
   MAP = 'map',
+  ONE = 'one',
+  TWO = 'two',
 
   // WEAPONS
   WEAPON_FIST = 'weapon_fist',
@@ -290,6 +294,8 @@ const ICONS: Record<ICON_ID, string> = {
   [ICON_ID.GENERATE_ROOM]: generate_room,
   [ICON_ID.COMPENDIUM]: compendium,
   [ICON_ID.MAP]: map,
+  [ICON_ID.ONE]: one,
+  [ICON_ID.TWO]: two,
 
   // WEAPONS
   [ICON_ID.WEAPON_FIST]: fist,
