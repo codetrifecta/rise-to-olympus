@@ -78,6 +78,12 @@ import art_room_tartarus_common_obstacle_7 from '../assets/sprites/tiles/tartaru
 import art_room_tartarus_common_floor_8 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_8.png';
 import art_room_tartarus_common_obstacle_8 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_8.png';
 
+import art_room_tartarus_common_floor_9 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_9.png';
+import art_room_tartarus_common_obstacle_9 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_9.png';
+
+import art_room_tartarus_common_floor_10 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_10.png';
+import art_room_tartarus_common_obstacle_10 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_10.png';
+
 import art_room_tartarus_boss_floor from '../assets/sprites/tiles/tartarus/room_tartarus_boss_floor.png';
 import art_room_tartarus_boss_obstacle from '../assets/sprites/tiles/tartarus/room_tartarus_boss_obstacle.png';
 import { ENEMY_PRESET_ID, ENEMY_PRESETS, ENTITY_TYPE } from './entity';
@@ -577,5 +583,108 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
     ]),
     artFloor: art_room_tartarus_common_floor_8,
     artObstacle: art_room_tartarus_common_obstacle_8,
+  },
+  {
+    ...BASE_ROOM,
+    id: 9,
+    type: ROOM_TYPE.COMMON,
+    roomTileMatrix: [
+      [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3],
+      [3, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3],
+      [4, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 4],
+      [4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+      [4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+      [3, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 3],
+      [3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 3],
+      [3, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 3],
+      [3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+    ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 2,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 3,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 4,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['7,7', [ENTITY_TYPE.ENEMY, 1]],
+      ['8,14', [ENTITY_TYPE.ENEMY, 2]],
+      ['12,9', [ENTITY_TYPE.ENEMY, 3]],
+      ['13,11', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
+    artFloor: art_room_tartarus_common_floor_9,
+    artObstacle: art_room_tartarus_common_obstacle_9,
+  },
+  {
+    ...BASE_ROOM,
+    id: 10,
+    type: ROOM_TYPE.COMMON,
+    roomTileMatrix: [
+      [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      [3, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 0, 0, 0, 2, 1, 0, 0, 2, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 3],
+      [3, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+      [4, 1, 1, 1, 1, 1, 1, 1, 2, 1, 5, 1, 2, 1, 1, 1, 1, 1, 1, 1, 4],
+      [4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+      [3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 0, 0, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 3],
+      [3, 1, 2, 2, 0, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 3],
+      [3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 3],
+      [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+    ],
+    enemies: [
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+        id: 1,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+        id: 2,
+      },
+      {
+        ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+        id: 3,
+      },
+    ],
+    roomEntityPositions: new Map([
+      ['8,8', [ENTITY_TYPE.ENEMY, 1]],
+      ['12,12', [ENTITY_TYPE.ENEMY, 2]],
+      ['14,7', [ENTITY_TYPE.ENEMY, 3]],
+    ]),
+    artFloor: art_room_tartarus_common_floor_10,
+    artObstacle: art_room_tartarus_common_obstacle_10,
   },
 ];
