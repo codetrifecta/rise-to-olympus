@@ -29,12 +29,14 @@ export const PlayerControlPanel: FC = () => {
     isRoomOver,
     isGameOver,
     // isInventoryOpen,
+    gameSpeed,
     isGameLogOpen,
     isCharacterSheetOpen,
     isGenerateRoomOpen,
     isCompendiumOpen,
     isMinimapOpen,
     isEntityMoving,
+    setGameSpeed,
     setIsCharacterSheetOpen,
     // setIsInventoryOpen,
     setIsGameLogOpen,
@@ -137,6 +139,43 @@ export const PlayerControlPanel: FC = () => {
       isEntityMoving
     );
   }, [isGameOver, turnCycle, isEntityMoving]);
+
+  const gameSpeedButton = useMemo(() => {
+    switch (gameSpeed) {
+      case 1:
+        return (
+          <Icon
+            icon={ICON_ID.ONE}
+            width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+            height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+          />
+        );
+      case 2:
+        return (
+          <Icon
+            icon={ICON_ID.TWO}
+            width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+            height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+          />
+        );
+      case 3:
+        return (
+          <Icon
+            icon={ICON_ID.THREE}
+            width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+            height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+          />
+        );
+      default:
+        return (
+          <Icon
+            icon={ICON_ID.ONE}
+            width={PLAYER_CONTROL_PANEL_ICON_SIZE}
+            height={PLAYER_CONTROL_PANEL_ICON_SIZE}
+          />
+        );
+    }
+  }, [gameSpeed]);
 
   return (
     <div
@@ -457,7 +496,7 @@ export const PlayerControlPanel: FC = () => {
                   <p></p>
                 </Tooltip>
               </div>
-              <div className="absolute right-0">
+              <div className="absolute right-[-10%]">
                 <IconButton
                   onClick={() => {
                     handleEndTurnClick();
@@ -486,12 +525,28 @@ export const PlayerControlPanel: FC = () => {
               </div>
             </div>
 
-            {/* Placeholder */}
-            <div></div>
-
             {/* Tool buttons */}
-            {/* <div className="flex justify-center gap-5 col-span-1">
+            <div className="flex justify-center items-center gap-5 col-span-1">
               <div className="relative">
+                <IconButton
+                  onClick={() => {
+                    console.log('Speed Up Button');
+                    if (gameSpeed === 1) {
+                      setGameSpeed(2);
+                    } else if (gameSpeed === 2) {
+                      setGameSpeed(3);
+                    } else if (gameSpeed === 3) {
+                      setGameSpeed(1);
+                    }
+                  }}
+                >
+                  {gameSpeedButton}
+                </IconButton>
+                <Tooltip width={200}>
+                  <h2>{gameSpeed}x Speed</h2>
+                </Tooltip>
+              </div>
+              {/* <div className="relative">
                 <IconButton
                   onClick={() => {
                     setIsCharacterSheetOpen(false);
@@ -509,8 +564,8 @@ export const PlayerControlPanel: FC = () => {
                   <h2>Generate Room</h2>
                   <p>Customize room layout</p>
                 </Tooltip>
-              </div>
-            </div> */}
+              </div> */}
+            </div>
           </div>
         )}
       </div>

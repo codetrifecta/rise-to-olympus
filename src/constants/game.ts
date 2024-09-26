@@ -5,3 +5,5 @@ export const PLAYER_CONTROL_PANEL_HEIGHT = PLAYER_CONTROL_PANEL_ICON_SIZE + 6;
 export const ROOM_LENGTH = 15;
 
 export const MAX_SKILL_SLOTS = 4;
+
+export const BASE_MOVEMENT_TIME = 500;

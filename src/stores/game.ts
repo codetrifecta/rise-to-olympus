@@ -29,6 +29,7 @@ interface IGameStateStore {
   isCameraMoving: boolean;
   isEntityMoving: boolean;
   maxSkillSlots: number;
+  gameSpeed: number;
   setDoorPositions: (doorPositions: [number, number][]) => void;
   setHoveredTile: (hoveredTile: [number, number] | null) => void;
   setRoomLength: (roomLength: number) => void;
@@ -57,6 +58,7 @@ interface IGameStateStore {
   setIsCameraMoving: (isCameraMoving: boolean) => void;
   setIsEntityMoving: (isEntityMoving: boolean) => void;
   setMaxSkillSlots: (maxSkillSlots: number) => void;
+  setGameSpeed: (gameSpeed: number) => void;
 
   resetGameState: () => void;
 }
@@ -88,6 +90,7 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   isCameraMoving: false,
   isEntityMoving: false,
   maxSkillSlots: MAX_SKILL_SLOTS,
+  gameSpeed: 1,
 
   setDoorPositions: (doorPositions: [number, number][]) =>
     set({ doorPositions }),
@@ -170,6 +173,8 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   setIsEntityMoving: (isEntityMoving: boolean) => set({ isEntityMoving }),
 
   setMaxSkillSlots: (maxSkillSlots: number) => set({ maxSkillSlots }),
+
+  setGameSpeed: (gameSpeed: number) => set({ gameSpeed }),
 
   resetGameState: () => {
     set({

@@ -69,6 +69,7 @@ import { ROOM_TYPE } from '../../constants/room';
 import { BASE_FLOOR, FLOOR_ID } from '../../constants/floor';
 import { generateFloorRoomsAndChestItems } from '../../utils/floor';
 import { useCampaignStore } from '../../stores/campaign';
+import { BASE_MOVEMENT_TIME } from '../../constants/game';
 
 export const RoomLogic: FC<{
   currentHoveredEntity: IEntity | null;
@@ -91,6 +92,7 @@ export const RoomLogic: FC<{
     prevTurnCycle,
     setTurnCycle,
     endTurn,
+    gameSpeed,
     isRoomOver,
     isGameOver,
     isCameraMoving,
@@ -127,6 +129,10 @@ export const RoomLogic: FC<{
 
   const { selectedCampaign, campaigns, setCampaigns, setSelectedCampaign } =
     useCampaignStore();
+
+  const movementTime = useMemo(() => {
+    return BASE_MOVEMENT_TIME / gameSpeed;
+  }, [gameSpeed]);
 
   // When player changes room, check if the room is over and set it to true if it is
   useEffect(() => {
@@ -519,7 +525,7 @@ export const RoomLogic: FC<{
         };
 
         // Wait for a short time before enemy can move or attack
-        await sleep(1000);
+        await sleep(1000 / gameSpeed);
 
         // Check if enemy can move or attack
         if (cannotMove && cannotAttack) {
@@ -569,7 +575,7 @@ export const RoomLogic: FC<{
 
                 enemyAP -= 2;
                 setEnemy(newEnemy);
-                await sleep(1500);
+                await sleep(1500 / gameSpeed);
               }
 
               if (newPlayer.health <= 0) {
@@ -631,7 +637,7 @@ export const RoomLogic: FC<{
 
                 enemyAP -= 2;
                 setEnemy(newEnemy);
-                await sleep(1500);
+                await sleep(1500 / gameSpeed);
               }
             } else {
               addLog({
@@ -714,7 +720,7 @@ export const RoomLogic: FC<{
             type: 'info',
           });
 
-          await sleep(1000);
+          await sleep(1000 / gameSpeed);
           endTurn();
         }
       }
@@ -1448,7 +1454,7 @@ export const RoomLogic: FC<{
 
       // Delete the first element in the path array
       path = path.slice(1);
-      await sleep(isRoomOver ? 250 : 500);
+      await sleep(isRoomOver ? 250 : movementTime);
 
       if (path.length === 0) {
         setIsEntityMoving(false);
@@ -1869,7 +1875,7 @@ export const RoomLogic: FC<{
       newEnemyPosition = [row, col];
 
       // Delete the first element in the path array
-      await sleep(500);
+      await sleep(movementTime);
       shortestPath = shortestPath.slice(1);
 
       if (shortestPath.length === 0) {
