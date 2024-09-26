@@ -151,7 +151,7 @@ export const BASE_FIRE_STAFF: IWeapon = {
   attackType: WEAPON_ATTACK_TYPE.RANGED,
   type: WEAPON_TYPE.STAFF,
   itemType: ITEM_TYPE.WEAPON,
-  damageMultiplier: 0.3,
+  damageMultiplier: 0.6,
   stats: {
     strength: 1,
     intelligence: 10,
@@ -169,7 +169,7 @@ export const BASE_ICE_STAFF: IWeapon = {
   attackType: WEAPON_ATTACK_TYPE.RANGED,
   type: WEAPON_TYPE.STAFF,
   itemType: ITEM_TYPE.WEAPON,
-  damageMultiplier: 0.3,
+  damageMultiplier: 0.6,
   stats: {
     strength: 1,
     intelligence: 6,
@@ -187,12 +187,12 @@ export const BASE_EARTH_STAFF: IWeapon = {
   attackType: WEAPON_ATTACK_TYPE.RANGED,
   type: WEAPON_TYPE.STAFF,
   itemType: ITEM_TYPE.WEAPON,
-  damageMultiplier: 0.3,
+  damageMultiplier: 0.6,
   stats: {
     strength: 1,
     intelligence: 5,
     defense: 10,
-    constitution: 10,
+    constitution: 3,
   },
   range: 8,
   cost: 2,
