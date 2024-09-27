@@ -1588,7 +1588,7 @@ export const RoomLogic: FC<{
 
       if (newRow === playerPosition[0] && newCol === playerPosition[1]) {
         playerIsInCardinalDirection = true;
-        return;
+        break;
       }
     }
 
