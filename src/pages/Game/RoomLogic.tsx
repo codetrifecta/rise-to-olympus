@@ -915,6 +915,17 @@ export const RoomLogic: FC<{
     currentRoom,
   ]);
 
+  // Get chest position in the room matrix
+  const chestTilePosition = useMemo(() => {
+    for (let i = 0; i < roomLength; i++) {
+      for (let j = 0; j < roomLength; j++) {
+        if (roomTileMatrix[i][j] === TILE_TYPE.CHEST) {
+          return [i, j];
+        }
+      }
+    }
+  }, [roomTileMatrix]);
+
   // Debounce hovered tile
   const debouncedSetHoveredTile = debounce(setHoveredTile, 100);
 
@@ -1534,6 +1545,123 @@ export const RoomLogic: FC<{
 
     if (!isRoomOver) {
       setPlayerActionPoints(player.actionPoints - playerMovementAPCost);
+    }
+  };
+
+  // Handle player moving near a chest
+  const handlePlayerMoveToOpenChest = async (row: number, col: number) => {
+    // Check if clicked tile is a chest tile
+    if (
+      chestTilePosition &&
+      (row !== chestTilePosition[0] || col !== chestTilePosition[1])
+    ) {
+      console.error('Player did not click on a chest tile!');
+      return;
+    }
+
+    // Check if entity is moving
+    if (isEntityMoving) {
+      console.error('Entity is moving!');
+      return;
+    }
+
+    // Return id chest is already opened
+    if (isChestOpen) {
+      return;
+    }
+
+    // Check if player is within the cardian directions of the chest
+    // Cardinal direction array
+    const cardinalDirections = [
+      [0, 1],
+      [0, -1],
+      [1, 0],
+      [-1, 0],
+    ];
+
+    let playerIsInCardinalDirection = false;
+
+    for (let i = 0; i < cardinalDirections.length; i++) {
+      const direction = cardinalDirections[i];
+      const newRow = row + direction[0];
+      const newCol = col + direction[1];
+
+      if (newRow === playerPosition[0] && newCol === playerPosition[1]) {
+        playerIsInCardinalDirection = true;
+        return;
+      }
+    }
+
+    if (!playerIsInCardinalDirection) {
+      const possibleTiles: [number, number][] = [];
+
+      // Get cardinal tiles around the chest
+      cardinalDirections.forEach((direction) => {
+        const newRow = row + direction[0];
+        const newCol = col + direction[1];
+
+        if (
+          newRow >= 0 &&
+          newRow < roomLength &&
+          newCol >= 0 &&
+          newCol < roomLength &&
+          roomTileMatrix[newRow][newCol] === TILE_TYPE.FLOOR
+        ) {
+          possibleTiles.push([newRow, newCol]);
+        }
+      });
+
+      console.log('handlePlayerMoveToOpenChest: possibleTiles', possibleTiles);
+
+      const path = findPathsFromCurrentLocation(
+        playerPosition,
+        roomTileMatrix,
+        roomLength * 1.5,
+        roomEntityPositions
+      );
+
+      // Check for cardinal tiles around the chest
+      let tileToMoveTo: [number, number] | null = null;
+
+      // Out of the 4 possible cardinal tiles, find the shortest path from the player to the chest
+      let shortestPathLength: number | null = null;
+
+      // USE REGULAR FOR LOOP
+      for (let i = 0; i < possibleTiles.length; i++) {
+        const tile = possibleTiles[i];
+        const pathToTile = path.get(`${tile[0]},${tile[1]}`);
+
+        if (!pathToTile) {
+          continue;
+        }
+
+        if (shortestPathLength === null) {
+          shortestPathLength = pathToTile.length;
+          tileToMoveTo = tile;
+          continue;
+        }
+
+        if (shortestPathLength && pathToTile.length < shortestPathLength) {
+          shortestPathLength = pathToTile.length;
+          tileToMoveTo = tile;
+        }
+      }
+
+      if (!tileToMoveTo) {
+        console.error('No tile to move to found!');
+        return;
+      }
+
+      await handlePlayerMove(tileToMoveTo[0], tileToMoveTo[1]);
+    }
+
+    if (isChestOpen) {
+      setIsChestOpen(false);
+      setIsCharacterSheetOpen(false);
+    } else {
+      setIsChestOpen(true);
+      setIsCharacterSheetOpen(true);
+      displayGeneralMessage(`tile_${player.entityType}_${player.id}`, 'Loot!');
     }
   };
 
@@ -2891,28 +3019,7 @@ export const RoomLogic: FC<{
                   } else if (tileType === TILE_TYPE.FLOOR) {
                     handlePlayerMove(rowIndex, columnIndex);
                   } else if (tileType === TILE_TYPE.CHEST) {
-                    // Only open chest if player is within 1 tile of the chest
-                    if (
-                      Math.abs(playerRow - rowIndex) <= 1 &&
-                      Math.abs(playerCol - columnIndex) <= 1
-                    ) {
-                      if (isChestOpen) {
-                        setIsChestOpen(false);
-                        setIsCharacterSheetOpen(false);
-                      } else {
-                        setIsChestOpen(true);
-                        setIsCharacterSheetOpen(true);
-                        displayGeneralMessage(
-                          `tile_${player.entityType}_${player.id}`,
-                          'Loot!'
-                        );
-                      }
-                    } else {
-                      displayGeneralMessage(
-                        `tile_${player.entityType}_${player.id}`,
-                        'Too far away!'
-                      );
-                    }
+                    handlePlayerMoveToOpenChest(rowIndex, columnIndex);
                   }
 
                   return;
