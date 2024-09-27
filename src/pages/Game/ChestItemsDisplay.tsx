@@ -305,23 +305,22 @@ const WeaponCard: FC<{
             ) : null}
           </p>
         )}
-        {weapon.stats.constitution > 0 ||
-          (constitutionDiff !== 0 && (
-            <p className={clsx(cardParagraphClasses)}>
-              Constitution: {weapon.stats.constitution}
-              {constitutionDiff !== 0 ? (
-                constitutionDiff > 0 ? (
-                  <span className="text-green-600 ml-2">
-                    +{Math.abs(constitutionDiff)}
-                  </span>
-                ) : (
-                  <span className="text-red-600 ml-2">
-                    -{Math.abs(constitutionDiff)}
-                  </span>
-                )
-              ) : null}
-            </p>
-          ))}
+        {(weapon.stats.constitution > 0 || constitutionDiff !== 0) && (
+          <p className={clsx(cardParagraphClasses)}>
+            Constitution: {weapon.stats.constitution}
+            {constitutionDiff !== 0 ? (
+              constitutionDiff > 0 ? (
+                <span className="text-green-600 ml-2">
+                  +{Math.abs(constitutionDiff)}
+                </span>
+              ) : (
+                <span className="text-red-600 ml-2">
+                  -{Math.abs(constitutionDiff)}
+                </span>
+              )
+            ) : null}
+          </p>
+        )}
         <p className={clsx(cardParagraphClasses)}>
           Range: {weapon.range}
           {rangeDiff !== 0 ? (
