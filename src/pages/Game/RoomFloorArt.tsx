@@ -34,7 +34,7 @@ export const RoomFloorArt: FC<{
       return;
     }
 
-    let imgSrc = currentRoom.artFloor;
+    let imgSrc = currentRoom.artBackground;
 
     if (!imgSrc) {
       imgSrc = defaultRoom;

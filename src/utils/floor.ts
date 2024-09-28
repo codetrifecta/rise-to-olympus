@@ -848,8 +848,8 @@ export const generateFloorRoomsAndChestItems = (): [
           roomTileMatrix: roomFromQueue.roomTileMatrix,
           enemies: scaledEnemies,
           roomEntityPositions: roomFromQueue.roomEntityPositions,
-          artFloor: roomFromQueue.artFloor,
-          artObstacle: roomFromQueue.artObstacle,
+          artBackground: roomFromQueue.artBackground,
+          artForeground: roomFromQueue.artForeground,
         };
       } else if (room.type === ROOM_TYPE.BOSS) {
         const tartarusBossRoom = { ...ROOM_TARTARUS_BOSS };
@@ -885,8 +885,8 @@ export const generateFloorRoomsAndChestItems = (): [
           roomTileMatrix: tartarusBossRoom.roomTileMatrix,
           enemies: scaledEnemies,
           roomEntityPositions: tartarusBossRoom.roomEntityPositions,
-          artFloor: tartarusBossRoom.artFloor,
-          artObstacle: tartarusBossRoom.artObstacle,
+          artBackground: tartarusBossRoom.artBackground,
+          artForeground: tartarusBossRoom.artForeground,
         };
       } else if (room.type === ROOM_TYPE.NULL) {
         return {

@@ -47,7 +47,7 @@ export const RoomObstacleArt: FC<{
       return;
     }
 
-    const imgSrc = currentRoom.artObstacle;
+    const imgSrc = currentRoom.artForeground;
 
     image.src = imgSrc;
 
@@ -56,10 +56,10 @@ export const RoomObstacleArt: FC<{
       context.reset();
       context.imageSmoothingEnabled = false;
 
-      if (!currentRoom.artObstacle) {
+      if (!currentRoom.artForeground) {
         // console.log(
         //   'RoomObstacleArt: No obstacle art',
-        //   currentRoom.artObstacle
+        //   currentRoom.artForeground
         // );
         context.clearRect(0, 0, canvas.width, canvas.height);
         return;

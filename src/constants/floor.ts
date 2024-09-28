@@ -79,8 +79,8 @@ export const FLOOR_TARTARUS_CAMP: IFloor = {
           [3, 1, 1, 1, 1, 1, 1, 1, 3],
           [3, 3, 3, 3, 3, 3, 3, 3, 3],
         ],
-        artFloor: art_room_tartarus_camp_floor,
-        artObstacle: '',
+        artBackground: art_room_tartarus_camp_floor,
+        artForeground: '',
         artWall: art_room_tartarus_camp_wall,
       },
     ],
@@ -161,8 +161,8 @@ const createTutorialFloorRooms = () => {
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
-    artFloor: art_room_tutorial_floor_4,
-    artObstacle: art_room_tutorial_obstacle_4,
+    artBackground: art_room_tutorial_floor_4,
+    artForeground: art_room_tutorial_obstacle_4,
   };
   tutorialFloor[1][2] = {
     ...tutorialFloor[1][2],
@@ -211,8 +211,8 @@ const createTutorialFloorRooms = () => {
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
-    artFloor: art_room_tutorial_floor_3,
-    artObstacle: art_room_tutorial_obstacle_3,
+    artBackground: art_room_tutorial_floor_3,
+    artForeground: art_room_tutorial_obstacle_3,
   };
   tutorialFloor[2][2] = {
     ...tutorialFloor[2][2],
@@ -261,8 +261,8 @@ const createTutorialFloorRooms = () => {
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
-    artFloor: art_room_tutorial_floor_2,
-    artObstacle: art_room_tutorial_obstacle_2,
+    artBackground: art_room_tutorial_floor_2,
+    artForeground: art_room_tutorial_obstacle_2,
   };
   tutorialFloor[2][1] = {
     ...tutorialFloor[2][1],
@@ -293,8 +293,8 @@ const createTutorialFloorRooms = () => {
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
-    artFloor: art_room_tutorial_floor,
-    artObstacle: art_room_tutorial_obstacle,
+    artBackground: art_room_tutorial_floor,
+    artForeground: art_room_tutorial_obstacle,
   };
 
   return tutorialFloor;
