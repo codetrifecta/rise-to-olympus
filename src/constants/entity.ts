@@ -51,7 +51,7 @@ export const PLAYER: IPlayer = {
   id: 1,
   name: 'Kratos',
   sprite: SPRITE_ID.PLAYER_16,
-  spriteSize: TILE_SIZE * 1.5,
+  spriteSize: TILE_SIZE * 1.7,
   spritesheetRows: 12,
   spritesheetColumns: 6,
   spritesheetIdleRow: 0,

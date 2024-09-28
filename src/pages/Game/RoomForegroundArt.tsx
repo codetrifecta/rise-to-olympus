@@ -5,7 +5,7 @@ import { useGameStateStore } from '../../stores/game';
 import { useFloorStore } from '../../stores/floor';
 // import { ENTITY_TYPE } from '../../constants/entity';
 
-export const RoomObstacleArt: FC<{
+export const RoomForegroundArt: FC<{
   width: number;
   height: number;
   grayscale?: boolean;
@@ -29,7 +29,7 @@ export const RoomObstacleArt: FC<{
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {
-      console.error('RoomObstacleArt: No canvas');
+      console.error('RoomForegroundArt: No canvas');
       return;
     }
 
@@ -38,12 +38,12 @@ export const RoomObstacleArt: FC<{
     const image = new Image();
 
     if (!currentRoom) {
-      console.error('RoomObstacleArt: No current room');
+      console.error('RoomForegroundArt: No current room');
       return;
     }
 
     if (!floor) {
-      console.error('RoomObstacleArt: No current floor');
+      console.error('RoomForegroundArt: No current floor');
       return;
     }
 
@@ -58,7 +58,7 @@ export const RoomObstacleArt: FC<{
 
       if (!currentRoom.artForeground) {
         // console.log(
-        //   'RoomObstacleArt: No obstacle art',
+        //   'RoomForegroundArt: No obstacle art',
         //   currentRoom.artForeground
         // );
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -138,7 +138,7 @@ export const RoomObstacleArt: FC<{
           entityRender.style.height.replace('px', '')
         );
 
-        const cutOffHeight = TILE_SIZE * 2.1;
+        const cutOffHeight = TILE_SIZE * 1.5;
         const cutOffWidth = TILE_SIZE * 2.3;
 
         // Initially start right at the entity's position
