@@ -23,6 +23,8 @@ import { useGameStateStore } from '../../stores/game';
 import { CHECKPOINT } from '../../constants/campaign';
 import { SKILLS } from '../../constants/skill';
 import { isCampaign } from '../../utils/campaign';
+import { SKILL_ANIMATION_PRESET } from '../../constants/skillAnimation';
+import { useSkillAnimationStore } from '../../stores/skillAnimation';
 
 export const Game = () => {
   const { selectedCampaign, campaigns, setSelectedCampaign, setCampaigns } =
@@ -41,6 +43,8 @@ export const Game = () => {
     setIsCharacterSheetOpen,
     setIsChestOpen,
   } = useGameStateStore();
+
+  const { setCurrentSkillAnimation } = useSkillAnimationStore();
 
   const [escModalOpen, setEscModalOpen] = useState(false);
 
@@ -209,6 +213,17 @@ export const Game = () => {
       setIsMinimapOpen(false);
 
       console.log('Skipping tutorial and going to camp');
+    }
+
+    // Initialize skill animations so they are ready to play
+
+    for (const skillAnimationPreset in SKILL_ANIMATION_PRESET) {
+      const skillAnimation = SKILL_ANIMATION_PRESET[skillAnimationPreset];
+      // console.log('Skill animation:', skillAnimation);
+
+      skillAnimation.position = [-100, -100];
+
+      setCurrentSkillAnimation(skillAnimation);
     }
   }, [searchParams]);
 
