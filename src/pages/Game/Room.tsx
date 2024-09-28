@@ -24,13 +24,6 @@ export const Room: FC<{
         height: roomLength * TILE_SIZE,
       }}
     >
-      <div className="absolute top-0 left-0 z-20 ">
-        <RoomForegroundArt
-          width={roomLength * TILE_SIZE}
-          height={roomLength * TILE_SIZE}
-        />
-        <SkillAnimation />
-      </div>
       <div
         id="entity_sprite_positions"
         className="absolute top-0 left-0 z-[15] "
@@ -38,6 +31,13 @@ export const Room: FC<{
         <EntitySpritePositions
           setCurrentHoveredEntity={setCurrentHoveredEntity}
         />
+        <div className="absolutetop-0 left-0 z-20 ">
+          <RoomForegroundArt
+            width={roomLength * TILE_SIZE}
+            height={roomLength * TILE_SIZE}
+          />
+          <SkillAnimation />
+        </div>
       </div>
       <div className="absolute z-10">
         <RoomLogic

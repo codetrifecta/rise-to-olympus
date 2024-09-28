@@ -2,17 +2,17 @@ import { IArmor, IFloor, IRoom, Item, IWeapon } from '../types';
 import { ENEMY_PRESET_ID, ENEMY_PRESETS, ENTITY_TYPE } from './entity';
 import { BASE_ROOM, ROOM_TYPE } from './room';
 
-import art_room_tutorial_floor from '../assets/sprites/tiles/tutorial/room_tutorial_floor.png';
-import art_room_tutorial_obstacle from '../assets/sprites/tiles/tutorial/room_tutorial_obstacle.png';
+import art_room_tutorial_background from '../assets/sprites/tiles/tutorial/room_tutorial_background.png';
+import art_room_tutorial_foreground from '../assets/sprites/tiles/tutorial/room_tutorial_foreground.png';
 
-import art_room_tutorial_floor_2 from '../assets/sprites/tiles/tutorial/room_tutorial_floor_2.png';
-import art_room_tutorial_obstacle_2 from '../assets/sprites/tiles/tutorial/room_tutorial_obstacle_2.png';
+import art_room_tutorial_common_background_02 from '../assets/sprites/tiles/tutorial/room_tutorial_common_background_02.png';
+import art_room_tutorial_common_foreground_02 from '../assets/sprites/tiles/tutorial/room_tutorial_common_foreground_02.png';
 
-import art_room_tutorial_floor_3 from '../assets/sprites/tiles/tutorial/room_tutorial_floor_3.png';
-import art_room_tutorial_obstacle_3 from '../assets/sprites/tiles/tutorial/room_tutorial_obstacle_3.png';
+import art_room_tutorial_common_background_03 from '../assets/sprites/tiles/tutorial/room_tutorial_common_background_03.png';
+import art_room_tutorial_common_foreground_03 from '../assets/sprites/tiles/tutorial/room_tutorial_common_foreground_03.png';
 
-import art_room_tutorial_floor_4 from '../assets/sprites/tiles/tutorial/room_tutorial_floor_4.png';
-import art_room_tutorial_obstacle_4 from '../assets/sprites/tiles/tutorial/room_tutorial_obstacle_4.png';
+import art_room_tutorial_boss_background from '../assets/sprites/tiles/tutorial/room_tutorial_boss_background.png';
+import art_room_tutorial_boss_foreground from '../assets/sprites/tiles/tutorial/room_tutorial_boss_foreground.png';
 
 import art_room_tartarus_camp_floor from '../assets/sprites/tiles/tartarus/room_tartarus_camp_floor.png';
 import art_room_tartarus_camp_wall from '../assets/sprites/tiles/tartarus/room_tartarus_camp_wall.png';
@@ -161,8 +161,8 @@ const createTutorialFloorRooms = () => {
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
-    artBackground: art_room_tutorial_floor_4,
-    artForeground: art_room_tutorial_obstacle_4,
+    artBackground: art_room_tutorial_boss_background,
+    artForeground: art_room_tutorial_boss_foreground,
   };
   tutorialFloor[1][2] = {
     ...tutorialFloor[1][2],
@@ -211,8 +211,8 @@ const createTutorialFloorRooms = () => {
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
-    artBackground: art_room_tutorial_floor_3,
-    artForeground: art_room_tutorial_obstacle_3,
+    artBackground: art_room_tutorial_common_background_03,
+    artForeground: art_room_tutorial_common_foreground_03,
   };
   tutorialFloor[2][2] = {
     ...tutorialFloor[2][2],
@@ -261,8 +261,8 @@ const createTutorialFloorRooms = () => {
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
-    artBackground: art_room_tutorial_floor_2,
-    artForeground: art_room_tutorial_obstacle_2,
+    artBackground: art_room_tutorial_common_background_02,
+    artForeground: art_room_tutorial_common_foreground_02,
   };
   tutorialFloor[2][1] = {
     ...tutorialFloor[2][1],
@@ -293,8 +293,8 @@ const createTutorialFloorRooms = () => {
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
     ],
-    artBackground: art_room_tutorial_floor,
-    artForeground: art_room_tutorial_obstacle,
+    artBackground: art_room_tutorial_background,
+    artForeground: art_room_tutorial_foreground,
   };
 
   return tutorialFloor;
