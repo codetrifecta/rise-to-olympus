@@ -211,8 +211,8 @@ export interface IRoom {
   roomEntityPositions: Map<string, [ENTITY_TYPE, number]>;
   roomLength: number;
   roomTileMatrix: TILE_TYPE[][];
-  artFloor: string;
-  artObstacle: string;
+  artBackground: string;
+  artForeground: string;
   artWall: string;
 }
 

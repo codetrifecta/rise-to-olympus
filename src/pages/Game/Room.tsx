@@ -4,7 +4,7 @@ import { useGameStateStore } from '../../stores/game';
 import { EntitySpritePositions } from './EntitySpritePositions';
 import { RoomDoorArt } from './RoomDoorArt';
 import { RoomFloorArt } from './RoomFloorArt';
-import { RoomObstacleArt } from './RoomObstacleArt';
+import { RoomForegroundArt } from './RoomForegroundArt';
 import { RoomWallArt } from './RoomWallArt';
 import { SkillAnimation } from './SkillAnimation';
 import { IEntity } from '../../types';
@@ -24,15 +24,20 @@ export const Room: FC<{
         height: roomLength * TILE_SIZE,
       }}
     >
-      <div id="entity_sprite_positions" className="absolute top-0 left-0 z-20 ">
-        <EntitySpritePositions
-          setCurrentHoveredEntity={setCurrentHoveredEntity}
-        />
-        <RoomObstacleArt
+      <div className="absolute top-0 left-0 z-20 ">
+        <RoomForegroundArt
           width={roomLength * TILE_SIZE}
           height={roomLength * TILE_SIZE}
         />
         <SkillAnimation />
+      </div>
+      <div
+        id="entity_sprite_positions"
+        className="absolute top-0 left-0 z-[15] "
+      >
+        <EntitySpritePositions
+          setCurrentHoveredEntity={setCurrentHoveredEntity}
+        />
       </div>
       <div className="absolute z-10">
         <RoomLogic

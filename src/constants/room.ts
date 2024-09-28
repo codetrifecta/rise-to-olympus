@@ -1,7 +1,8 @@
 import { IRoom } from '../types';
-import art_room_tutorial_floor from '../assets/sprites/tiles/tutorial/room_tutorial_floor.png';
-import art_room_tutorial_obstacle from '../assets/sprites/tiles/tutorial/room_tutorial_obstacle.png';
 import art_room_tutorial_wall from '../assets/sprites/tiles/tutorial/room_tutorial_wall.png';
+
+import art_room_tutorial_background from '../assets/sprites/tiles/tutorial/room_tutorial_background.png';
+import art_room_tutorial_foreground from '../assets/sprites/tiles/tutorial/room_tutorial_foreground.png';
 
 export enum ROOM_TYPE {
   NULL = 0,
@@ -49,43 +50,43 @@ export const BASE_ROOM: IRoom = {
     [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
     [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   ],
-  artFloor: art_room_tutorial_floor,
-  artObstacle: art_room_tutorial_obstacle,
+  artBackground: art_room_tutorial_background,
+  artForeground: art_room_tutorial_foreground,
   artWall: art_room_tutorial_wall,
 };
 
-import art_room_tartarus_common_floor_01 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_01.png';
-import art_room_tartarus_common_obstacle_01 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_01.png';
+import art_room_tartarus_common_background_01 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_01.png';
+import art_room_tartarus_common_foreground_01 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_01.png';
 
-import art_room_tartarus_common_floor_02 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_02.png';
-import art_room_tartarus_common_obstacle_02 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_02.png';
+import art_room_tartarus_common_background_02 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_02.png';
+import art_room_tartarus_common_foreground_02 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_02.png';
 
-import art_room_tartarus_common_floor_03 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_03.png';
-import art_room_tartarus_common_obstacle_03 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_03.png';
+import art_room_tartarus_common_background_03 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_03.png';
+import art_room_tartarus_common_foreground_03 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_03.png';
 
-import art_room_tartarus_common_floor_04 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_04.png';
-import art_room_tartarus_common_obstacle_04 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_04.png';
+import art_room_tartarus_common_background_04 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_04.png';
+import art_room_tartarus_common_foreground_04 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_04.png';
 
-import art_room_tartarus_common_floor_05 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_05.png';
-import art_room_tartarus_common_obstacle_05 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_05.png';
+import art_room_tartarus_common_background_05 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_05.png';
+import art_room_tartarus_common_foreground_05 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_05.png';
 
-import art_room_tartarus_common_floor_06 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_06.png';
-import art_room_tartarus_common_obstacle_06 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_06.png';
+import art_room_tartarus_common_background_06 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_06.png';
+import art_room_tartarus_common_foreground_06 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_06.png';
 
-import art_room_tartarus_common_floor_07 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_07.png';
-import art_room_tartarus_common_obstacle_07 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_07.png';
+import art_room_tartarus_common_background_07 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_07.png';
+import art_room_tartarus_common_foreground_07 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_07.png';
 
-import art_room_tartarus_common_floor_08 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_08.png';
-import art_room_tartarus_common_obstacle_08 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_08.png';
+import art_room_tartarus_common_background_08 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_08.png';
+import art_room_tartarus_common_foreground_08 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_08.png';
 
-import art_room_tartarus_common_floor_09 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_09.png';
-import art_room_tartarus_common_obstacle_09 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_09.png';
+import art_room_tartarus_common_background_09 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_09.png';
+import art_room_tartarus_common_foreground_09 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_09.png';
 
-import art_room_tartarus_common_floor_10 from '../assets/sprites/tiles/tartarus/room_tartarus_common_floor_10.png';
-import art_room_tartarus_common_obstacle_10 from '../assets/sprites/tiles/tartarus/room_tartarus_common_obstacle_10.png';
+import art_room_tartarus_common_background_10 from '../assets/sprites/tiles/tartarus/room_tartarus_common_background_10.png';
+import art_room_tartarus_common_foreground_10 from '../assets/sprites/tiles/tartarus/room_tartarus_common_foreground_10.png';
 
-import art_room_tartarus_boss_floor from '../assets/sprites/tiles/tartarus/room_tartarus_boss_floor.png';
-import art_room_tartarus_boss_obstacle from '../assets/sprites/tiles/tartarus/room_tartarus_boss_obstacle.png';
+import art_room_tartarus_boss_background from '../assets/sprites/tiles/tartarus/room_tartarus_boss_background.png';
+import art_room_tartarus_boss_foreground from '../assets/sprites/tiles/tartarus/room_tartarus_boss_foreground.png';
 import { ENEMY_PRESET_ID, ENEMY_PRESETS, ENTITY_TYPE } from './entity';
 
 export const ROOM_TARTARUS_START: IRoom = {
@@ -117,8 +118,8 @@ export const ROOM_TARTARUS_START: IRoom = {
     [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
     [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   ],
-  artFloor: art_room_tutorial_floor,
-  artObstacle: art_room_tutorial_obstacle,
+  artBackground: art_room_tutorial_background,
+  artForeground: art_room_tutorial_foreground,
 };
 
 export const ROOM_TARTARUS_BOSS: IRoom = {
@@ -172,8 +173,8 @@ export const ROOM_TARTARUS_BOSS: IRoom = {
     ['5,15', [ENTITY_TYPE.ENEMY, 3]],
     ['15,12', [ENTITY_TYPE.ENEMY, 4]],
   ]),
-  artFloor: art_room_tartarus_boss_floor,
-  artObstacle: art_room_tartarus_boss_obstacle,
+  artBackground: art_room_tartarus_boss_background,
+  artForeground: art_room_tartarus_boss_foreground,
 };
 
 export const ROOMS_TARTARUS_COMMON: IRoom[] = [
@@ -228,8 +229,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['11,15', [ENTITY_TYPE.ENEMY, 3]],
       ['15,10', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_01,
-    artObstacle: art_room_tartarus_common_obstacle_01,
+    artBackground: art_room_tartarus_common_background_01,
+    artForeground: art_room_tartarus_common_foreground_01,
   },
   {
     ...BASE_ROOM,
@@ -287,8 +288,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['16,13', [ENTITY_TYPE.ENEMY, 4]],
       ['14,15', [ENTITY_TYPE.ENEMY, 5]],
     ]),
-    artFloor: art_room_tartarus_common_floor_02,
-    artObstacle: art_room_tartarus_common_obstacle_02,
+    artBackground: art_room_tartarus_common_background_02,
+    artForeground: art_room_tartarus_common_foreground_02,
   },
   {
     ...BASE_ROOM,
@@ -331,8 +332,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['8,8', [ENTITY_TYPE.ENEMY, 1]],
       ['13,11', [ENTITY_TYPE.ENEMY, 2]],
     ]),
-    artFloor: art_room_tartarus_common_floor_03,
-    artObstacle: art_room_tartarus_common_obstacle_03,
+    artBackground: art_room_tartarus_common_background_03,
+    artForeground: art_room_tartarus_common_foreground_03,
   },
   {
     ...BASE_ROOM,
@@ -375,8 +376,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['8,10', [ENTITY_TYPE.ENEMY, 1]],
       ['12,10', [ENTITY_TYPE.ENEMY, 2]],
     ]),
-    artFloor: art_room_tartarus_common_floor_04,
-    artObstacle: art_room_tartarus_common_obstacle_04,
+    artBackground: art_room_tartarus_common_background_04,
+    artForeground: art_room_tartarus_common_foreground_04,
   },
   {
     ...BASE_ROOM,
@@ -399,7 +400,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 3],
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 3],
       [3, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 0, 0, 1, 1, 1, 1, 1, 3],
-      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 0, 3],
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 0, 0, 3],
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 2, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3],
@@ -429,8 +430,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['13,8', [ENTITY_TYPE.ENEMY, 3]],
       ['10,12', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_05,
-    artObstacle: art_room_tartarus_common_obstacle_05,
+    artBackground: art_room_tartarus_common_background_05,
+    artForeground: art_room_tartarus_common_foreground_05,
   },
   {
     ...BASE_ROOM,
@@ -473,8 +474,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['7,6', [ENTITY_TYPE.ENEMY, 1]],
       ['16,14', [ENTITY_TYPE.ENEMY, 2]],
     ]),
-    artFloor: art_room_tartarus_common_floor_06,
-    artObstacle: art_room_tartarus_common_obstacle_06,
+    artBackground: art_room_tartarus_common_background_06,
+    artForeground: art_room_tartarus_common_foreground_06,
   },
   {
     ...BASE_ROOM,
@@ -527,8 +528,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['14,1', [ENTITY_TYPE.ENEMY, 3]],
       ['17,19', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_07,
-    artObstacle: art_room_tartarus_common_obstacle_07,
+    artBackground: art_room_tartarus_common_background_07,
+    artForeground: art_room_tartarus_common_foreground_07,
   },
   {
     ...BASE_ROOM,
@@ -581,8 +582,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['6,15', [ENTITY_TYPE.ENEMY, 3]],
       ['15,10', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_08,
-    artObstacle: art_room_tartarus_common_obstacle_08,
+    artBackground: art_room_tartarus_common_background_08,
+    artForeground: art_room_tartarus_common_foreground_08,
   },
   {
     ...BASE_ROOM,
@@ -593,20 +594,20 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
       [3, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3],
-      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
-      [3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3],
+      [3, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3],
       [3, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 3],
       [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
-      [3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3],
-      [4, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 4],
+      [3, 2, 2, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 3],
+      [4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4],
       [4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
-      [4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+      [4, 1, 1, 1, 0, 1, 1, 0, 1, 1, 5, 1, 1, 0, 1, 1, 0, 1, 1, 1, 4],
       [3, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 3],
-      [3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3],
-      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3],
+      [3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 3],
       [3, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 3],
-      [3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+      [3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3],
       [3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3],
       [3, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3],
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -635,8 +636,8 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['12,9', [ENTITY_TYPE.ENEMY, 3]],
       ['13,11', [ENTITY_TYPE.ENEMY, 4]],
     ]),
-    artFloor: art_room_tartarus_common_floor_09,
-    artObstacle: art_room_tartarus_common_obstacle_09,
+    artBackground: art_room_tartarus_common_background_09,
+    artForeground: art_room_tartarus_common_foreground_09,
   },
   {
     ...BASE_ROOM,
@@ -684,7 +685,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
       ['12,12', [ENTITY_TYPE.ENEMY, 2]],
       ['14,7', [ENTITY_TYPE.ENEMY, 3]],
     ]),
-    artFloor: art_room_tartarus_common_floor_10,
-    artObstacle: art_room_tartarus_common_obstacle_10,
+    artBackground: art_room_tartarus_common_background_10,
+    artForeground: art_room_tartarus_common_foreground_10,
   },
 ];
