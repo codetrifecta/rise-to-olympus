@@ -70,6 +70,7 @@ This game was built with the following technologies:
 ## 🛣️ Roadmap
 
 - [x] Toggle button to speed up enemy actions
+- [ ] Upgradable passives (higher base stat, more skill slots, etc)
 - [ ] Refactor obstacle and entity layering to fix entity-obstacle layering bugs
 - [ ] Shop room so players can buy specific equipment
 - [ ] Miniboss room for extra challenge and higher quality loot
