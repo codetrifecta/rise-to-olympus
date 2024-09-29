@@ -31,7 +31,7 @@ export const Room: FC<{
         <EntitySpritePositions
           setCurrentHoveredEntity={setCurrentHoveredEntity}
         />
-        <div className="absolutetop-0 left-0 z-20 ">
+        <div className="absolute top-0 left-0 z-20 ">
           <RoomForegroundArt
             width={roomLength * TILE_SIZE}
             height={roomLength * TILE_SIZE}
