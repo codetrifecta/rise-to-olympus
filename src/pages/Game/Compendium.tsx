@@ -18,6 +18,7 @@ import { Button } from './Button';
 import { useCampaignStore } from '../../stores/campaign';
 import { useFloorStore } from '../../stores/floor';
 import { FLOOR_ID } from '../../constants/floor';
+import { ICON_ID } from '../../constants/icon';
 
 const ICON_SIZE = 50;
 
@@ -304,10 +305,10 @@ export const Compendium: FC = () => {
     }
 
     return (
-      <div className="mb-3">
+      <div className="mb-3 col-span-1">
         <p className="mb-2">{categoryName}</p>
         <div
-          className="flex gap-1 justify-center items-center"
+          className="flex gap-1 flex-wrap justify-center items-center"
           // Grid layout
           // className={`grid gap-1 grid-cols-12`}
           // style={{
@@ -403,7 +404,8 @@ export const Compendium: FC = () => {
         </h3>
       </div>
 
-      <div className="mb-5 flex flex-col">
+      <div className="relative mt-16 mb-5 grid grid-rows-2 grid-cols-5">
+        {/* Row 1: Skills */}
         {renderSkillsByCategory(
           'Strength-Based Damaging Skills',
           strengthBasedSkills
@@ -418,6 +420,50 @@ export const Compendium: FC = () => {
           crowdControlDebuffSkills
         )}
         {renderSkillsByCategory('Movement Skills', movementSkills)}
+
+        {/* Row 2: Passives */}
+        <div className="mb-3 col-span-1">
+          <p className="mb-2">Passives</p>
+          <div
+            className="flex gap-1 flex-wrap justify-center items-center"
+            // Grid layout
+            // className={`grid gap-1 grid-cols-12`}
+            // style={{
+            //   gridTemplateRows: `repeat(${Math.ceil(skills.length / 12)}, ${ICON_SIZE}px)`,
+            // }}
+          >
+            <div
+              className="bg-gray-500 relative"
+              style={{ width: ICON_SIZE, height: ICON_SIZE }}
+            >
+              <div className="flex justify-center items-center">
+                <IconButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('clicked');
+                  }}
+                  // disabled={
+                  //   equippedSkills.find((equippedSkill) => {
+                  //     if (equippedSkill === null) return;
+                  //     return equippedSkill.name === skill.name;
+                  //   })
+                  //     ? true
+                  //     : false
+                  // }
+                  // grayscale={skillIsLocked}
+                  // borderPulse={isAboutToUnlockSkill?.id === skill.id}
+                >
+                  <Icon
+                    icon={ICON_ID.SKILLS}
+                    width={ICON_SIZE - 4}
+                    height={ICON_SIZE - 4}
+                  />
+                </IconButton>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="mb-6 flex justify-center ">
