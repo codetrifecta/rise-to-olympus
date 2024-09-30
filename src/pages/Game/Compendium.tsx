@@ -522,7 +522,7 @@ export const Compendium: FC = () => {
         </h3>
       </div>
 
-      <div className="relative mt-16 mb-5 grid grid-rows-3 grid-cols-2 gap-y-10">
+      <div className="relative mt-16 mb-5 grid grid-rows-3 grid-cols-2 gap-y-10 gap-x-5">
         {/* Row 1: Skills */}
         {renderSkillsByCategory(
           'Strength-Based Damaging Skills',

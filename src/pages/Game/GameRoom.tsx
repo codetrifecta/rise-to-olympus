@@ -614,7 +614,7 @@ export const GameRoom: FC = () => {
 
         {/* Compendium */}
         <section
-          className="fixed z-[60] top-[50%] left-[50%]  shadow-lg flex w-[90%]"
+          className="fixed z-[60] top-[50%] left-[50%]  shadow-lg flex w-[60%]"
           style={{
             maxHeight: `calc(100vh - ${PLAYER_CONTROL_PANEL_HEIGHT}px)`,
             visibility: isCompendiumOpen ? 'visible' : 'hidden',
