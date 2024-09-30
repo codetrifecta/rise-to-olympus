@@ -152,53 +152,18 @@ export const Compendium: FC = () => {
     }
   }, [player.skills, isCompendiumOpen]);
 
-  const renderLockText: (
-    skillOrPassiveID: ISkill | PASSIVE_ID
-  ) => React.ReactNode = (skillOrPassiveID: ISkill | PASSIVE_ID) => {
+  const renderSkillLockText: (skillOrPassiveID: ISkill) => React.ReactNode = (
+    skillOrPassiveID: ISkill
+  ) => {
     if (selectedCampaign === null) {
-      console.error('Compendium renderLockText: No selected campaign');
+      console.error('Compendium renderSkillLockText: No selected campaign');
       return null;
     }
 
-    if (isAboutToUnlock?.unlockableType === COMPENDIUM_UNLOCKABLE.SKILL) {
-      const skill = skillOrPassiveID as ISkill;
-      if (isSkillLocked(skill)) {
-        if (isAboutToUnlock?.unlockableID === skill.id) {
-          if (selectedCampaign.divinity >= 100) {
-            return (
-              <>
-                <h2 className="text-yellow-600">
-                  <strong>CLICK TO AGAIN TO UNLOCK</strong>
-                </h2>
-                <p>Cost: 100 Divinity</p>
-              </>
-            );
-          } else {
-            return (
-              <>
-                <h2 className="text-yellow-800">
-                  <strong>INSUFFICIENT DIVINITY</strong>
-                </h2>
-                <p>Cost: 100 Divinity</p>
-              </>
-            );
-          }
-        } else {
-          return (
-            <>
-              <h2 className="text-red-800">
-                <strong>LOCKED</strong>
-              </h2>
-              <p>Cost: 100 Divinity</p>
-            </>
-          );
-        }
-      }
-    } else if (
-      isAboutToUnlock?.unlockableType === COMPENDIUM_UNLOCKABLE.PASSIVE
-    ) {
-      const passiveID = skillOrPassiveID as PASSIVE_ID;
-      if (isAboutToUnlock?.unlockableID === passiveID) {
+    const skill = skillOrPassiveID as ISkill;
+    console.log(isSkillLocked(skill));
+    if (isSkillLocked(skill)) {
+      if (isAboutToUnlock?.unlockableID === skill.id) {
         if (selectedCampaign.divinity >= 100) {
           return (
             <>
@@ -233,6 +198,44 @@ export const Compendium: FC = () => {
     return null;
   };
 
+  const renderPassiveLockText = (passiveID: PASSIVE_ID) => {
+    if (!selectedCampaign) {
+      console.error('Compendium renderPassiveLockText: No selected campaign');
+      return null;
+    }
+
+    if (isAboutToUnlock?.unlockableID === passiveID) {
+      if (selectedCampaign.divinity >= 100) {
+        return (
+          <>
+            <h2 className="text-yellow-600">
+              <strong>CLICK TO AGAIN TO UNLOCK</strong>
+            </h2>
+            <p>Cost: 100 Divinity</p>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <h2 className="text-yellow-800">
+              <strong>INSUFFICIENT DIVINITY</strong>
+            </h2>
+            <p>Cost: 100 Divinity</p>
+          </>
+        );
+      }
+    } else {
+      return (
+        <>
+          <h2 className="text-red-800">
+            <strong>LOCKED</strong>
+          </h2>
+          <p>Cost: 100 Divinity</p>
+        </>
+      );
+    }
+  };
+
   const renderSkillButtonTooltip = (skill: ISkill) => {
     const tagString = skill.tags
       .map((tag) => {
@@ -256,7 +259,7 @@ export const Compendium: FC = () => {
       return (
         <Tooltip width={tooltipWidth}>
           <div className="flex flex-col px-5 py-3">
-            {renderLockText(skill)}
+            {renderSkillLockText(skill)}
             <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
             <p>{tagString}</p>
             <p>{skill.description}</p>
@@ -273,7 +276,7 @@ export const Compendium: FC = () => {
       return (
         <Tooltip width={tooltipWidth}>
           <div className="flex flex-col px-5 py-3">
-            {renderLockText(skill)}
+            {renderSkillLockText(skill)}
             <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
             <p>{tagString}</p>
             <p>{skill.description}</p>
@@ -290,7 +293,7 @@ export const Compendium: FC = () => {
       return (
         <Tooltip width={tooltipWidth}>
           <div className="flex flex-col px-5 py-3">
-            {renderLockText(skill)}
+            {renderSkillLockText(skill)}
             <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
             <p>{tagString}</p>
             <p>{skill.description}</p>
@@ -591,9 +594,9 @@ export const Compendium: FC = () => {
                         height={ICON_SIZE - 4}
                       />
                     </IconButton>
-                    <Tooltip>
+                    <Tooltip width={400}>
                       <div className="flex flex-col px-5 py-3">
-                        {renderLockText(PASSIVE_ID.SKILL_SLOTS)}
+                        {renderPassiveLockText(PASSIVE_ID.SKILL_SLOTS)}
                         <h2 className="border-b mb-2 pb-1">
                           Upgrade {passive.name}
                         </h2>
