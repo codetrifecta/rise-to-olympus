@@ -236,3 +236,11 @@ export interface ISkillAnimation {
   xOffset?: number;
   yOffset?: number;
 }
+
+export interface IPassive {
+  name: string;
+  description: string;
+  icon: ICON_ID;
+  currentLevel: number;
+  maxLevel: number;
+}

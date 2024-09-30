@@ -4,6 +4,7 @@ import {
   intelligenceBasedSkillIDs,
   movementSkillIDs,
   selfBuffSkillIDs,
+  SKILL_ID,
   SKILL_TAG,
   SKILLS,
   strengthBasedSkillIDs,
@@ -19,24 +20,40 @@ import { useCampaignStore } from '../../stores/campaign';
 import { useFloorStore } from '../../stores/floor';
 import { FLOOR_ID } from '../../constants/floor';
 import { ICON_ID } from '../../constants/icon';
+import { MAX_SKILL_SLOTS, STARTING_SKILL_SLOTS } from '../../constants/game';
 
 const ICON_SIZE = 50;
+
+const enum PASSIVE_ID {
+  SKILL_SLOTS = 'SKILL_SLOTS',
+}
+
+const enum COMPENDIUM_UNLOCKABLE {
+  SKILL = 'SKILL',
+  PASSIVE = 'PASSIVE',
+}
 
 export const Compendium: FC = () => {
   const { player, setPlayerSkills } = usePlayerStore();
 
   const [equippedSkills, setEquippedSkills] = useState<ISkill[]>(player.skills);
 
-  const { maxSkillSlots, isCompendiumOpen, setIsCompendiumOpen } =
-    useGameStateStore();
+  const {
+    maxSkillSlots,
+    isCompendiumOpen,
+    setMaxSkillSlots,
+    setIsCompendiumOpen,
+  } = useGameStateStore();
 
   const { campaigns, selectedCampaign, setSelectedCampaign, setCampaigns } =
     useCampaignStore();
 
   const { floor } = useFloorStore();
 
-  const [isAboutToUnlockSkill, setIsAboutToUnlockSkill] =
-    useState<ISkill | null>(null);
+  const [isAboutToUnlock, setIsAboutToUnlock] = useState<{
+    unlockableType: COMPENDIUM_UNLOCKABLE;
+    unlockableID: SKILL_ID | PASSIVE_ID;
+  } | null>(null);
 
   // Establish the different categories of skills
   const strengthBasedSkills = useMemo(() => {
@@ -124,14 +141,53 @@ export const Compendium: FC = () => {
     }
   }, [player.skills, isCompendiumOpen]);
 
-  const renderSkillLockText = (skill: ISkill) => {
+  const renderLockText: (
+    skillOrPassiveID: ISkill | PASSIVE_ID
+  ) => React.ReactNode = (skillOrPassiveID: ISkill | PASSIVE_ID) => {
     if (selectedCampaign === null) {
-      console.error('Compendium renderSkillLockText: No selected campaign');
+      console.error('Compendium renderLockText: No selected campaign');
       return null;
     }
 
-    if (isSkillLocked(skill)) {
-      if (isAboutToUnlockSkill?.id === skill.id) {
+    if (isAboutToUnlock?.unlockableType === COMPENDIUM_UNLOCKABLE.SKILL) {
+      const skill = skillOrPassiveID as ISkill;
+      if (isSkillLocked(skill)) {
+        if (isAboutToUnlock?.unlockableID === skill.id) {
+          if (selectedCampaign.divinity >= 100) {
+            return (
+              <>
+                <h2 className="text-yellow-600">
+                  <strong>CLICK TO AGAIN TO UNLOCK</strong>
+                </h2>
+                <p>Cost: 100 Divinity</p>
+              </>
+            );
+          } else {
+            return (
+              <>
+                <h2 className="text-yellow-800">
+                  <strong>INSUFFICIENT DIVINITY</strong>
+                </h2>
+                <p>Cost: 100 Divinity</p>
+              </>
+            );
+          }
+        } else {
+          return (
+            <>
+              <h2 className="text-red-800">
+                <strong>LOCKED</strong>
+              </h2>
+              <p>Cost: 100 Divinity</p>
+            </>
+          );
+        }
+      }
+    } else if (
+      isAboutToUnlock?.unlockableType === COMPENDIUM_UNLOCKABLE.PASSIVE
+    ) {
+      const passiveID = skillOrPassiveID as PASSIVE_ID;
+      if (isAboutToUnlock?.unlockableID === passiveID) {
         if (selectedCampaign.divinity >= 100) {
           return (
             <>
@@ -189,7 +245,7 @@ export const Compendium: FC = () => {
       return (
         <Tooltip width={tooltipWidth}>
           <div className="flex flex-col px-5 py-3">
-            {renderSkillLockText(skill)}
+            {renderLockText(skill)}
             <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
             <p>{tagString}</p>
             <p>{skill.description}</p>
@@ -206,7 +262,7 @@ export const Compendium: FC = () => {
       return (
         <Tooltip width={tooltipWidth}>
           <div className="flex flex-col px-5 py-3">
-            {renderSkillLockText(skill)}
+            {renderLockText(skill)}
             <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
             <p>{tagString}</p>
             <p>{skill.description}</p>
@@ -223,7 +279,7 @@ export const Compendium: FC = () => {
       return (
         <Tooltip width={tooltipWidth}>
           <div className="flex flex-col px-5 py-3">
-            {renderSkillLockText(skill)}
+            {renderLockText(skill)}
             <h2 className="border-b mb-2 pb-1">{skill.name}</h2>
             <p>{tagString}</p>
             <p>{skill.description}</p>
@@ -295,7 +351,7 @@ export const Compendium: FC = () => {
     setCampaigns(newCampaigns);
 
     // Unset isAboutToUnlockSkill
-    setIsAboutToUnlockSkill(null);
+    setIsAboutToUnlock(null);
   };
 
   const renderSkillsByCategory = (categoryName: string, skills: ISkill[]) => {
@@ -333,13 +389,16 @@ export const Compendium: FC = () => {
                         e.stopPropagation();
                         if (
                           isSkillLocked(skill) &&
-                          isAboutToUnlockSkill?.id !== skill.id
+                          isAboutToUnlock?.unlockableID !== skill.id
                         ) {
-                          setIsAboutToUnlockSkill(skill);
+                          setIsAboutToUnlock({
+                            unlockableType: COMPENDIUM_UNLOCKABLE.SKILL,
+                            unlockableID: skill.id,
+                          });
                           return;
                         } else if (
                           isSkillLocked(skill) &&
-                          isAboutToUnlockSkill?.id === skill.id
+                          isAboutToUnlock?.unlockableID === skill.id
                         ) {
                           console.log('Unlocking skill', skill);
                           handleUnlockSkill(skill);
@@ -358,7 +417,7 @@ export const Compendium: FC = () => {
                           : false
                       }
                       grayscale={skillIsLocked}
-                      borderPulse={isAboutToUnlockSkill?.id === skill.id}
+                      borderPulse={isAboutToUnlock?.unlockableID === skill.id}
                     >
                       <Icon
                         icon={skill.icon}
@@ -382,8 +441,8 @@ export const Compendium: FC = () => {
     <div
       className="bg-zinc-900 p-5 border border-white h-full w-full"
       onClick={() => {
-        if (isAboutToUnlockSkill) {
-          setIsAboutToUnlockSkill(null);
+        if (isAboutToUnlock) {
+          setIsAboutToUnlock(null);
         }
       }}
     >
@@ -400,11 +459,11 @@ export const Compendium: FC = () => {
       <div className="absolute ml-1">
         <h3>
           Divinity: {selectedCampaign ? selectedCampaign.divinity : 0}{' '}
-          {isAboutToUnlockSkill ? '- 100' : null}
+          {isAboutToUnlock ? '- 100' : null}
         </h3>
       </div>
 
-      <div className="relative mt-16 mb-5 grid grid-rows-2 grid-cols-5">
+      <div className="relative mt-16 mb-5 grid grid-rows-3 grid-cols-2 gap-y-10">
         {/* Row 1: Skills */}
         {renderSkillsByCategory(
           'Strength-Based Damaging Skills',
@@ -441,18 +500,27 @@ export const Compendium: FC = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('clicked');
+
+                    if (
+                      isAboutToUnlock?.unlockableID !== PASSIVE_ID.SKILL_SLOTS
+                    ) {
+                      setIsAboutToUnlock({
+                        unlockableType: COMPENDIUM_UNLOCKABLE.PASSIVE,
+                        unlockableID: PASSIVE_ID.SKILL_SLOTS,
+                      });
+                    } else if (
+                      isAboutToUnlock?.unlockableID === PASSIVE_ID.SKILL_SLOTS
+                    ) {
+                      setMaxSkillSlots(maxSkillSlots + 1);
+                      setIsAboutToUnlock(null);
+                    }
                   }}
-                  // disabled={
-                  //   equippedSkills.find((equippedSkill) => {
-                  //     if (equippedSkill === null) return;
-                  //     return equippedSkill.name === skill.name;
-                  //   })
-                  //     ? true
-                  //     : false
-                  // }
-                  // grayscale={skillIsLocked}
-                  // borderPulse={isAboutToUnlockSkill?.id === skill.id}
+                  disabled={maxSkillSlots >= MAX_SKILL_SLOTS}
+                  borderPulse={
+                    isAboutToUnlock?.unlockableType ===
+                      COMPENDIUM_UNLOCKABLE.PASSIVE &&
+                    isAboutToUnlock?.unlockableID === PASSIVE_ID.SKILL_SLOTS
+                  }
                 >
                   <Icon
                     icon={ICON_ID.SKILLS}
@@ -460,6 +528,19 @@ export const Compendium: FC = () => {
                     height={ICON_SIZE - 4}
                   />
                 </IconButton>
+                <Tooltip>
+                  <div className="flex flex-col px-5 py-3">
+                    {renderLockText(PASSIVE_ID.SKILL_SLOTS)}
+                    <h2 className="border-b mb-2 pb-1">
+                      Upgrade Max Skill Slots
+                    </h2>
+                    <p>
+                      {maxSkillSlots - STARTING_SKILL_SLOTS} /{' '}
+                      {MAX_SKILL_SLOTS - STARTING_SKILL_SLOTS}
+                    </p>
+                    <p>Gain additional skill slots</p>
+                  </div>
+                </Tooltip>
               </div>
             </div>
           </div>

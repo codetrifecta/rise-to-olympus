@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { IEntity } from '../types';
 import { ENTITY_TYPE } from '../constants/entity';
 import { TILE_TYPE } from '../constants/tile';
-import { MAX_SKILL_SLOTS, ROOM_LENGTH } from '../constants/game';
+import { ROOM_LENGTH, STARTING_SKILL_SLOTS } from '../constants/game';
 
 interface IGameStateStore {
   doorPositions: [number, number][];
@@ -89,7 +89,7 @@ export const useGameStateStore = create<IGameStateStore>((set, get) => ({
   wallArtFile: '',
   isCameraMoving: false,
   isEntityMoving: false,
-  maxSkillSlots: MAX_SKILL_SLOTS,
+  maxSkillSlots: STARTING_SKILL_SLOTS,
   gameSpeed: 1,
 
   setDoorPositions: (doorPositions: [number, number][]) =>
