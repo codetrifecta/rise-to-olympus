@@ -1,4 +1,5 @@
 import { ICampaign } from '../types';
+import { PASSIVES } from './passive';
 import { SKILL_ID } from './skill';
 
 export enum CHECKPOINT {
@@ -31,7 +32,8 @@ export const BASE_CAMPAIGN: ICampaign = {
   },
   checkpoint: CHECKPOINT.TUTORIAL,
   unlockedSkillIDs: [SKILL_ID.CLEAVE, SKILL_ID.FIREBALL, SKILL_ID.FLY],
-  divinity: 100,
+  passives: PASSIVES,
+  divinity: 300,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 } as const;

@@ -10,6 +10,7 @@ import { ITEM_TYPE } from './constants/item';
 import { ARMOR_PART } from './constants/armor';
 import { FLOOR_ID } from './constants/floor';
 import { CHECKPOINT } from './constants/campaign';
+import { PASSIVE_ID } from './constants/passive';
 
 export interface IScriptsCompleted {
   tutorial: boolean;
@@ -35,6 +36,7 @@ export interface ICampaign {
   scriptsCompleted: IScriptsCompleted;
   checkpoint: CHECKPOINT;
   unlockedSkillIDs: SKILL_ID[];
+  passives: IPassive[];
   divinity: number;
   createdAt: string;
   updatedAt: string;
@@ -238,6 +240,7 @@ export interface ISkillAnimation {
 }
 
 export interface IPassive {
+  id: PASSIVE_ID;
   name: string;
   description: string;
   icon: ICON_ID;

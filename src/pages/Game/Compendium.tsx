@@ -10,7 +10,7 @@ import {
   strengthBasedSkillIDs,
 } from '../../constants/skill';
 import { Icon } from './Icon';
-import { ISkill } from '../../types';
+import { IPassive, ISkill } from '../../types';
 import { IconButton } from './IconButton';
 import { Tooltip } from './Tooltip';
 import { useGameStateStore } from '../../stores/game';
@@ -20,13 +20,10 @@ import { useCampaignStore } from '../../stores/campaign';
 import { useFloorStore } from '../../stores/floor';
 import { FLOOR_ID } from '../../constants/floor';
 import { ICON_ID } from '../../constants/icon';
-import { MAX_SKILL_SLOTS, STARTING_SKILL_SLOTS } from '../../constants/game';
+import { PASSIVE_ID } from '../../constants/passive';
+import { STARTING_SKILL_SLOTS } from '../../constants/game';
 
 const ICON_SIZE = 50;
-
-const enum PASSIVE_ID {
-  SKILL_SLOTS = 'SKILL_SLOTS',
-}
 
 const enum COMPENDIUM_UNLOCKABLE {
   SKILL = 'SKILL',
@@ -38,12 +35,7 @@ export const Compendium: FC = () => {
 
   const [equippedSkills, setEquippedSkills] = useState<ISkill[]>(player.skills);
 
-  const {
-    maxSkillSlots,
-    isCompendiumOpen,
-    setMaxSkillSlots,
-    setIsCompendiumOpen,
-  } = useGameStateStore();
+  const { isCompendiumOpen, setIsCompendiumOpen } = useGameStateStore();
 
   const { campaigns, selectedCampaign, setSelectedCampaign, setCampaigns } =
     useCampaignStore();
@@ -54,6 +46,25 @@ export const Compendium: FC = () => {
     unlockableType: COMPENDIUM_UNLOCKABLE;
     unlockableID: SKILL_ID | PASSIVE_ID;
   } | null>(null);
+
+  // Compute max skill slots
+  const maxSkillSlots = useMemo(() => {
+    if (selectedCampaign === null) {
+      console.error('Compendium maxSkillSlots: No selected campaign');
+      return 0;
+    }
+
+    const skillSlotsPassive = selectedCampaign.passives.find(
+      (passive) => passive.id === PASSIVE_ID.SKILL_SLOTS
+    );
+
+    if (!skillSlotsPassive) {
+      console.error('Compendium maxSkillSlots: Skill slots passive not found');
+      return 0;
+    }
+
+    return skillSlotsPassive.currentLevel + STARTING_SKILL_SLOTS;
+  }, [selectedCampaign]);
 
   // Establish the different categories of skills
   const strengthBasedSkills = useMemo(() => {
@@ -354,6 +365,54 @@ export const Compendium: FC = () => {
     setIsAboutToUnlock(null);
   };
 
+  const handleUpgradePassive = (passive: IPassive) => {
+    if (selectedCampaign === null) {
+      console.error('Compendium handleUpgradePassive: No selected campaign');
+      return;
+    }
+
+    let newSelectedCampaign = { ...selectedCampaign };
+    let newCampaigns = [...campaigns];
+
+    switch (passive.id) {
+      case PASSIVE_ID.SKILL_SLOTS:
+        {
+          newSelectedCampaign = {
+            ...selectedCampaign,
+            divinity: selectedCampaign.divinity - 100,
+            passives: selectedCampaign.passives.map((passive) => {
+              if (passive.id === PASSIVE_ID.SKILL_SLOTS) {
+                return {
+                  ...passive,
+                  currentLevel: passive.currentLevel + 1,
+                };
+              }
+
+              return passive;
+            }),
+          };
+
+          newCampaigns = campaigns.map((campaign) => {
+            if (campaign.id === selectedCampaign.id) {
+              return newSelectedCampaign;
+            }
+
+            return campaign;
+          });
+        }
+        break;
+      default:
+        console.error('Compendium handleUpgradePassive: Unhandled passive ID');
+        break;
+    }
+
+    setSelectedCampaign(newSelectedCampaign);
+    setCampaigns(newCampaigns);
+
+    // Unset isAboutToUnlockSkill
+    setIsAboutToUnlock(null);
+  };
+
   const renderSkillsByCategory = (categoryName: string, skills: ISkill[]) => {
     if (selectedCampaign === null) {
       console.error('Compendium renderSkillsByCategory: No selected campaign');
@@ -491,58 +550,63 @@ export const Compendium: FC = () => {
             //   gridTemplateRows: `repeat(${Math.ceil(skills.length / 12)}, ${ICON_SIZE}px)`,
             // }}
           >
-            <div
-              className="bg-gray-500 relative"
-              style={{ width: ICON_SIZE, height: ICON_SIZE }}
-            >
-              <div className="flex justify-center items-center">
-                <IconButton
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    if (
-                      isAboutToUnlock?.unlockableID !== PASSIVE_ID.SKILL_SLOTS
-                    ) {
-                      setIsAboutToUnlock({
-                        unlockableType: COMPENDIUM_UNLOCKABLE.PASSIVE,
-                        unlockableID: PASSIVE_ID.SKILL_SLOTS,
-                      });
-                    } else if (
-                      isAboutToUnlock?.unlockableID === PASSIVE_ID.SKILL_SLOTS
-                    ) {
-                      setMaxSkillSlots(maxSkillSlots + 1);
-                      setIsAboutToUnlock(null);
-                    }
-                  }}
-                  disabled={maxSkillSlots >= MAX_SKILL_SLOTS}
-                  borderPulse={
-                    isAboutToUnlock?.unlockableType ===
-                      COMPENDIUM_UNLOCKABLE.PASSIVE &&
-                    isAboutToUnlock?.unlockableID === PASSIVE_ID.SKILL_SLOTS
-                  }
+            {selectedCampaign?.passives.map((passive) => {
+              return (
+                <div
+                  key={passive.id}
+                  className="bg-gray-500 relative"
+                  style={{ width: ICON_SIZE, height: ICON_SIZE }}
                 >
-                  <Icon
-                    icon={ICON_ID.SKILLS}
-                    width={ICON_SIZE - 4}
-                    height={ICON_SIZE - 4}
-                  />
-                </IconButton>
-                <Tooltip>
-                  <div className="flex flex-col px-5 py-3">
-                    {renderLockText(PASSIVE_ID.SKILL_SLOTS)}
-                    <h2 className="border-b mb-2 pb-1">
-                      Upgrade Max Skill Slots
-                    </h2>
-                    <p>
-                      {maxSkillSlots - STARTING_SKILL_SLOTS} /{' '}
-                      {MAX_SKILL_SLOTS - STARTING_SKILL_SLOTS}
-                    </p>
-                    <p>Gain additional skill slots</p>
+                  <div className="flex justify-center items-center">
+                    <IconButton
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        if (
+                          isAboutToUnlock?.unlockableID !==
+                          PASSIVE_ID.SKILL_SLOTS
+                        ) {
+                          setIsAboutToUnlock({
+                            unlockableType: COMPENDIUM_UNLOCKABLE.PASSIVE,
+                            unlockableID: PASSIVE_ID.SKILL_SLOTS,
+                          });
+                        } else if (
+                          isAboutToUnlock?.unlockableID ===
+                          PASSIVE_ID.SKILL_SLOTS
+                        ) {
+                          handleUpgradePassive(passive);
+                        }
+                      }}
+                      disabled={passive.currentLevel >= passive.maxLevel}
+                      borderPulse={
+                        isAboutToUnlock?.unlockableType ===
+                          COMPENDIUM_UNLOCKABLE.PASSIVE &&
+                        isAboutToUnlock?.unlockableID === PASSIVE_ID.SKILL_SLOTS
+                      }
+                    >
+                      <Icon
+                        icon={ICON_ID.SKILLS}
+                        width={ICON_SIZE - 4}
+                        height={ICON_SIZE - 4}
+                      />
+                    </IconButton>
+                    <Tooltip>
+                      <div className="flex flex-col px-5 py-3">
+                        {renderLockText(PASSIVE_ID.SKILL_SLOTS)}
+                        <h2 className="border-b mb-2 pb-1">
+                          Upgrade {passive.name}
+                        </h2>
+                        <p>
+                          {passive.currentLevel} / {passive.maxLevel}
+                        </p>
+                        <p>{passive.description}</p>
+                      </div>
+                    </Tooltip>
                   </div>
-                </Tooltip>
-              </div>
-            </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
