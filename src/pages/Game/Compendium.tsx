@@ -152,16 +152,15 @@ export const Compendium: FC = () => {
     }
   }, [player.skills, isCompendiumOpen]);
 
-  const renderSkillLockText: (skillOrPassiveID: ISkill) => React.ReactNode = (
-    skillOrPassiveID: ISkill
+  const renderSkillLockText: (skill: ISkill) => React.ReactNode = (
+    skill: ISkill
   ) => {
     if (selectedCampaign === null) {
       console.error('Compendium renderSkillLockText: No selected campaign');
       return null;
     }
 
-    const skill = skillOrPassiveID as ISkill;
-    console.log(isSkillLocked(skill));
+    // console.log(isSkillLocked(skill));
     if (isSkillLocked(skill)) {
       if (isAboutToUnlock?.unlockableID === skill.id) {
         if (selectedCampaign.divinity >= 100) {
@@ -198,41 +197,46 @@ export const Compendium: FC = () => {
     return null;
   };
 
-  const renderPassiveLockText = (passiveID: PASSIVE_ID) => {
+  const renderPassiveLockText = (passive: IPassive) => {
     if (!selectedCampaign) {
       console.error('Compendium renderPassiveLockText: No selected campaign');
       return null;
     }
 
-    if (isAboutToUnlock?.unlockableID === passiveID) {
-      if (selectedCampaign.divinity >= 100) {
-        return (
-          <>
-            <h2 className="text-yellow-600">
-              <strong>CLICK TO AGAIN TO UNLOCK</strong>
-            </h2>
-            <p>Cost: 100 Divinity</p>
-          </>
-        );
+    const isMaxed = passive.currentLevel >= passive.maxLevel;
+
+    if (!isMaxed) {
+      if (isAboutToUnlock?.unlockableID === passive.id) {
+        if (selectedCampaign.divinity >= 100) {
+          return (
+            <>
+              <h2 className="text-yellow-600">
+                <strong>CLICK TO AGAIN TO UNLOCK</strong>
+              </h2>
+              <p>Cost: 100 Divinity</p>
+            </>
+          );
+        } else {
+          return (
+            <>
+              <h2 className="text-yellow-800">
+                <strong>INSUFFICIENT DIVINITY</strong>
+              </h2>
+              <p>Cost: 100 Divinity</p>
+            </>
+          );
+        }
       } else {
-        return (
-          <>
-            <h2 className="text-yellow-800">
-              <strong>INSUFFICIENT DIVINITY</strong>
-            </h2>
-            <p>Cost: 100 Divinity</p>
-          </>
-        );
+        if (passive)
+          return (
+            <>
+              <h2 className="text-red-800">
+                <strong>LOCKED</strong>
+              </h2>
+              <p>Cost: 100 Divinity</p>
+            </>
+          );
       }
-    } else {
-      return (
-        <>
-          <h2 className="text-red-800">
-            <strong>LOCKED</strong>
-          </h2>
-          <p>Cost: 100 Divinity</p>
-        </>
-      );
     }
   };
 
@@ -566,17 +570,13 @@ export const Compendium: FC = () => {
                         e.preventDefault();
                         e.stopPropagation();
 
-                        if (
-                          isAboutToUnlock?.unlockableID !==
-                          PASSIVE_ID.SKILL_SLOTS
-                        ) {
+                        if (isAboutToUnlock?.unlockableID !== passive.id) {
                           setIsAboutToUnlock({
                             unlockableType: COMPENDIUM_UNLOCKABLE.PASSIVE,
-                            unlockableID: PASSIVE_ID.SKILL_SLOTS,
+                            unlockableID: passive.id,
                           });
                         } else if (
-                          isAboutToUnlock?.unlockableID ===
-                          PASSIVE_ID.SKILL_SLOTS
+                          isAboutToUnlock?.unlockableID === passive.id
                         ) {
                           handleUpgradePassive(passive);
                         }
@@ -585,7 +585,7 @@ export const Compendium: FC = () => {
                       borderPulse={
                         isAboutToUnlock?.unlockableType ===
                           COMPENDIUM_UNLOCKABLE.PASSIVE &&
-                        isAboutToUnlock?.unlockableID === PASSIVE_ID.SKILL_SLOTS
+                        isAboutToUnlock?.unlockableID === passive.id
                       }
                     >
                       <Icon
@@ -596,7 +596,7 @@ export const Compendium: FC = () => {
                     </IconButton>
                     <Tooltip width={400}>
                       <div className="flex flex-col px-5 py-3">
-                        {renderPassiveLockText(PASSIVE_ID.SKILL_SLOTS)}
+                        {renderPassiveLockText(passive)}
                         <h2 className="border-b mb-2 pb-1">
                           Upgrade {passive.name}
                         </h2>
