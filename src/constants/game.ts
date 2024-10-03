@@ -8,4 +8,4 @@ export const MAX_SKILL_SLOTS = 6;
 
 export const STARTING_SKILL_SLOTS = 3;
 
-export const BASE_MOVEMENT_TIME = 500;
+export const BASE_MOVEMENT_TIME = 250;

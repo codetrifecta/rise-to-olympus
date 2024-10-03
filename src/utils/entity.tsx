@@ -72,6 +72,12 @@ export const handlePlayerEndTurn = (
       actionPoints: newActionPoints,
       skills: newSkills,
       statuses: filteredStatuses,
+      state: {
+        isAttacking: false,
+        isMoving: false,
+        isUsingSkill: false,
+        skillId: null,
+      },
     });
   }
 
