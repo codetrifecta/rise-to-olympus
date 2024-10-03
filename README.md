@@ -89,23 +89,23 @@ This game was built with the following technologies:
 
   Title Screen
 
-  <img src="./image.png" width="400" > &nbsp;
+  <img src="./image.png" width="600" > &nbsp;
 
   Tutorial Start Room
 
-  <img src="./image-1.png" width="400" > &nbsp;
+  <img src="./image-1.png" width="600" > &nbsp;
 
   Combat Scenario
 
-  <img src="./image-2.png" width="400" > &nbsp;
+  <img src="./image-2.png" width="600" > &nbsp;
 
   Randomized Chest Loot
 
-  <img src="./image-3.png" width="400" > &nbsp;
+  <img src="./image-3.png" width="600" > &nbsp;
 
   Compendium: Unlock Skills and Passives
 
-  <img src="./image-4.png" width="400" > &nbsp;
+  <img src="./image-4.png" width="600" > &nbsp;
 
 </div>
 
