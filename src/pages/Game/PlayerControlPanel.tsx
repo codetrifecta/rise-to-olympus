@@ -67,11 +67,6 @@ export const PlayerControlPanel: FC = () => {
   const [openSkills, setOpenSkills] = useState(false);
 
   const handleEndTurnClick = () => {
-    setPlayerState({
-      isAttacking: false,
-      isMoving: false,
-      isUsingSkill: false,
-    });
     handlePlayerEndTurn(turnCycle, player, setPlayer, endTurn);
   };
 
