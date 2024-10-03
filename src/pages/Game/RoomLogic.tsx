@@ -1465,7 +1465,7 @@ export const RoomLogic: FC<{
 
       // Delete the first element in the path array
       path = path.slice(1);
-      await sleep(isRoomOver ? 250 : movementTime);
+      await sleep(movementTime);
 
       if (path.length === 0) {
         setIsEntityMoving(false);

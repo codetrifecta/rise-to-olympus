@@ -534,7 +534,7 @@ export const PlayerControlPanel: FC = () => {
                       setGameSpeed(1);
                     }
                   }}
-                  disabled={disabled || isRoomOver}
+                  disabled={disabled}
                 >
                   {gameSpeedButton}
                 </IconButton>
