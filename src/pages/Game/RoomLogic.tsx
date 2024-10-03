@@ -778,6 +778,9 @@ export const RoomLogic: FC<{
     }
   }, [player, roomEntityPositions]);
 
+  // Get player's last position befor being hidden
+  const playerPositionBeforeHidden = useRef<[number, number]>(playerPosition);
+
   // Get player's vision range for weapon attack
   const playerVisionRange = useMemo(() => {
     if (player.state.isAttacking) {
@@ -937,6 +940,11 @@ export const RoomLogic: FC<{
     rowIndex: number,
     columnIndex: number
   ) => {
+    // Set last player position if player used any hidden skill
+    if ([SKILL_ID.HIDE].includes(skill.id)) {
+      playerPositionBeforeHidden.current = playerPosition;
+    }
+
     setTimeout(() => {
       const { newPlayer, newEnemies, newRoomEntityPositions } = handleSkill(
         skill,
@@ -1838,7 +1846,7 @@ export const RoomLogic: FC<{
     console.log('handleEnemyMove');
 
     let newEnemy = { ...enemy };
-    const [playerRow, playerCol] = playerPosition;
+    let [playerRow, playerCol] = playerPosition;
 
     let newRoomEntityPositions = new Map([...roomEntityPositions]);
 
@@ -1859,16 +1867,20 @@ export const RoomLogic: FC<{
       return [newEnemy, newEnemyPosition];
     }
 
-    // If player is hidden, do not move the enemy
+    // If player is hidden, set enemy destination to the last seen position
+    let isHidden = false;
     if (player.statuses.some((status) => status.id === STATUS_ID.HIDDEN)) {
-      return [newEnemy, newEnemyPosition];
+      // return [newEnemy, newEnemyPosition];
+      playerRow = playerPositionBeforeHidden.current[0];
+      playerCol = playerPositionBeforeHidden.current[1];
+      isHidden = true;
     }
 
     // Get enemy range and get tiles around the player's vision with the same range (one of these will be the enemy's target tile)
     const range = newEnemy.range;
     const possibleTiles = getVisionFromEntityPosition(
       roomTileMatrix,
-      playerPosition,
+      isHidden ? playerPositionBeforeHidden.current : playerPosition,
       range,
       newRoomEntityPositions
     );
@@ -1895,6 +1907,8 @@ export const RoomLogic: FC<{
         }
       }
     }
+
+    // console.log(possibleTilesInRange, isHidden);
 
     // Find path to the possible tiles for the enemy to move to
     const path = findPathsFromCurrentLocation(
@@ -1950,7 +1964,7 @@ export const RoomLogic: FC<{
     };
 
     // Get the tile the enemy will move to
-    console.log('shortestPath of enemy', enemy.id, shortestPath);
+    // console.log('shortestPath of enemy', enemy.id, shortestPath);
 
     setIsEntityMoving(true);
 
@@ -2067,7 +2081,7 @@ export const RoomLogic: FC<{
 
       // After attack animation ends, change back to idle animation
       setTimeout(() => {
-        console.log('is this happening? 2');
+        // console.log('is this happening? 2');
         if (playerCol < enemyCol) {
           setEntityAnimationIdle(newEnemy, ENTITY_SPRITE_DIRECTION.LEFT);
         } else if (playerCol > enemyCol) {
@@ -2213,11 +2227,11 @@ export const RoomLogic: FC<{
             totalDamage * incomingDamageMultiplierFromDeflecting
           );
 
-          console.log(
-            damageToEnemy,
-            totalDamage,
-            incomingDamageMultiplierFromDeflecting
-          );
+          // console.log(
+          //   damageToEnemy,
+          //   totalDamage,
+          //   incomingDamageMultiplierFromDeflecting
+          // );
 
           newEnemy.health = damageEntity(
             newEnemy,
