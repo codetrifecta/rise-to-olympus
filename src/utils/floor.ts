@@ -1,12 +1,14 @@
 import {
   BASE_ROOM,
   ROOM_TARTARUS_BOSS,
+  ROOM_TARTARUS_ENEMY_OPTIONS,
   ROOM_TARTARUS_START,
   ROOM_TYPE,
   ROOMS_TARTARUS_COMMON,
 } from '../constants/room';
 import { IRoom, Item } from '../types';
 import { scaleEnemy } from './entity';
+import { pick } from './general';
 import { getScaledItems } from './item';
 
 /**
@@ -754,7 +756,7 @@ export const generateFloorRoomsAndChestItems = (): [
   const floorPlan = generateFloorPlan(true);
   const connectedFloor = connectAdjacentRooms(floorPlan);
 
-  const roomsQueue: IRoom[] = [...ROOMS_TARTARUS_COMMON];
+  let roomsQueue: IRoom[] = [...ROOMS_TARTARUS_COMMON];
 
   // Shuffle the roomsQueue
   for (let i = 0; i < ROOMS_TARTARUS_COMMON.length; i++) {
@@ -766,10 +768,17 @@ export const generateFloorRoomsAndChestItems = (): [
     roomsQueue[randomIndex] = temp;
   }
 
-  // console.log(
-  //   'roomsQueue',
-  //   roomsQueue.map((room) => room.id)
-  // );
+  // Randomize enemies and enemy placements in each room
+  roomsQueue = roomsQueue.map((room) => {
+    const enemyOption = pick(ROOM_TARTARUS_ENEMY_OPTIONS[room.id]);
+    const { enemies, enemyPositions } = enemyOption;
+
+    return {
+      ...room,
+      enemies,
+      roomEntityPositions: enemyPositions,
+    };
+  });
 
   // Assign rooms to the floor
   let roomId = 10;
