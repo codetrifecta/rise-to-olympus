@@ -260,6 +260,27 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
         ['13,11', [ENTITY_TYPE.ENEMY, 2]],
       ]),
     },
+    {
+      enemies: [
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.EREBUS_FIEND],
+          id: 1,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.EREBUS_FIEND],
+          id: 2,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.EREBUS_FIEND],
+          id: 3,
+        },
+      ],
+      enemyPositions: new Map([
+        ['8,6', [ENTITY_TYPE.ENEMY, 1]],
+        ['10,15', [ENTITY_TYPE.ENEMY, 2]],
+        ['14,10', [ENTITY_TYPE.ENEMY, 3]],
+      ]),
+    },
   ],
   4: [
     {
@@ -276,6 +297,22 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
       enemyPositions: new Map([
         ['8,10', [ENTITY_TYPE.ENEMY, 1]],
         ['12,10', [ENTITY_TYPE.ENEMY, 2]],
+      ]),
+    },
+    {
+      enemies: [
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+          id: 1,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+          id: 2,
+        },
+      ],
+      enemyPositions: new Map([
+        ['9,3', [ENTITY_TYPE.ENEMY, 1]],
+        ['12,17', [ENTITY_TYPE.ENEMY, 2]],
       ]),
     },
   ],
@@ -306,6 +343,22 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
         ['10,12', [ENTITY_TYPE.ENEMY, 4]],
       ]),
     },
+    {
+      enemies: [
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.SKYWARD_TITAN],
+          id: 1,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.SKYWARD_TITAN],
+          id: 2,
+        },
+      ],
+      enemyPositions: new Map([
+        ['10,8', [ENTITY_TYPE.ENEMY, 1]],
+        ['10,13', [ENTITY_TYPE.ENEMY, 2]],
+      ]),
+    },
   ],
   6: [
     {
@@ -324,12 +377,28 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
         ['16,14', [ENTITY_TYPE.ENEMY, 2]],
       ]),
     },
+    {
+      enemies: [
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.MYRMIDON_HOUND],
+          id: 1,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.MYRMIDON_HOUND],
+          id: 2,
+        },
+      ],
+      enemyPositions: new Map([
+        ['7,15', [ENTITY_TYPE.ENEMY, 1]],
+        ['17,8', [ENTITY_TYPE.ENEMY, 2]],
+      ]),
+    },
   ],
   7: [
     {
       enemies: [
         {
-          ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
           id: 1,
         },
         {
@@ -344,12 +413,37 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
           ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
           id: 4,
         },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+          id: 5,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+          id: 6,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+          id: 7,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+          id: 8,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
+          id: 9,
+        },
       ],
       enemyPositions: new Map([
-        ['9,10', [ENTITY_TYPE.ENEMY, 1]],
-        ['4,2', [ENTITY_TYPE.ENEMY, 2]],
-        ['14,1', [ENTITY_TYPE.ENEMY, 3]],
-        ['17,19', [ENTITY_TYPE.ENEMY, 4]],
+        ['4,6', [ENTITY_TYPE.ENEMY, 1]],
+        ['4,14', [ENTITY_TYPE.ENEMY, 2]],
+        ['9,4', [ENTITY_TYPE.ENEMY, 3]],
+        ['9,10', [ENTITY_TYPE.ENEMY, 4]],
+        ['9,15', [ENTITY_TYPE.ENEMY, 5]],
+        ['15,6', [ENTITY_TYPE.ENEMY, 6]],
+        ['15,14', [ENTITY_TYPE.ENEMY, 7]],
+        ['19,6', [ENTITY_TYPE.ENEMY, 8]],
+        ['19,14', [ENTITY_TYPE.ENEMY, 9]],
       ]),
     },
   ],
@@ -380,6 +474,22 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
         ['15,10', [ENTITY_TYPE.ENEMY, 4]],
       ]),
     },
+    {
+      enemies: [
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+          id: 1,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+          id: 2,
+        },
+      ],
+      enemyPositions: new Map([
+        ['10,5', [ENTITY_TYPE.ENEMY, 1]],
+        ['10,15', [ENTITY_TYPE.ENEMY, 2]],
+      ]),
+    },
   ],
   9: [
     {
@@ -408,6 +518,32 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
         ['13,11', [ENTITY_TYPE.ENEMY, 4]],
       ]),
     },
+    {
+      enemies: [
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+          id: 1,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+          id: 2,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+          id: 3,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.STYGIAN_WRAITH],
+          id: 4,
+        },
+      ],
+      enemyPositions: new Map([
+        ['10,8', [ENTITY_TYPE.ENEMY, 1]],
+        ['10,12', [ENTITY_TYPE.ENEMY, 2]],
+        ['13,9', [ENTITY_TYPE.ENEMY, 3]],
+        ['13,12', [ENTITY_TYPE.ENEMY, 4]],
+      ]),
+    },
   ],
   10: [
     {
@@ -429,6 +565,27 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
         ['8,8', [ENTITY_TYPE.ENEMY, 1]],
         ['12,12', [ENTITY_TYPE.ENEMY, 2]],
         ['14,7', [ENTITY_TYPE.ENEMY, 3]],
+      ]),
+    },
+    {
+      enemies: [
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+          id: 1,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_LYCAN],
+          id: 2,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.TARTARIAN_HOUND],
+          id: 3,
+        },
+      ],
+      enemyPositions: new Map([
+        ['9,9', [ENTITY_TYPE.ENEMY, 1]],
+        ['11,11', [ENTITY_TYPE.ENEMY, 2]],
+        ['13,7', [ENTITY_TYPE.ENEMY, 3]],
       ]),
     },
   ],
