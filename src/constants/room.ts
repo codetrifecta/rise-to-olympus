@@ -89,6 +89,95 @@ import art_room_tartarus_boss_background from '../assets/sprites/tiles/tartarus/
 import art_room_tartarus_boss_foreground from '../assets/sprites/tiles/tartarus/room_tartarus_boss_foreground.png';
 import { ENEMY_PRESET_ID, ENEMY_PRESETS, ENTITY_TYPE } from './entity';
 
+export const ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS: Record<
+  number,
+  Map<string, [ENTITY_TYPE, number]>[]
+> = {
+  // 0 is for boss
+  0: [
+    new Map([
+      ['10,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['4,4', [ENTITY_TYPE.ENEMY, 2]],
+      ['5,15', [ENTITY_TYPE.ENEMY, 3]],
+      ['15,12', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
+  ],
+  1: [
+    new Map([
+      ['11,4', [ENTITY_TYPE.ENEMY, 1]],
+      ['7,10', [ENTITY_TYPE.ENEMY, 2]],
+      ['11,15', [ENTITY_TYPE.ENEMY, 3]],
+      ['15,10', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
+  ],
+  2: [
+    new Map([
+      ['11,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['7,6', [ENTITY_TYPE.ENEMY, 2]],
+      ['9,15', [ENTITY_TYPE.ENEMY, 3]],
+      ['16,13', [ENTITY_TYPE.ENEMY, 4]],
+      ['14,15', [ENTITY_TYPE.ENEMY, 5]],
+    ]),
+  ],
+  3: [
+    new Map([
+      ['8,8', [ENTITY_TYPE.ENEMY, 1]],
+      ['13,11', [ENTITY_TYPE.ENEMY, 2]],
+    ]),
+  ],
+  4: [
+    new Map([
+      ['8,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['12,10', [ENTITY_TYPE.ENEMY, 2]],
+    ]),
+  ],
+  5: [
+    new Map([
+      ['8,7', [ENTITY_TYPE.ENEMY, 1]],
+      ['13,13', [ENTITY_TYPE.ENEMY, 2]],
+      ['13,8', [ENTITY_TYPE.ENEMY, 3]],
+      ['10,12', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
+  ],
+  6: [
+    new Map([
+      ['7,6', [ENTITY_TYPE.ENEMY, 1]],
+      ['16,14', [ENTITY_TYPE.ENEMY, 2]],
+    ]),
+  ],
+  7: [
+    new Map([
+      ['9,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['4,2', [ENTITY_TYPE.ENEMY, 2]],
+      ['14,1', [ENTITY_TYPE.ENEMY, 3]],
+      ['17,19', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
+  ],
+  8: [
+    new Map([
+      ['9,10', [ENTITY_TYPE.ENEMY, 1]],
+      ['6,5', [ENTITY_TYPE.ENEMY, 2]],
+      ['6,15', [ENTITY_TYPE.ENEMY, 3]],
+      ['15,10', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
+  ],
+  9: [
+    new Map([
+      ['7,7', [ENTITY_TYPE.ENEMY, 1]],
+      ['8,14', [ENTITY_TYPE.ENEMY, 2]],
+      ['12,9', [ENTITY_TYPE.ENEMY, 3]],
+      ['13,11', [ENTITY_TYPE.ENEMY, 4]],
+    ]),
+  ],
+  10: [
+    new Map([
+      ['8,8', [ENTITY_TYPE.ENEMY, 1]],
+      ['12,12', [ENTITY_TYPE.ENEMY, 2]],
+      ['14,7', [ENTITY_TYPE.ENEMY, 3]],
+    ]),
+  ],
+};
+
 export const ROOM_TARTARUS_START: IRoom = {
   ...BASE_ROOM,
   id: 0,
@@ -167,12 +256,7 @@ export const ROOM_TARTARUS_BOSS: IRoom = {
       id: 4,
     },
   ],
-  roomEntityPositions: new Map([
-    ['10,10', [ENTITY_TYPE.ENEMY, 1]],
-    ['4,4', [ENTITY_TYPE.ENEMY, 2]],
-    ['5,15', [ENTITY_TYPE.ENEMY, 3]],
-    ['15,12', [ENTITY_TYPE.ENEMY, 4]],
-  ]),
+  roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[0][0],
   artBackground: art_room_tartarus_boss_background,
   artForeground: art_room_tartarus_boss_foreground,
 };
@@ -223,12 +307,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 4,
       },
     ],
-    roomEntityPositions: new Map([
-      ['11,4', [ENTITY_TYPE.ENEMY, 1]],
-      ['7,10', [ENTITY_TYPE.ENEMY, 2]],
-      ['11,15', [ENTITY_TYPE.ENEMY, 3]],
-      ['15,10', [ENTITY_TYPE.ENEMY, 4]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[1][0],
     artBackground: art_room_tartarus_common_background_01,
     artForeground: art_room_tartarus_common_foreground_01,
   },
@@ -281,13 +360,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 5,
       },
     ],
-    roomEntityPositions: new Map([
-      ['11,10', [ENTITY_TYPE.ENEMY, 1]],
-      ['7,6', [ENTITY_TYPE.ENEMY, 2]],
-      ['9,15', [ENTITY_TYPE.ENEMY, 3]],
-      ['16,13', [ENTITY_TYPE.ENEMY, 4]],
-      ['14,15', [ENTITY_TYPE.ENEMY, 5]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[2][0],
     artBackground: art_room_tartarus_common_background_02,
     artForeground: art_room_tartarus_common_foreground_02,
   },
@@ -328,10 +401,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 2,
       },
     ],
-    roomEntityPositions: new Map([
-      ['8,8', [ENTITY_TYPE.ENEMY, 1]],
-      ['13,11', [ENTITY_TYPE.ENEMY, 2]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[3][0],
     artBackground: art_room_tartarus_common_background_03,
     artForeground: art_room_tartarus_common_foreground_03,
   },
@@ -372,10 +442,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 2,
       },
     ],
-    roomEntityPositions: new Map([
-      ['8,10', [ENTITY_TYPE.ENEMY, 1]],
-      ['12,10', [ENTITY_TYPE.ENEMY, 2]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[4][0],
     artBackground: art_room_tartarus_common_background_04,
     artForeground: art_room_tartarus_common_foreground_04,
   },
@@ -424,12 +491,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 4,
       },
     ],
-    roomEntityPositions: new Map([
-      ['8,7', [ENTITY_TYPE.ENEMY, 1]],
-      ['13,13', [ENTITY_TYPE.ENEMY, 2]],
-      ['13,8', [ENTITY_TYPE.ENEMY, 3]],
-      ['10,12', [ENTITY_TYPE.ENEMY, 4]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[5][0],
     artBackground: art_room_tartarus_common_background_05,
     artForeground: art_room_tartarus_common_foreground_05,
   },
@@ -470,10 +532,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 2,
       },
     ],
-    roomEntityPositions: new Map([
-      ['7,6', [ENTITY_TYPE.ENEMY, 1]],
-      ['16,14', [ENTITY_TYPE.ENEMY, 2]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[6][0],
     artBackground: art_room_tartarus_common_background_06,
     artForeground: art_room_tartarus_common_foreground_06,
   },
@@ -522,12 +581,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 4,
       },
     ],
-    roomEntityPositions: new Map([
-      ['9,10', [ENTITY_TYPE.ENEMY, 1]],
-      ['4,2', [ENTITY_TYPE.ENEMY, 2]],
-      ['14,1', [ENTITY_TYPE.ENEMY, 3]],
-      ['17,19', [ENTITY_TYPE.ENEMY, 4]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[7][0],
     artBackground: art_room_tartarus_common_background_07,
     artForeground: art_room_tartarus_common_foreground_07,
   },
@@ -576,12 +630,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 4,
       },
     ],
-    roomEntityPositions: new Map([
-      ['9,10', [ENTITY_TYPE.ENEMY, 1]],
-      ['6,5', [ENTITY_TYPE.ENEMY, 2]],
-      ['6,15', [ENTITY_TYPE.ENEMY, 3]],
-      ['15,10', [ENTITY_TYPE.ENEMY, 4]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[9][0],
     artBackground: art_room_tartarus_common_background_08,
     artForeground: art_room_tartarus_common_foreground_08,
   },
@@ -630,12 +679,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 4,
       },
     ],
-    roomEntityPositions: new Map([
-      ['7,7', [ENTITY_TYPE.ENEMY, 1]],
-      ['8,14', [ENTITY_TYPE.ENEMY, 2]],
-      ['12,9', [ENTITY_TYPE.ENEMY, 3]],
-      ['13,11', [ENTITY_TYPE.ENEMY, 4]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[9][0],
     artBackground: art_room_tartarus_common_background_09,
     artForeground: art_room_tartarus_common_foreground_09,
   },
@@ -680,11 +724,7 @@ export const ROOMS_TARTARUS_COMMON: IRoom[] = [
         id: 3,
       },
     ],
-    roomEntityPositions: new Map([
-      ['8,8', [ENTITY_TYPE.ENEMY, 1]],
-      ['12,12', [ENTITY_TYPE.ENEMY, 2]],
-      ['14,7', [ENTITY_TYPE.ENEMY, 3]],
-    ]),
+    roomEntityPositions: ROOM_TARTARUS_ENEMY_POSITIONS_OPTIONS[10][0],
     artBackground: art_room_tartarus_common_background_10,
     artForeground: art_room_tartarus_common_foreground_10,
   },
