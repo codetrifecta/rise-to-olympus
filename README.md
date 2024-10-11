@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="#-features">Features</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-prerequisites">Prerequisites</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-setup">Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#%EF%B8%8F-roadmap">Roadmap</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#%EF%B8%8F-images">Images</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -35,9 +35,9 @@
 
   Benefit from continuous improvements and new content based on player feedback.
 
-## 📋 Prerequisites
+## 📋 Setup
 
-Project Before you start, you will need to have the following tools installed on your PC/Laptop:
+Before you start, you will need to have the following tools installed on your PC/Laptop:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) and/or [Yarn](https://yarnpkg.com/).
 In addition, it is good to have an editor to work with the code such as [VSCode](https://code.visualstudio.com/).
 
@@ -113,6 +113,6 @@ This game was built with the following technologies:
 
 ## 👥 Contributors
 
-- [Afuza](https://github.com/afutofu) - Tech Lead, System architect and design, UI
-- [Denise](https://github.com/Detadja) - Pathfinding, Vision, Floor Rooms Generation
+- [Afuza](https://github.com/afutofu) - Tech lead, System architect and designer, UI/UX implementor
+- [Denise](https://github.com/Detadja) - Implement [athfinding, vision, Floor rooms generation
 - [Sehyun](https://github.com/parksehyun91) - Scripts, Map creation
