@@ -398,6 +398,22 @@ export const ROOM_TARTARUS_ENEMY_OPTIONS: Record<
     {
       enemies: [
         {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+          id: 1,
+        },
+        {
+          ...ENEMY_PRESETS[ENEMY_PRESET_ID.INFERNAL_MINOTAUR],
+          id: 2,
+        },
+      ],
+      enemyPositions: new Map([
+        ['9,8', [ENTITY_TYPE.ENEMY, 1]],
+        ['9,12', [ENTITY_TYPE.ENEMY, 2]],
+      ]),
+    },
+    {
+      enemies: [
+        {
           ...ENEMY_PRESETS[ENEMY_PRESET_ID.CERBERUS_PUP],
           id: 1,
         },
