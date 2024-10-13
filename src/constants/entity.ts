@@ -171,6 +171,7 @@ const BASE_ENEMY: IEnemy = {
 };
 
 export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
+  // Miniboss
   [ENEMY_PRESET_ID.ABYSSAL_CYCLOPEAN_WRAITH]: {
     ...BASE_ENEMY,
     id: 0,
@@ -194,6 +195,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 30,
   },
+  // Tier 1
   [ENEMY_PRESET_ID.CERBERUS_PUP]: {
     ...BASE_ENEMY,
     id: 0,
@@ -217,6 +219,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 10,
   },
+  // Boss
   [ENEMY_PRESET_ID.CORRUPT_MINOTAUR]: {
     ...BASE_ENEMY,
     id: 0,
@@ -240,6 +243,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 30,
   },
+  // Tier 3
   [ENEMY_PRESET_ID.CORRUPT_OLYMPIAN]: {
     ...BASE_ENEMY,
     id: 0,
@@ -263,6 +267,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 30,
   },
+  // Tier 2
   [ENEMY_PRESET_ID.EREBUS_FIEND]: {
     ...BASE_ENEMY,
     id: 0,
@@ -286,6 +291,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 20,
   },
+  // Tier 3
   [ENEMY_PRESET_ID.INFERNAL_MINOTAUR]: {
     ...BASE_ENEMY,
     id: 0,
@@ -309,6 +315,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 20,
   },
+  // Tier 2
   [ENEMY_PRESET_ID.MYRMIDON_HOUND]: {
     ...BASE_ENEMY,
     id: 0,
@@ -332,6 +339,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 20,
   },
+  // Tier 3
   [ENEMY_PRESET_ID.SKYWARD_TITAN]: {
     ...BASE_ENEMY,
     id: 0,
@@ -355,6 +363,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 20,
   },
+  // Tier 1
   [ENEMY_PRESET_ID.STYGIAN_WRAITH]: {
     ...BASE_ENEMY,
     id: 0,
@@ -378,6 +387,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 10,
   },
+  // Tier 2
   [ENEMY_PRESET_ID.TARTARIAN_HOUND]: {
     ...BASE_ENEMY,
     id: 0,
@@ -401,6 +411,7 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 20,
   },
+  // Tier 2
   [ENEMY_PRESET_ID.TARTARIAN_LYCAN]: {
     ...BASE_ENEMY,
     id: 0,
@@ -424,30 +435,4 @@ export const ENEMY_PRESETS: Record<ENEMY_PRESET_ID, IEnemy> = {
     statuses: [],
     divinity: 20,
   },
-  // [ENEMY_PRESET_ID.MINOTAUR]: {
-  //   id: 0,
-  //   name: 'Minotaur',
-  //   sprite: SPRITE_ID.ENEMY_017_B,
-  //   spriteSize: 115,
-  //   entityType: ENTITY_TYPE.ENEMY,
-  //   health: 50,
-  //   maxHealth: 50,
-  //   range: 1,
-  //   damage: 10,
-  //   damageBonus: 0,
-  //   statuses: [],
-  // },
-  // [ENEMY_PRESET_ID.FLAMING_SKULL_A]: {
-  //   id: 0,
-  //   name: 'Flaming Skull',
-  //   sprite: SPRITE_ID.ENEMY_008_A,
-  //   spriteSize: 64,
-  //   entityType: ENTITY_TYPE.ENEMY,
-  //   health: 10,
-  //   maxHealth: 10,
-  //   range: 1,
-  //   damage: 5,
-  //   damageBonus: 0,
-  //   statuses: [],
-  // },
 };
