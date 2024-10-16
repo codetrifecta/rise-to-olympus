@@ -37,7 +37,7 @@
 
 ## 📋 Prerequisites
 
-Project Before you start, you will need to have the following tools installed on your PC/Laptop:
+Before you start, you will need to have the following tools installed on your PC/Laptop:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) and/or [Yarn](https://yarnpkg.com/).
 In addition, it is good to have an editor to work with the code such as [VSCode](https://code.visualstudio.com/).
 
