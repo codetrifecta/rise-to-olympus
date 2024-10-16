@@ -113,6 +113,6 @@ This game was built with the following technologies:
 
 ## 👥 Contributors
 
-- [Afuza](https://github.com/afutofu) - Tech Lead, System architect and design, UI
+- [Afuza](https://github.com/afutofu) - Tech Lead, System architect and design, UI/UX
 - [Denise](https://github.com/Detadja) - Pathfinding, Vision, Floor Rooms Generation
 - [Sehyun](https://github.com/parksehyun91) - Scripts, Map creation
